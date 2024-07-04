@@ -450,7 +450,7 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
         className={`${isZoomEnabled ? 'hidden' : ''}`}
         {...settings_std}>
         {productListSlider.map((image, index) => (         
-          <div key={index} className="relative grid justify-items-center items-center h-[26rem] md:h-72 lg:h-96 w-10-single-prod">
+          <div key={index} className={`relative grid justify-items-center items-center ${window.innerWidth <= 550 ? ``: `h-[32rem]`} md:h-72 lg:h-96 w-10-single-prod`}>
             <img id={index} draggable="false" className={`absolute z-[-1] ${apparel === 'hoodie' ? 'Hoodie' : ''} ${apparel === 'tshirt' ? 'Tshirt' : ''} `} src={editedImage} alt="" 
             style={{height:`${dimHeight - 2 }%`,width: `${dimWidth}%`,top:`${dimTop + 1}%`,left:`${dimLeft}%`}}
             />
@@ -464,7 +464,7 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
           className={`${isZoomEnabled ? 'hidden' : ''}`}
           {...settings}>
           {productListSlider.map((image, index) => (         
-            <div key={index} className="relative grid justify-items-center items-center h-[26rem] md:h-72 lg:h-96 w-96" >
+            <div key={index} className={`relative grid justify-items-center items-center ${window.innerWidth <= 550 ? ``: `h-[32rem]`} md:h-72 lg:h-96 w-96`} >
               {/* <div style={{ height: '422.2px', width: '422.2px',justifyContent: 'center' }}> */}
               <img id={index} draggable="false" className={`absolute z-[-1] ${apparel === 'hoodie' ? 'Hoodie' : ''} ${apparel === 'tshirt' ? 'Tshirt' : ''} `} src={editedImage} alt="" 
               style={{height:`${dimHeight - 3}%`,width: `${dimWidth}%`,top:`${dimTop + 3}%`,left:`${dimLeft}%`}}
