@@ -1,0 +1,459 @@
+.zoomBoundary {
+  width: 50%;
+  height: 50%;
+  left: 25%;
+  top: 10%;
+}
+
+.capZoomBoundary {
+  width: 50%;
+  height: 50%;
+  left: 25%;
+  top: 20%;
+}
+
+.mugZoomBoundary {
+  width: 50%;
+  height: 50%;
+  left: 25%;
+  top: 25%;
+}
+
+.zoomInnerBorder {
+  width: 50%;
+  height: 50%;
+  top: 25%;
+  left: 25%;
+  outline: 2px green dashed;
+}
+
+.control-point {
+  position: absolute;
+  box-sizing: border-box;
+  display: inline-block;
+  background: #fff;
+  border: 1px solid #c0c5cf;
+  box-shadow: 0 0 2px 0 rgba(86, 90, 98, .2);
+  border-radius: 6px;
+  padding: 4px;
+  user-select: none;
+}
+
+.control-point.point-e {
+  cursor: ew-resize;
+  left: 100%;
+  top: 50%;
+  margin-left: -5px
+}
+
+.control-point.point-n {
+  cursor: ns-resize;
+  left: 50%;
+  margin-top: -5px
+}
+
+.control-point.point-s {
+  cursor: ns-resize;
+  left: 50%;
+  top: 100%;
+  margin-top: -5px
+}
+
+.control-point.point-w {
+  cursor: ew-resize;
+  top: 50%;
+  left: 0;
+  margin-left: -5px
+}
+
+.control-point.point-ne {
+  cursor: nesw-resize;
+  left: 100%;
+  margin-top: -5px;
+  margin-left: -5px
+}
+
+.control-point.point-nw {
+  cursor: nwse-resize;
+  left: 0;
+  top: 0;
+  margin-left: -5px;
+  margin-top: -5px
+}
+
+.control-point.point-se {
+  cursor: nwse-resize;
+  left: 100%;
+  top: 100%;
+  margin-left: -5px;
+  margin-top: -5px
+}
+
+.control-point.point-sw {
+  cursor: nesw-resize;
+  top: 100%;
+  left: 0;
+  margin-left: -5px;
+  margin-top: -5px
+}
+
+
+
+/* Zoomer New CSS */
+.canvas-R {
+  height: 270px;
+  width: 270px;
+  position: absolute;
+  background-image: url("../../assets/landing_r_mask.png");
+  background-size: cover;
+  pointer-events: none;
+  opacity: 0.9;
+  top: 20.6%;
+  left: 20.6%;
+}
+.canvas-R-Std {
+  height: 270px;
+  width: 270px;
+  position: absolute;
+  background-image: url("../../assets/E_image.png");
+  background-size: cover;
+  pointer-events: none;
+  opacity: 0.9;
+  top: 20.6%;
+  left: 20.6%;
+}
+#zoomer-new {
+  height: 100%;
+  width: 100%;
+  margin-top : 80px;
+  margin-bottom : 150px
+}
+.control-point {
+  /* z-index: 1000; */
+  background-color: rgb(128, 0, 0);
+}
+.Save-btn-contaiiner {
+  height: 60px;
+  width: 100vw;
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  background-color: bisque;
+  z-index: 1000000;
+}
+.back-arrow-zoomer {
+  height: 30px;
+  width: 50px;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+}
+.save-btn {
+  height: 40px;
+  width: 180px;
+  text-align: center;
+  justify-content: center;
+  background-color: rgb(128, 0, 0);
+  color: white;
+  border-radius: 5px;
+  margin-top: auto;
+  margin-left: auto;
+  margin-bottom: auto;
+  display: block;
+  margin-right: 5%;
+}
+.nav-zoomer {
+  height: 50px;
+    position: fixed;
+    width: 100vw;
+    left: 0;
+    top: 0;
+    z-index: 999999999;
+    background-color: white;
+}
+.edit-preview-div {
+  width: 100vw;
+  height: 40px;
+  position: fixed;
+  top: 10%;
+  background-color: white;
+  display: flex;
+  padding: 10px;
+}
+.whitespace-right {
+  height: 58.6%;
+  width: 20.75%;
+  background-color: white;
+  opacity: 0.7;
+  position: absolute;
+  right: 0;
+  top: 20.6%;
+  z-index: 40;
+  pointer-events: none;
+}
+.whitespace-bottom {
+  height: 20.72%;
+  width: 100%;
+  background-color: white;
+  opacity: 0.7;
+  z-index: 40;
+  position: absolute;
+  bottom: 0;
+  pointer-events: none;
+}
+.whitespace-left {
+  height: 58.6%;
+  width: 20.6%;
+  background-color: white;
+  opacity: 0.7;
+  position: absolute;
+  left: 0;
+  top: 20.6%;
+  z-index: 40;
+  pointer-events: none;
+}
+.whitespace-top {
+  height: 20.63%;
+  width: 100%;
+  background-color: white;
+  opacity: 0.7;
+  position: absolute;
+  top: 0;
+  z-index: 40;
+  pointer-events: none;
+}
+/* .whitespace-top {
+  height: 105px;
+    width: 100%;
+    background-color: white;
+    opacity: 0.7;
+    position: absolute;
+    top: 0;
+    z-index: 40;
+    pointer-events: none;
+}
+.whitespace-left {
+  height: 58.8%;
+    width: 20.6%;
+    background-color: white;
+    opacity: 0.7;
+    position: absolute;
+    left: 0;
+    top: 20.6%;
+    z-index: 40;
+    pointer-events: none;
+}
+.whitespace-right {
+  height: 58.8%;
+    width: 20.6%;
+    background-color: white;
+    opacity: 0.7;
+    position: absolute;
+    right: 0;
+    top: 20.6%;
+    z-index: 40;
+    pointer-events: none;
+}
+.whitespace-bottom {
+  height: 20.6%;
+    width: 100%;
+    background-color: white;
+    opacity: 0.7;
+    z-index: 40;
+    position: absolute;
+    bottom: 0;
+    pointer-events: none;
+} */
+/* .rectangle-img-border {
+  position: absolute;
+  z-index: 9999;
+  background-color: transparent;
+  border: 3px dotted red;
+  pointer-events: none;
+} */
+.zoomer-interactive-div {
+  height: 510px;
+  width: 510px;
+}
+.preview-div {
+  position: relative;
+}
+.zoomer-span {
+  position: absolute;
+  z-index: 100;
+  top: -7%;
+  width: 100%;
+  left: 0;
+  font-size: 19px;
+  color: rgb(128, 0, 0);
+}
+#product-gallery.zoomer {
+  overflow-y: hidden;
+}
+
+
+#product-gallery.zoomer {
+  width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999999;
+    background-color: white;
+}
+.preview-new-zoomer {
+  height: 450px;
+  width: 450px;
+}
+.Hat-preview {
+  height: 550px;
+  width: 540px;
+}
+.Cup-preview {
+  height: 325px;
+  width: 325px;
+}
+.R_Preview {
+  top: 20.7%;
+  left: 35.7%;
+}
+.R_Preview_Std {
+  top: 40.7%;
+  left: 35.7%;
+}
+.Hat-R-Src-Img {
+  top: 32.4%;
+  left: 38.1%;
+}
+.Cup-R-Src-Img {
+  top: 28.5%;
+  left: 31.3%;
+  outline: none !important;
+}
+@media only screen and (min-width: 767px) and (max-width: 769px){
+  .zoomer-interactive-div{
+    margin-top: 25px;
+  }
+}
+@media only screen and (max-width: 540px) {
+  #product-gallery .mugPreviewImg {
+    top: 35% !important;
+    left: 32.5% !important;
+  }
+  .save-btn {
+    margin-right: auto !important;
+  }
+  .Hat-preview {
+    height: 330px !important;
+    width: 340px !important;
+  }
+  .Cup-preview {
+    height: 220px !important;
+    width: 220px !important;
+  }
+  .Hat-R-Src-Img {
+    top: 31.4%;
+    left: 37.5%;
+  }
+  .preview-new-zoomer {
+    height: 300px;
+    width: 300px;
+  }
+  .zoomer-span {
+    top : -7%;
+    font-size: 13px
+  }
+  .zoomer-interactive-div {
+    height: 310px;
+    width: 310px;
+    margin-top: 55px;
+  }
+  .canvas-R {
+    height: 182px;
+    width: 182px;
+    top: 20.7%;
+    left: 20.7%;
+    }
+    .canvas-R-Std {
+      height: 182px;
+      width: 182px;
+      top: 20.7%;
+      left: 20.7%;
+      }
+    .whitespace-top {
+      height: 64.2px;
+      width: 100%;
+    background-color: white;
+    opacity: 0.7;
+    position: absolute;
+    top: 0;
+    z-index: 40;
+    pointer-events: none;
+    }
+    .whitespace-left {
+      height: 58.8%;
+      width: 20.6%;
+      background-color: white;
+      opacity: 0.7;
+      position: absolute;
+      left: 0;
+      top: 20.6%;
+      z-index: 40;
+      pointer-events: none;
+  }
+  .whitespace-right {
+    height: 58.8%;
+    width: 20.6%;
+    background-color: white;
+    opacity: 0.7;
+    position: absolute;
+    right: 0;
+    top: 20.6%;
+    z-index: 40;
+    pointer-events: none;
+}
+.whitespace-bottom {
+  height: 20.6%;
+  width: 100%;
+  background-color: white;
+  opacity: 0.7;
+  z-index: 40;
+  position: absolute;
+  bottom: 0;
+  pointer-events: none;
+}
+#product-gallery.zoomer {
+  overflow-y: scroll;
+}
+}
+
+@media only screen and (max-height: 740px) {
+  #product-gallery.zoomer {
+    height: 100vh;
+    /* overflow-y: hidden; */
+    overflow-x: hidden;
+  }
+  .zoomer .space-x-2 {
+    display: none;
+  }
+}
+
+
+/* new */
+.hei-460 {
+  height: 460px;
+  width: 460px;
+}
+
+.hat-preview {
+  height: 590px;
+  width: 570px;
+}
+
+.btnupscale {
+  width: 300px;
+  height: 100px;
+  z-index: 99999999;
+  background-color: blue;
+  position: absolute;
+  color: white;
+}

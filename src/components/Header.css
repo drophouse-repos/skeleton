@@ -1,0 +1,87 @@
+ 
+.header {
+  align-items: start;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  opacity: 80%;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  transition: height 0.5s ease-in-out;
+  width: 100%; height: 60px;
+  z-index: 10000;  
+}
+.header.expanded {
+  height: 100vh; 
+  transition: height 0.3s ease-in-out;
+}
+  
+.logo {  
+  height: 60px; 
+  margin-left: 20px; 
+  margin-right: 20px; 
+}
+
+.home, .nothome, .info, .notinfo {  
+  transition: transform 0.5s ease-in-out;
+  cursor: pointer;
+  width: 30px;  
+  margin-top: 15px;
+}
+
+.nothome {   transform: rotate(-90deg); }
+.info {   transform: rotate(-90deg);   animation: blink 1.5s infinite; }
+
+.notinfo {   transform: rotate(0deg);  }
+
+.info-boxes {
+  display: flex;
+  flex-direction: column; /* Arrange info boxes in a column */
+  align-items: center; /* Center the boxes */
+  width: 100%; /* Full width to center content */
+  color: white;
+  position: absolute;
+  top: 10%;
+  transition: transform 2s ease-in-out, opacity 2s ease-in-out;
+}
+
+.info-box {
+  background-color: #333; 
+  border: 1px solid whitesmoke; 
+  padding: 10px 20px; 
+  margin: 10px 0; 
+  width: 90%;
+  text-align: center; 
+  transition: background-color 0.3s; 
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.info-box:hover {
+  background-color: #555; 
+}
+
+.textbox {
+  color: white;
+  font-weight: 600;
+  margin-top: 20px;   
+}
+
+.step-container {
+  width: 80%; 
+  padding: 0 20px; 
+}
+
+.step-description {
+  color: #f0f0f0; 
+  font-size: .9rem; 
+  line-height: 1.5; 
+  margin-bottom: 20px; 
+  text-align: center; 
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}

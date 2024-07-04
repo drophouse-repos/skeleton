@@ -1,0 +1,13 @@
+.divider {
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+  }
+  
+.divider::before, .divider::after {
+    flex: 1;
+    content: '';
+    padding: 0.5px;
+    background-color: #c2c8d0;
+    margin: 5px;
+}

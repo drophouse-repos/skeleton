@@ -1,0 +1,77 @@
+{
+  "name": "aurum",
+  "version": "2.0.0",
+  "private": true,
+  "dependencies": {
+    "@ant-design/icons": "^5.2.6",
+    "@cloudinary/react": "^1.13.0",
+    "@cloudinary/url-gen": "^1.19.0",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/material": "^5.15.17",
+    "@react-oauth/google": "^0.12.1",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@upscalerjs/esrgan-thick": "^1.0.0-beta.16",
+    "@vercel/analytics": "^1.2.2",
+    "@vercel/speed-insights": "^1.0.10",
+    "antd": "^5.13.2",
+    "axios": "^1.6.7",
+    "cors": "^2.8.5",
+    "firebase": "^10.7.2",
+    "framer-motion": "^11.1.7",
+    "html2canvas": "^1.4.1",
+    "mnemonist": "^0.39.8",
+    "randomcolor": "^0.6.2",
+    "react": "^18.2.0",
+    "react-confetti": "^6.1.0",
+    "react-dom": "^18.2.0",
+    "react-easy-panzoom": "^0.4.4",
+    "react-icons": "^4.10.1",
+    "react-intersection-observer": "^9.8.0",
+    "react-lazyload": "^3.2.1",
+    "react-rnd": "^10.4.1",
+    "react-router-dom": "^6.0.0",
+    "react-scripts": "5.0.1",
+    "react-slick": "^0.30.1",
+    "react-transition-group": "^4.4.5",
+    "react-zoom-pan-pinch": "^3.4.2",
+    "semantic-ui-css": "^2.5.0",
+    "semantic-ui-react": "^2.1.4",
+    "slick-carousel": "^1.8.1",
+    "stripe": "^14.16.0",
+    "styled-components": "^6.1.0",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "dev": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "globals": {
+      "cv": "readonly"
+    }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "dotenv": "^16.3.1",
+    "file-saver": "^2.0.5",
+    "npm-run-all": "^4.1.5",
+    "tailwindcss": "^3.4.1",
+    "uuid": "^9.0.0"
+  }
+}

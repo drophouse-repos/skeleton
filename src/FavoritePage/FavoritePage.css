@@ -1,0 +1,71 @@
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  position: relative; 
+  margin-top: 10px;
+  margin-bottom: 25px;
+}
+
+.back-button {
+  position: absolute; 
+  left: 0; /* ...to the left */
+  margin-left: 1rem; /* with a little margin from the edge */
+}
+
+.favor-page h1 {
+  text-align: center;
+  flex: 1; /* ensures it takes the available space */
+  vertical-align: middle;
+}
+
+.heart-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.product-container {
+  text-align: center;
+  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border: 1px solid #e1e1e1;
+  border-radius: 10px;
+}
+
+.prompt {
+  background-color: #f3f3f3;
+  padding: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.product-image {
+  width: 100%;
+  height: auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #fff;
+}
+
+.product-details {
+  text-align: left;
+  margin-top: 20px;
+}
+
+.add-to-cart-button {
+  background-color: #38bdf8; /* sky-600 */
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 20px;
+  width: 100%;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+/* Add any additional styling as needed */

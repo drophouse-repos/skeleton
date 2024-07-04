@@ -1,0 +1,230 @@
+#product-gallery .slick-current {
+  animation: image-centered 0.3s forwards;
+}
+
+#product-gallery .slick-slide:not(.slick-current) {
+  animation: image-not-centered 0.3s forwards;
+}
+
+@keyframes image-centered {
+  0% {
+    transform: scale(80%);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(110%);
+    opacity: 1;
+  }
+}
+
+@keyframes image-not-centered {
+  0% {
+    transform: scale(110%);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(80%);
+    opacity: 0.5;
+  }
+}
+
+#product-gallery div:focus {
+  outline: none;
+}
+
+#product-gallery .previewImg {
+  /* left:38%; */
+  /* width: 25%;
+  height: 25%; */
+  /* top: 25%; */
+  height: 24.74%;
+  width: 27.78%;
+  position: absolute;
+    top: 24.5%;
+    left: 36.1%;
+}
+#product-gallery .previewImg_std {
+  /* left:38%; */
+  /* width: 25%;
+  height: 25%; */
+  /* top: 25%; */
+  height: 24.74%;
+  width: 27.78%;
+  position: absolute;
+    top: 41.5%;
+    left: 36.1%;
+}
+
+
+/* #product-gallery .previewImg.Tshirt {
+  left: calc(10% + 90px);
+  width: calc(10% + 58px);
+  height: calc(10% + 55px);
+  top: calc(10% + 55.9px);
+} */
+
+/* #product-gallery .previewImg.Hoodie {
+  left: calc(10% + 100px);
+    width: calc(10% + 58px);
+    height: calc(10% + 52px);
+    top: calc(11% + 93px);
+} */
+#product-gallery .capPreviewImg {
+  left: 38%;
+    width: 85px;
+    height: 85px;
+    top: 33.5%;
+    position: absolute;
+}
+
+#product-gallery .mugPreviewImg {
+  left: 31%;
+  width: 135px;
+  height: 135px;
+  top: 30%;
+}
+/* particulatly for iphone 14 pro max and higher resolution screens Tested-OK*/
+@media screen and (max-width: 480px) {
+  #product-gallery .previewImg.Tshirt {
+    top: 26.25%;
+    height: 22.45%;
+    position: fixed;
+    width: 27%;
+    left: 36.6%;
+  }
+  #product-gallery .previewImg.Hoodie {
+    left: calc(10% + 111.8px);
+    width: calc(10% + 65px);
+    height: calc(11.5% + 54px);
+    top: calc(10.2% + 86px);
+}
+#product-gallery .capPreviewImg {
+  left: 38%;
+  width: 90px;
+  height: 90px;
+  top: 37.5%;
+  position: absolute;
+}
+}
+/* particularly for smaller(Galaxy s8+) screen devices lesser than 360px width Tested-OK*/
+@media screen and (max-width: 370px) and (min-width: 360px) {
+  #product-gallery .previewImg.Tshirt {
+    top: calc(10vh + 82px);
+    height: calc(10vh + 23px);
+    position: fixed;
+    width: 27%;
+    left: 36.6%;
+  }
+  #product-gallery .previewImg.Hoodie {
+    left: calc(5% + 106.8px);
+    width: calc(10% + 65px);
+    height: calc(9.5% + 50px);
+    top: calc(13.22% + 86px);
+}
+}
+/* particularly for iphone SE and smaller screen devices Tested-OK*/
+@media screen and (max-width: 375px) and (min-width: 370px) {
+  #product-gallery .previewImg.Tshirt {
+    top: calc(18% + 59px);
+        height: calc(12% + 41px);
+        position: fixed;
+        width: 27%;
+        left: 36.6%;
+  }
+  #product-gallery .previewImg.Hoodie {
+    left: calc(10% + 97px);
+    position: fixed;
+    width: calc(10% + 58px);
+    height: calc(9% + 52px);
+    top: calc(12% + 91px);
+}
+}
+/* particularly for galaxy s20 ultra device Tested-OK*/
+@media screen and (max-width: 412px) and (min-width: 401px) {
+  #product-gallery .previewImg.Tshirt {
+    top: calc(10% + 88px);
+    height: calc(10vh + 22px);
+    position: fixed;
+    width: 27%;
+    left: 36.6%;
+  }
+  #product-gallery .previewImg.Hoodie {
+    left: calc(10% + 105.8px);
+    width: calc(10% + 65px);
+    height: calc(12.5% + 45px);
+    top: calc(11.1% + 85px);
+}
+}
+/* particularly for iphone XR and devices Tested-OK*/
+@media screen and (max-width: 420px) and (min-width: 414px) {
+  #product-gallery .previewImg.Tshirt {
+    top: 27.2%;
+        height: calc(15% + 33px);
+        position: fixed;
+        width: calc(20% + 31px);
+        left: calc(10vh + 54.5px);
+  }
+  #product-gallery .previewImg.Hoodie {
+    left: calc(12% + 102px);
+    width: calc(10% + 58px);
+    height: calc(11% + 52px);
+    top: calc(10% + 92px);
+}
+}
+/* particularly for surface duo screen  higher than 490px width Tested-OK*/
+@media screen and (max-width: 540px) and (min-width: 510px) {
+  #product-gallery .previewImg.Tshirt {
+    top: calc(10% + 54px);
+    height: calc(10% + 101px);
+    position: fixed;
+    width: calc(10% + 88px);
+    left: 36.6%;
+  }
+}
+/* particularly for Iphone-12-pro Tested-OK*/
+@media screen and (min-width: 390px) and (max-width: 391px) {
+  #product-gallery .previewImg.Tshirt {
+    top: calc(11% + 91.5px);
+    height: calc(15% + 27px);
+    position: absolute;
+    width: calc(20% + 29px);
+    left: calc(20% + 60px);
+
+  }
+  #product-gallery .previewImg.Hoodie {
+    left: calc(6% + 113px);
+    width: calc(10% + 65px);
+    height: calc(9.5% + 54px);
+    top: calc(12.6% + 84px);
+  }
+}
+/* particularly for Iphone-12-pro Tested-OK*/
+/* @media screen and (max-width: 540px) and (min-width: 540) {
+#product-gallery .previewImg.Hoodie {
+  left: calc(20% + 94px);
+  width: calc(12% + 58px);
+  height: calc(14% + 55px);
+  top: calc(4% + 95px);
+}
+} */
+@media screen and (min-width: 480.1px) and (max-width: 600px) {
+  #product-gallery .previewImg {
+    top: 23%;
+  }
+}
+
+
+.thumbnail {
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+}
+
+.thumbnail-selected {
+  border: 1px solid red;
+}
+
+.w-10-single-prod {
+  width: 22.5rem !important;
+}

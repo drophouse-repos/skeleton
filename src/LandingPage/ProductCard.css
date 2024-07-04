@@ -1,0 +1,15 @@
+.landing-random-image {
+    display: block;
+    width: auto;
+    height: 100%;
+    animation: image-switch 1s linear;
+}
+
+@keyframes image-switch {
+    0% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 1;
+    }
+}

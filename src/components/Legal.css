@@ -1,0 +1,60 @@
+* {
+  font-size: .5rem; 
+  font-family: 'Poppins', sans-serif; 
+}
+
+.legalbanner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px;
+    width: 100%;
+  }
+  
+  .general h4 {
+    color: #800000;
+    cursor: pointer;
+    margin: 5px;
+  }
+  
+  .social-icons {
+    background-color: transparent;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .social-icons img{
+    height: 25px;
+    margin: 5px;
+  }
+
+  .legal-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+
+.team {
+  transition: ease .5s ; 
+  opacity: 100%;
+}
+
+.noTeam {
+  transition: ease .5s ; 
+  visibility: collapse;
+  opacity: 0%;
+}
+
+.matrix-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.matrix-cell img {
+  height: 100px;
+  border-radius: 5px;
+  margin: 10px;
+}

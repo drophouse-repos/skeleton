@@ -1,0 +1,49 @@
+.productListBorder{
+    position: relative;
+    /* border: 2px solid transparent; */
+}
+
+.productListBorder::after{
+    content:"";
+    width: 0;
+    height: 2px;
+    position: absolute;
+    transition: all 0.15s ease-in-out;
+    background: #0491F7;
+}
+
+.productListBorder:hover::after{
+    width: 100%;
+}
+
+.productListBorder::after{
+    transition-delay: 0.2s;
+}
+
+.productListBorder::after{
+    left: 0;
+    bottom: 0;
+}
+
+.productListBorder:hover::after{
+    transition-delay: 0s;
+}
+
+.fade-enter {
+    opacity: 0;
+  }
+  
+.fade-enter-active {
+    opacity: 1;
+    transition: opacity 500ms;
+}
+
+.fade-exit {
+    opacity: 1;
+}
+
+.fade-exit-active {
+    opacity: 0;
+    transition: opacity 0;
+}
+  
