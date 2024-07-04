@@ -454,7 +454,7 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
             <img id={index} draggable="false" className={`absolute z-[-1] ${apparel === 'hoodie' ? 'Hoodie' : ''} ${apparel === 'tshirt' ? 'Tshirt' : ''} `} src={editedImage} alt="" 
             style={{height:`${dimHeight - 2 }%`,width: `${dimWidth}%`,top:`${dimTop + 1}%`,left:`${dimLeft}%`}}
             />
-            <img draggable="false" src={isFront ? image.front : image.back} alt="" className="object-contain mx-auto h-[32rem] md:h-72 lg:h-96 z-30" />
+            <img draggable="false" src={isFront ? image.front : image.back} alt="" className={`object-contain mx-auto ${window.innerWidth <= 550 ? ``: `h-[32rem]`} md:h-72 lg:h-96 z-30`} />
           </div>
         ))}         
       </Slider>
@@ -469,7 +469,7 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
               <img id={index} draggable="false" className={`absolute z-[-1] ${apparel === 'hoodie' ? 'Hoodie' : ''} ${apparel === 'tshirt' ? 'Tshirt' : ''} `} src={editedImage} alt="" 
               style={{height:`${dimHeight - 3}%`,width: `${dimWidth}%`,top:`${dimTop + 3}%`,left:`${dimLeft}%`}}
               />
-              <img draggable="false" src={isFront ? image.front : image.back} alt="" className="object-contain h-[32rem] md:h-72 lg:h-96 mx-auto  z-30" />
+              <img draggable="false" src={isFront ? image.front : image.back} alt="" className={`object-contain mx-auto ${window.innerWidth <= 550 ? ``: `h-[32rem]`} md:h-72 lg:h-96 z-30`} />
             {/* </div> */}
             </div>
           ))}         
