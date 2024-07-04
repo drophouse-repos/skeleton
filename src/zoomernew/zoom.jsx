@@ -15,7 +15,6 @@ import DrophouseLogo from "../assets/logo_footer_t.png";
 const ZoomItem = forwardRef(function Zoom(props, ref) {
   const [backgroundImage, setBackgroundImage] = useState('');
 
-
   useEffect(() => {
     const fetchImage = async () => {
       const image = await props.imageSrc; 
