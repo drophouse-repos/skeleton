@@ -198,7 +198,6 @@ const InformationPage = () => {
       zipCode: ''
     });
   };
-  
   const handleSubmit = async (e) => {
     if(e) e.preventDefault();
     if(isOrderPlaced)
@@ -206,7 +205,7 @@ const InformationPage = () => {
       window.location.href = "/user";
       return;
     }
-    if(process.env.REACT_APP_STRIPE_CHECKOUT_ENABLED == "true")
+    if(process.env.REACT_APP_STRIPE_CHECKOUT_ENABLED == "false")
     {
       if(!isConfirmOrder)
       {
@@ -235,7 +234,8 @@ const InformationPage = () => {
     }
     try {
       productInfo["shipping_info"] = findAddress('primary');
-      if(process.env.REACT_APP_STRIPE_CHECKOUT_ENABLED === 'true'){
+      productInfo["org_name"] = orgDetails[0].name;
+      if(process.env.REACT_APP_STRIPE_CHECKOUT_ENABLED === 'false'){
         createStudentCheckout(productInfo, navigate)
         .then((data)=>{
           setMessageBannerText(data.message);
@@ -379,7 +379,7 @@ const InformationPage = () => {
           </div>
         </div>
           ) : (
-            `${(process.env.REACT_APP_STRIPE_CHECKOUT_ENABLED == 'false') ? `CHECKOUT` : `ORDER`}`
+            `${(process.env.REACT_APP_STRIPE_CHECKOUT_ENABLED == 'true') ? `CHECKOUT` : `ORDER`}`
           )}
         </button>
       </form>
