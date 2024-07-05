@@ -440,7 +440,7 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
 
     const [zoomItemSrc, setZoomItemSrc] = useState(null);
   // console.log("Current Index : ",currentIndex); 
-  console.log((productImageList[currentIndex]?.back === ' '))
+  console.log(productImageList[currentIndex]?.back.startsWith('data:image/'))
   return (
     <div id="product-gallery" className={`sliderContainer overflow-hidden ${!isZoomEnabled ? '' : 'zoomer'}`} ref={ref}>
       <div className={`${isZoomEnabled ? 'hidden' : ''}`}>
@@ -478,7 +478,7 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
       )}
       </div>
       <div className={`row ${isZoomEnabled ? 'hidden' : 'flex'} 
-      ${productImageList[currentIndex]?.back === ' ' ? ``: `hidden`}
+      ${productImageList[currentIndex]?.back.startsWith('data:image/') ? ``: `hidden`}
       `} style={{justifyContent: 'center'}}>
         <div className="row flex" style={{width: 'fit-content', justifyContent: 'center' , marginRight: '5px'}}>
             <div
