@@ -1,7 +1,8 @@
+@media screen and (min-width: 550px) {
 #product-gallery .slick-current {
   animation: image-centered 0.3s forwards;
 }
-
+}
 #product-gallery .slick-slide:not(.slick-current) {
   animation: image-not-centered 0.3s forwards;
 }
