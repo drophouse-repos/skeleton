@@ -19,10 +19,10 @@ export const getUserToken = async () => {
 if (process.env.REACT_APP_AUTHTYPE_SAML === 'true') {
   axiosInstance.interceptors.request.use(
     async (config) => {
-      const user = auth.currentUser;
-      if (user) {
-        const token = sessionStorage.getItem('saml_authToken');
+      const token = sessionStorage.getItem('saml_authToken');
+      if (token) {
         config.headers.Authorization = `Bearer ${token}`;
+        config.headers['X-Bearer'] = 'Student'
       }
       return config;
     },
@@ -39,6 +39,7 @@ else
       if (user) {
         const token = await user.getIdToken();
         config.headers.Authorization = `Bearer ${token}`;
+        config.headers['X-Bearer'] = 'Alumini'
       }
       return config;
     },

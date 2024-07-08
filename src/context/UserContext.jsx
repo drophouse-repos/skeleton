@@ -11,28 +11,48 @@ export const UserProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const auth = getAuth(app);
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-               const { displayName, email, phoneNumber } = user;       
-               let firstName = '';
-               if (!displayName) {
-                 firstName = email.split('@')[0];
-               } else {
-                 const names = splitName(displayName); 
-                 firstName = names.firstName;
-               }
-              
-              setUser({ isLoggedIn: true, firstName, email,  phoneNumber });
-            } else {
-                setUser({ isLoggedIn: false });
+        if(process.env.REACT_APP_AUTHTYPE_SAML === "true")
+        {
+            let firstName = sessionStorage.getItem('saml_name')
+            let email = sessionStorage.getItem('saml_email')
+            let phone = sessionStorage.getItem('saml_phone')
+            if(sessionStorage.getItem('saml_authToken') && firstName
+                && email && phone)
+            {
+                setUser({ isLoggedIn: true, firstName, email, phone });
+            }
+            else
+            {
+                setUser({ isLoggedIn: false })
             }
             setLoading(false);
-        });
-        return () => unsubscribe();
+        }
+        else
+        {
+            const unsubscribe = onAuthStateChanged(auth, (user) => {
+                if (user) {
+                   const { displayName, email, phoneNumber } = user;       
+                   let firstName = '';
+                   if (!displayName) {
+                     firstName = email.split('@')[0];
+                   } else {
+                     const names = splitName(displayName); 
+                     firstName = names.firstName;
+                   }
+                  
+                  setUser({ isLoggedIn: true, firstName, email,  phoneNumber });
+                } else {
+                    setUser({ isLoggedIn: false });
+                }
+                setLoading(false);
+            });
+            return () => unsubscribe();
+        }
     }, []);
 
     const handleSignOut = async () => {
         try {
+        console.log('signing out')
           await signOut(auth);
         } catch (error) {
           console.error('Error signing out:', error);
@@ -40,7 +60,7 @@ export const UserProvider = ({ children }) => {
       };
 
     return (
-        <UserContext.Provider value={{ user, loading, handleSignOut }}>
+        <UserContext.Provider value={{ user, setUser, loading, handleSignOut }}>
             {!loading && children}
         </UserContext.Provider>
     );

@@ -29,9 +29,9 @@ import ContactPage from './ContactPage/ContactPage';
 import Loader from './components/loader'
 import OrganisationDetails from './context/ApiContext';
 const PrivateRoute = ({ children }) => {
-  const { user } = useUser();
-
-  return user.isLoggedIn ? children : <Navigate to="/auth" replace />;
+	const { user, loading } = useUser();
+	if(!loading)
+  	return user.isLoggedIn ? children : <Navigate to="/auth" replace />;
 };
 
 

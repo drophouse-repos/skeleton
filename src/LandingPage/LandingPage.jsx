@@ -192,6 +192,13 @@ console.log("organisation details : ",orgDetails)
                 onClick={handleOrderPlaced}
               />
             }
+            {process.env.REACT_APP_AUTHTYPE_SAML === "true" && (
+            <ClassButton
+              text="Contact Us"
+              className={`font-bold tracking-wide text-gray-200 rounded-[20px] mt-12 px-3 py-1 h-fit md:text-3xl md:px-8 md:py-2 ${(window.innerWidth <= 544) ? `btn-mbl`: ``}`}
+              link="/contact"
+            />
+            )}
 
           </div>
 
