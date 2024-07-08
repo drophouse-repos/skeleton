@@ -65,6 +65,9 @@ const InformationPage = () => {
     bannerKey,
     setBannerKey
   } = useContext(MessageBannerContext);
+  useEffect(()=> {
+    setShowMessageBanner(false)
+  },[])
   const {isOrderPlaced} = useContext(OrderContext)
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const [isConfirmOrder, setisConfirmOrder] = useState(false);

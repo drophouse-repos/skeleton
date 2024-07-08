@@ -232,6 +232,9 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
     setMessageBannerText,
     setBannerKey
   } = useContext(MessageBannerContext);
+  useEffect(()=> {
+    setShowMessageBanner(false)
+  },[])
 
   const [tmp_x, setX] = useState();
   const [tmp_y, setY] = useState();

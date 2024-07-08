@@ -38,6 +38,9 @@ const LandingPage = () => {
       bannerKey,
       setBannerKey
     } = useContext(MessageBannerContext);
+    useEffect(()=> {
+      setShowMessageBanner(false)
+    },[])
   const { name, orgDetails, product, landingpage } = useContext(Orgcontext);
   const [product_list, setProduct_list] = useState([])
   

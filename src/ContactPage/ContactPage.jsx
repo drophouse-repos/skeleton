@@ -24,6 +24,9 @@ export default function ContactPage(){
         bannerKey,
         setBannerKey
       } = useContext(MessageBannerContext);
+      useEffect(()=> {
+        setShowMessageBanner(false)
+      },[])
     const handleSubmit = (e) => {
         if(email === '' || name === '' || message === ''){
             setMessageBannerText("Missing Required Fields");

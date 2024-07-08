@@ -46,6 +46,9 @@ export default function UserPage() {
     bannerKey,
     setBannerKey
   } = useContext(MessageBannerContext);
+  useEffect(()=> {
+    setShowMessageBanner(false)
+  },[])
   const { orgDetails } = useContext(Orgcontext)
 
   const navigate = useNavigate();

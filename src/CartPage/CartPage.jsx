@@ -17,7 +17,7 @@ function CartPage() {
     const [totalPrice, setTotalPrice] = useState(0);
     const [updateTrigger, setUpdateTrigger] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const {setShowMessageBanner} = useContext(MessageBannerContext);
+    const {setShowMessageBanner, setMessageBannerText} = useContext(MessageBannerContext);
     const {priceMap, getPriceNum} = useContext(PricesContext);
     const { orgDetails } = useContext(Orgcontext)
     const {
@@ -36,6 +36,9 @@ function CartPage() {
         isImageToCart
       } = useContext(ImageContext);
     
+      useEffect(()=> {
+        setShowMessageBanner(false)
+      },[])
     const navigate = useNavigate();
     useEffect(() => {
         setIsLoading(true);

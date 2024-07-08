@@ -145,6 +145,9 @@ const ProductPage = () => {
     bannerKey,
     setBannerKey
   } = useContext(MessageBannerContext);
+  useEffect(()=> {
+    setShowMessageBanner(false)
+  },[])
   const productGalleryRef = useRef(null);
 
   useEffect(() => {
