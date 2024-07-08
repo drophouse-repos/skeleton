@@ -100,8 +100,12 @@ const InformationPage = () => {
   }, [updateTrigger]);
 
   const forceUpdate = () => {
-    setUpdateTrigger(prev => !prev); 
+    setUpdateTrigger(prev => !prev);
+    setIsLoading(true) 
   };
+  useEffect(() => {
+    setIsLoading(false);
+  }, [updateTrigger]);
 
   function findAddress(type) {
     let shipping_info = shippingInfo.shipping_info
@@ -174,7 +178,6 @@ const InformationPage = () => {
       setMessageBannerText(data.message);
       setShowMessageBanner(true);
       setBannerKey(prevKey => prevKey + 1);
-      setIsLoading(false);
       return;
     })
     resetModal();
@@ -183,6 +186,7 @@ const InformationPage = () => {
   const handleCancel = () => {
     resetModal();
     setIsModalOpen(false);
+    setIsLoading(false)
   }
 
   const resetModal = () => {
@@ -369,6 +373,7 @@ const InformationPage = () => {
               setModalAddressType("primary")
               prefillModal("primary")
               setIsModalOpen(true)
+              setIsLoading(true)
             }}
           />
         </SelectableCard>
