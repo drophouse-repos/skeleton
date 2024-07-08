@@ -9,7 +9,11 @@ export const OrderProvider=({children}) => {
 	const [isOrderPlaced, setOrderPlaced] = useState(false);
 
 	useEffect(()=>{
-		
+		if(process.env.REACT_APP_AUTHTYPE_SAML != "true")
+		{
+			setLoading(false)
+			return;	
+		}
     	fetchOrderHistory()
         .then(orders => {
           	if (orders != null) {
