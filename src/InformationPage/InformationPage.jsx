@@ -205,13 +205,25 @@ const InformationPage = () => {
       window.location.href = "/user";
       return;
     }
-    if(process.env.REACT_APP_STRIPE_CHECKOUT_ENABLED == "false")
+    productInfo["shipping_info"] = findAddress('primary');
+    if(productInfo['shipping_info'] && productInfo['shipping_info']['firstName'] && productInfo['shipping_info']['email'] && productInfo['shipping_info']['lastName'] && productInfo['shipping_info']['phone'] && productInfo['shipping_info']['postalZipcode'] && productInfo['shipping_info']['stateProvince'] && productInfo['shipping_info']['streetAddress'] && productInfo['shipping_info']['city'])
+    {
+    if(process.env.REACT_APP_STRIPE_CHECKOUT_ENABLED === "false")
     {
       if(!isConfirmOrder)
       {
         setIsConfirmationModalOpen(true)
         return;
       }
+    }
+  }
+  else
+    {
+      setMessageBannerText("Please fill address details");
+      setShowMessageBanner(true);
+      setBannerKey(prevKey => prevKey + 1);
+      setIsLoading(false);
+      return;
     }
     setIsLoading(true); // Set loading to true when checkout starts
 
@@ -233,8 +245,8 @@ const InformationPage = () => {
       return;
     }
     try {
-      productInfo["shipping_info"] = findAddress('primary');
-      productInfo["org_name"] = orgDetails[0].name;
+      // productInfo["shipping_info"] = findAddress('primary');
+      // productInfo["org_name"] = orgDetails[0].name;
       if(process.env.REACT_APP_STRIPE_CHECKOUT_ENABLED === 'false'){
         createStudentCheckout(productInfo, navigate)
         .then((data)=>{
@@ -370,7 +382,6 @@ const InformationPage = () => {
             I agree to the <a href="/Terms.pdf" target="_blank" style={{fontFamily : `${orgDetails[0].font}`}}>Terms and Conditions</a>
           </label>
         </div>
-
         <button className="continueBtn" type="submit" disabled={isLoading} style={{fontFamily : `${orgDetails[0].font}`, color: `${orgDetails[0].theme_color}`}}>
           {isLoading ? (
             <div className="snippet" data-title="dot-elastic">

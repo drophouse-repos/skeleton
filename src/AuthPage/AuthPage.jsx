@@ -38,6 +38,12 @@ const AuthPage = () => {
     }
   };
 
+
+  useEffect(() => {
+    if(user.isLoggedIn && process.env.REACT_APP_AUTHTYPE_SAML === 'true')
+      navigate('/product')
+  }, [user])
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user && justLoggedIn) {
