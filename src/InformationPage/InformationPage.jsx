@@ -215,6 +215,7 @@ const InformationPage = () => {
     productInfo["shipping_info"] = findAddress('primary');
     productInfo["org_id"] = orgDetails[0].org_id;
     productInfo["org_name"] = orgDetails[0].name;
+    console.log(productInfo)
     if(productInfo['shipping_info'] && productInfo['shipping_info']['firstName'] && productInfo['shipping_info']['email'] && productInfo['shipping_info']['lastName'] && productInfo['shipping_info']['phone'] && productInfo['shipping_info']['postalZipcode'] && productInfo['shipping_info']['stateProvince'] && productInfo['shipping_info']['streetAddress'] && productInfo['shipping_info']['city'])
     {
     if(process.env.REACT_APP_STRIPE_CHECKOUT_ENABLED === "false")
