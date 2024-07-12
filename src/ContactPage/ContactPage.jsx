@@ -52,6 +52,9 @@ export default function ContactPage(){
                 setMessageBannerText("Thank you for contacting us!");
                 setShowMessageBanner(true);
                 setBannerKey(prevKey => prevKey + 1);
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 1000);
                 return;
               }
           })
