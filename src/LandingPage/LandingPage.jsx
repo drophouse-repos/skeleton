@@ -77,7 +77,6 @@ setCardProduct(landingpage.map(item => { return item.SampleProduct_asset; }))
       products.push(obj);
     }
   }
-  console.log("products for sample product : ",products)
 
   const [scrolled, setScrolled] = useState(false);
 
