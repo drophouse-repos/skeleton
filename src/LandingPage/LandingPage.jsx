@@ -57,7 +57,8 @@ const [CardProduct, setCardProduct] = useState();
 useEffect(()=>{
 setCardProduct(landingpage.map(item => { return item.SampleProduct_asset; }))
 },[landingpage])
-console.log("organisation details : ",orgDetails)
+
+
   const products = [];
 
   if(landingpage && landingpage && product_list && (landingpage.length == product_list.length && 
