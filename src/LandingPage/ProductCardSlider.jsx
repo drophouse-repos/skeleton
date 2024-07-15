@@ -17,7 +17,6 @@ export default function ProductCardSlider({ products, ImageChangeInterval }) {
     return (
       <div
         className={`${className}`}
-        // style={{ ...style, display: "block"}}
         onClick={onClick}
       >
         <RightCircleOutlined />
@@ -30,7 +29,6 @@ export default function ProductCardSlider({ products, ImageChangeInterval }) {
     return (
       <div
         className={`${className}`}
-        // style={{ ...style, display: "block"}}
         onClick={onClick}
       >
         <LeftCircleOutlined />

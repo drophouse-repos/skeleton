@@ -16,7 +16,6 @@ import ModalComponent from '../components/ModalComponent';
 import EditDesignTip from "../assets/EditDesignTip.png";
 import MessageBanner from "../components/MessageBanner";
 import app from "../firebase-config";
-// import { mapColorToIndex } from '../utils';
 import { OrderContext } from '../context/OrderContext';
 import { Orgcontext } from "../context/ApiContext";
 
@@ -66,7 +65,6 @@ const ProductPage = () => {
   const [toggled, setToggled] = useState(false);
   const [isAskingRosie, setIsAskingRosie] = useState(false);
   const navigate = useNavigate();
-  // const [isActive, setIsActive] = useState(false);
   const [isFirstVisit, setIsFirstVist] = useState(false);
   const [isZoomEnabled, setIsZoomEnabled] = useState(false);
   const {priceMap, getPriceNum} = useContext(PricesContext);
@@ -118,9 +116,8 @@ const ProductPage = () => {
       const productListColour = productList[0]?.Product_Colors || {};
 
       if (typeof productListColour === 'object' && !Array.isArray(productListColour)) {
-        // Create a mapping of color names to their indices
         const productColourNameToIndex = Object.keys(productListColour).reduce((acc, key, index) => {
-          acc[productListColour[key].name] = index; // Assigning the index to the color name
+          acc[productListColour[key].name] = index; 
           return acc;
         }, {});
 
@@ -135,8 +132,6 @@ const ProductPage = () => {
     return colorNameToIndex[color];
   };
 
-  
-  // console.log("current gallery index from the product page : ", currentGalleryIndex,color)
   const {
     showMessageBanner,
     setShowMessageBanner,
@@ -160,17 +155,14 @@ const ProductPage = () => {
     if (productListLoad.length > 0 && apparel) {
       const selectedProduct = productListLoad.find(item => item.Product_Name === apparel);
       const productListColour = selectedProduct?.Product_Colors || [];
-      // const productImage = productListColour.map(item => item.asset);
       setProductImageList(productListColour);
     }
   }, [productListLoad, apparel]);
 
   const apparelOptions = productListLoad.map(item => ({
     value: item.Product_Name,
-    // label: item.Product_Name.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase()), 
     label: item.Product_Description
   }));
-  // console.log("apparel : ",apparelOptions)
 
   const selectedProduct = productListLoad.find(item => item.Product_Name === apparel);
 
@@ -178,7 +170,6 @@ const ProductPage = () => {
     value: size,
     label: size,
   })) || [];
-  // console.log("product size : ",sizes)
   const [toggleActivated, setToggleActivated] = useState(false);
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -329,7 +320,6 @@ const ProductPage = () => {
   const handleProductGalleryChange = (selectedColor) => {
     setCurrentColor(selectedColor);
   };
-  // console.log("color on productpage : ",color)
   const handleAddToCart = async (setState) => {
     if (!isActive) {
       handleCartBtnDisable();
@@ -355,7 +345,6 @@ const ProductPage = () => {
       price: getPriceNum(apparel) * 100,
     }
     const succeeded = await fetchAddToCart(productInfo, navigate);
-    // console.log(productInfo);
     if (!succeeded.success) {
       if (succeeded.navigated)
         return
@@ -395,10 +384,6 @@ const ProductPage = () => {
             }
           ]
       };
-      // if (thumbnail && thumbnail.startsWith('data:image/png;base64,')){
-      //   productInfo.products[0].thumbnail = await fetchSaveImg(productInfo.products[0], navigate);
-      // console.log(productInfo.products[0])
-      // const succeeded = await fetchSaveImg(productInfo.products[0], navigate);
       navigate('/information', { state: { productInfo: productInfo } });
     }
   }
@@ -439,7 +424,7 @@ const ProductPage = () => {
     e.target.style.height = 'inherit'; // Reset the height
     e.target.style.height = `${Math.min(e.target.scrollHeight, maxTextAreaHeight)}px`; // Set new height
   };
-  const maxTextAreaHeight = 120; // For example, adjust this according to your styling
+  const maxTextAreaHeight = 120; 
 
   const disableCartBtn = () => {
     if(!addToCartBtn.current)
@@ -557,14 +542,6 @@ const ProductPage = () => {
                 className={`${(window.innerWidth <= 544 ? `w-[8rem]` : `w-[15rem]` )} border-none outline-none`}
                 value={size}
                 onChange={handleSizeChange}
-                // options={[
-                //   ...(apparel === 'hoodie' ? [{ value: "XS", label: "XS" }] : []),
-                //   { value: "S", label: "S" },
-                //   { value: "M", label: "M" },
-                //   { value: "L", label: "L" },
-                //   { value: "XL", label: "XL" },
-                //   { value: "2XL", label: "2XL" },
-                // ]}
                 options={sizes}
               />
             )}
@@ -573,7 +550,6 @@ const ProductPage = () => {
               <span style={{fontFamily : `${orgDetails[0].font}`}} className="text-blue-600 font-bold hover:text-teal-600 mt-0 cursor-pointer" onClick={() => {navigate("/information/size");}}>Size Information & Chart</span>
             )}
           </div>
-          {/* student model end */}
           <div className={`text-center text-black font-normal font-karl ${(window.innerWidth <= 544) ? `my-[1rem]`: `my-[3rem]`} ${(process.env.REACT_APP_SHOWPRICE == 'true') ? `` : `hidden`}`}>
             <span className="text-3xl font-bold" style={{fontFamily : `${orgDetails[0].font}`}}>
               ${getPriceNum(apparel)}

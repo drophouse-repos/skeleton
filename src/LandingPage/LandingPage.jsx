@@ -57,42 +57,8 @@ const [CardProduct, setCardProduct] = useState();
 useEffect(()=>{
 setCardProduct(landingpage.map(item => { return item.SampleProduct_asset; }))
 },[landingpage])
-// console.log("products fetched : ", CardProduct)
 console.log("organisation details : ",orgDetails)
-// Assuming 'products' is the array of product objects
-// product.forEach(product => {
-//   let productColors = typeof product.Product_Colors === 'string' ? JSON.parse(product.Product_Colors) : product.Product_Colors;
-  
-//   if (productColors) {
-//       let colorClip = Object.keys(productColors).map(key => productColors[key].clip);
-//       console.log(`color clip fetched: `, colorClip); // Assuming each product has a unique 'id' property
-//   } else {
-//       console.error(`Product ID ${product.id} has no colors available.`);
-//   }
-// });
-
-
-// console.log("products fetched : ", colorNames);
-
-  
-
   const products = [];
-  // if(items && items && itemsDesc && (items.length == itemsDesc.length && 
-  //   items.length == itemsImglist.length && itemsDesc.length == itemsImglist.length))
-  // {
-  //   for(var i=0; i<items.length; i++)
-  //   {
-  //     let item_img = require(`../${itemsImglist[i]}`)
-  //     var obj = {
-  //       type: items[i],
-  //       name: `${name} AI Designed ${itemsDesc[i]}`,
-  //       price: getPriceNum(items[i]),
-  //       color: (itemsColorlist && itemsColorlist[i]) ? itemsColorlist[i] : 'white',
-  //       imageList: [item_img]
-  //     }
-  //     products.push(obj);
-  //   }
-  // }
 
   if(landingpage && landingpage && product_list && (landingpage.length == product_list.length && 
     landingpage.length == CardProduct.length && product_list.length == CardProduct.length))
@@ -125,8 +91,6 @@ console.log("organisation details : ",orgDetails)
     };
 
     window.addEventListener('scroll', handleScroll);
-
-    // Cleanup the event listener on component unmount
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -162,15 +126,6 @@ console.log("organisation details : ",orgDetails)
 
             className={`${className} top-[8%] md:top-[8%] flex flex-col items-center`}
           >
-            {/* {
-              GetBackendImage().map((image, index) => {
-                return (
-                  <div key={index} className="hidden">
-                    <img src={image} alt="cache" />
-                  </div>
-                );
-              })
-            } */}
 
             <RShowcase imageList={GetBackendImage()} changeInterval={3000} RMask={orgDetails[0].mask}/>
             <div className="h-4"></div>
