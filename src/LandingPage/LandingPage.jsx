@@ -15,7 +15,6 @@ import MessageBanner from "../components/MessageBanner";
 import { Orgcontext } from '../context/ApiContext';
 
 const ImageChangeInterval = 3000;
-
 function GetBackendImage() {
   const imageNumber = 12;
   let imageList = [];
