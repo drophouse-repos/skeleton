@@ -67,10 +67,7 @@ export default function StepCards({
             style={{
               position: "sticky",
               top: `${10 + index * 5}%`,
-              // marginBottom: `${step.marginBottom}em`,
             }}
-            // className={`mb-${step.marginBottom} md:mb-${step.marginBottomMD}`}
-            // className="mb-32"
             key={index}
           >
             <StepCard

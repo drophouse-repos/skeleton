@@ -49,8 +49,6 @@ export default function ProductCard({ product, changeInterval, type }) {
                             ${product.price.toFixed(2)}
                         </div>
 
-                        {/* <div className="border-2 h-0 border-zinc-200 w-3/5"></div> */}
-
                         <div className="flex justify-center items-center place-self-center pt-2 w-full">
                             <GoToProductButton text="Design Now" link={"/product"} className={`text-white rounded-[20px] px-5`} type={product.type} color={product.color} />
                         </div>

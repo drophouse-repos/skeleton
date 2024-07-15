@@ -18,7 +18,6 @@ export default function ProductColorFooter({ currentIndex, onFooterClick , appar
         setProductImageList(productImage);
       }
     }, [productListLoad, apparel]);
-    // console.log(productImageList)
     const ColorBall = ({ color, highlight, onClick }) => {
         return (
             <div

@@ -336,7 +336,6 @@ export default function UserPage() {
             <input id="modalPhone" className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500" placeholder="Phone Number" value={(baseModalData && baseModalData.phone) ? baseModalData.phone : ''}
             onChange={e => handleBaseModalInputChange('phone', e.target.value)} />
 
-            {/*<Input id="modalPhone" placeholder="Phone Number" />*/}
             <div className="flex flex-row w-full justify-end mt-3">
               <button className="bg-gray-200 text-black-100 font-extrabold py-2 px-4 rounded-full mr-5" onClick={closeModal}>CANCEL</button>
               <button
@@ -450,13 +449,6 @@ export default function UserPage() {
             showEditButton={true}
             addressType="primary"
           />
-          {/* <UserInfoItem
-            label="Secondary Address"
-            value={addressToString(findAddress('secondary'), 2)}
-            showEditButton={true}
-            addressType="secondary"
-          /> */}
-          {/* <UserInfoItem label="Class Of Graduation" value="1995" /> */}
 
           <div className="border-2 h-0 border-zinc-500 w-full rounded-full"></div>
 

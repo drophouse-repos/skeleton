@@ -255,8 +255,6 @@ const InformationPage = () => {
       return;
     }
     try {
-      // productInfo["shipping_info"] = findAddress('primary');
-      // productInfo["org_name"] = orgDetails[0].name;
       if(process.env.REACT_APP_STRIPE_CHECKOUT_ENABLED === 'false'){
         createStudentCheckout(productInfo, navigate)
         .then((data)=>{

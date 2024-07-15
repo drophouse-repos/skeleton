@@ -39,20 +39,17 @@ export default function ProductSection({prop}) {
     const itemsDesc = product_disc;
     const itemsImglist = productImage;
     
-    // console.log(itemsDesc[0])
     const products = [];
     if(items && items && itemsDesc && (items.length == itemsDesc.length && 
       items.length == itemsImglist.length && itemsDesc.length == itemsImglist.length))
     {
       for(var i=0; i<items.length; i++)
       {
-        // let item_img = require(`../${itemsImglist[i]}`)
         let item_img = itemsImglist[i]
         var obj = {
           id : i,
           type: items[i],
           title: itemsDesc[i],
-          // color: (itemsColorlist && itemsColorlist[i]) ? itemsColorlist[i] : 'white',
           color: 'white',
           image: item_img
         }
@@ -69,8 +66,6 @@ export default function ProductSection({prop}) {
             title={item.title}
             image={item.image}
             onClick={() => {
-              // navigate(0)
-              // ProductSection.prop(false)
               setApparel(item.type);
               setColor(item.color);
               navigate("/product");

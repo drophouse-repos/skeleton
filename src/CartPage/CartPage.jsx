@@ -135,7 +135,6 @@ function CartPage() {
                                 <LeftCircleOutlined style={{ fontSize: '1.1rem', marginRight: "1em" }} />
                                 <div className="text-xl" style={{fontFamily : `${orgDetails[0].font}`}}>Back To Products</div>
                             </button>
-                            {/* <h2 className='text-lg md:text-3xl font-medium flex-1 text-center'>Shopping Cart</h2> */}
                         </div>
                         <span className='mt-[1rem] md:mt-auto text-md col-auto md:text-lg justify-self-center md:justify-self-end lg:hidden' style={{fontFamily : `${orgDetails[0].font}`}}>Subtotal: ${totalPrice.toFixed(2)}</span>
                     </div>
@@ -152,7 +151,6 @@ function CartPage() {
                                 <li className={`text-left text-slate-500 text-lg ${(product.title.includes('Mug')) || (product.title.includes('Cap')) ? `hidden` : ``}`} style={{fontFamily : `${orgDetails[0].font}`}}>Size: {product.size}</li>
                                 <li className='text-left text-slate-500 text-lg' style={{fontFamily : `${orgDetails[0].font}`}}>prompt: {product.prompt}</li>
                                 <div className='grid grid-cols-2 gap-4 divide-x w-fit font-light text-[12px] md:text-base mt-[1rem] cursor-pointer text-red-900'>
-                                    {/* <span className='text-[#0491F7]' onClick={(e) => onSaveForLater(index, e)}>Save for later</span> */}
                                     <span onClick={(e) => deleteFromCart(index, e)} style={{fontFamily : `${orgDetails[0].font}`}}>Delete</span>
                                 </div>
                             </ul>

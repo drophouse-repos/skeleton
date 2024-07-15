@@ -91,7 +91,6 @@ setCardProduct(landingpage.map(item => { return item.SampleProduct_asset; }))
     };
 
     window.addEventListener('scroll', handleScroll);
-
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -127,15 +126,6 @@ setCardProduct(landingpage.map(item => { return item.SampleProduct_asset; }))
 
             className={`${className} top-[8%] md:top-[8%] flex flex-col items-center`}
           >
-            {/* {
-              GetBackendImage().map((image, index) => {
-                return (
-                  <div key={index} className="hidden">
-                    <img src={image} alt="cache" />
-                  </div>
-                );
-              })
-            } */}
 
             <RShowcase imageList={GetBackendImage()} changeInterval={3000} RMask={orgDetails[0].mask}/>
             <div className="h-4"></div>
