@@ -528,13 +528,6 @@ const ProductPage = () => {
           />
         <div className={`justify-center  px-5 ${(process.env.REACT_APP_CART_ENABLED == 'true') ? (window.innerWidth <= 544) ? ``:`mt-[2rem]` : ``}`}>
           <div className={`grid ${apparel !== 'mug' && apparel !== 'cap' ? 'grid-cols-2' : 'grid-cols-1'} ${(window.innerWidth <= 544 ? `w-full` : `w-[70%]` )} mx-auto justify-items-center items-center`}>
-            {/* <Select
-        style={{ fontFamily: `${orgDetails[0].font}` }}
-        className={`${(window.innerWidth <= 544 ? 'w-[9rem]' : 'w-[15rem]')} border-none outline-none`}
-        onChange={handleApparelChange}
-        value={apparel}
-        options={apparelOptions}
-      /> */}
       {apparelOptions.length === 1 ? (
       <span className="text-gray-800 span-input">{apparelOptions[0].label}</span>
     ) : (
