@@ -55,17 +55,18 @@ class PromptInformation extends Component {
                 <InformationTopNav title="How to Write Effective Descriptions" />
                 <Carousel
                     ref={(c) => (this.slider = c)}
-                    className="h-[30rem] bg-[#F5F5F7] drop-shadow-lg mx-auto w-full rounded-md my-[2rem] p-[2rem] relative max-w-2xl"
+                    className=" bg-[#F5F5F7] drop-shadow-lg mx-auto w-full rounded-md my-[2rem] p-[2rem] relative max-w-2xl"
                     dots={false}
                     effect="fade"
+                    style={{height: `100%`}}
                 >
                     {promptTips.map((data, index) => (
                         <div key={index}>
                             <div className="text-pretty text-3xl font-medium mb-[2rem]" style={{ fontFamily: `${orgDetails[0].font}` }}>{data.title}</div>
-                            <div className="text-justify text-2xl h-[15rem] grid place-items-center">
+                            <div className="text-justify text-2xl h-[15rem] grid place-items-center" style={{height:`100%`}}>
                                 <span className="text-pretty" style={{ fontFamily: `${orgDetails[0].font}` }}>{data.tipDesp}</span>
                             </div>
-                            <div className="text-2xl" style={{ fontFamily: `${orgDetails[0].font}` }}>{index + 1}/{promptTips.length}</div>
+                            <div className="text-2xl" style={{ fontFamily: `${orgDetails[0].font}`}}>{index + 1}/{promptTips.length}</div>
                         </div>
                     ))}
                 </Carousel>
