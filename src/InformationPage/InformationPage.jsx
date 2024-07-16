@@ -331,7 +331,7 @@ const InformationPage = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {['firstName', 'lastName', 'email', 'phone', 'address1', 'address2', 'city', 'zipCode'].map(field => (
             <div key={field}>
-              <h2 className='text-start'>{field.replace(/([A-Z])/g, ' $1').toUpperCase()}<span className="text-red-600 ml-2">*</span></h2>
+              <h2 className='text-start'>{field.replace(/([A-Z])/g, ' $1').toUpperCase()}<span className="text-red-600 ml-2">{field === 'address2' ? '' : '*'}</span></h2>
               <ClassInput
                 id={`modal${field}`}
                 placeholder={field.replace(/([A-Z])/g, ' $1')}
