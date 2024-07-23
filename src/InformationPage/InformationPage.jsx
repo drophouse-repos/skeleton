@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import "./InformationPage.css";
 import { useContext } from 'react';
 import { MessageBannerContext } from "../context/MessageBannerContext";
@@ -15,9 +15,16 @@ import { createCheckoutSession, createStudentCheckout } from '../utils/fetch';
 import ClassInput from '../components/ClassInput';
 import { Orgcontext } from '../context/ApiContext';
 const emailRegex = /\S+@\S+\.\S+/;
+import {
+  LoadScript,
+  StandaloneSearchBox,
+} from '@react-google-maps/api';
+const libraries = ['places'];
+const apiKey = process.env.REACT_APP_GOOGLE_API;
 
 const InformationPage = () => {
   const location = useLocation();
+  const searchBoxRef = useRef(null);
   const { productInfo } = location.state || {};
   
   const initialFormData = () => {
@@ -294,6 +301,31 @@ const InformationPage = () => {
   const handleModalInputChange = (field, value) => {
     setModalData(prev => ({ ...prev, [field]: value }));
   };
+  const onPlacesChanged = () => {
+    const places = searchBoxRef.current.getPlaces();
+    if (places.length === 0) return;
+
+    const place = places[0];
+    const addressComponents = place.address_components;
+    if(!addressComponents)
+      return
+    handleModalInputChange('address1', place.name)
+    addressComponents.forEach(component => {
+      const types = component.types;
+      if (types.includes('neighborhood') || types.includes('sublocality_level_1')) {
+        handleModalInputChange('address2', component.long_name)
+      }
+      if (types.includes('administrative_area_level_3')) {
+        handleModalInputChange('city', component.long_name)
+      }
+      if (types.includes('administrative_area_level_1')) {
+        handleModalInputChange('state', component.short_name)
+      }
+      if (types.includes('postal_code')) {
+        handleModalInputChange('zipCode', component.long_name)
+      }
+    });
+  };
 
   return (
     <div>
@@ -332,12 +364,28 @@ const InformationPage = () => {
         {['firstName', 'lastName', 'email', 'phone', 'address1', 'address2', 'city', 'zipCode'].map(field => (
             <div key={field}>
               <h2 className='text-start'>{field.replace(/([A-Z])/g, ' $1').toUpperCase()}<span className="text-red-600 ml-2">{field === 'address2' ? '' : '*'}</span></h2>
-              <ClassInput
-                id={`modal${field}`}
-                placeholder={field.replace(/([A-Z])/g, ' $1')}
-                value={modalData[field]}
-                onChange={e => handleModalInputChange(field, e)}
-              />
+              {field == 'address1' ?
+                <LoadScript googleMapsApiKey={apiKey} libraries={libraries}>
+                  <StandaloneSearchBox
+                    onLoad={ref => (searchBoxRef.current = ref)}
+                    onPlacesChanged={onPlacesChanged}
+                  >
+                    <ClassInput
+                      id={`modal${field}`}
+                      placeholder={field.replace(/([A-Z])/g, ' $1')}
+                      value={modalData[field]}
+                      onChange={e => handleModalInputChange(field, e)}
+                    />
+                  </StandaloneSearchBox>
+                </LoadScript> 
+              :
+                <ClassInput
+                  id={`modal${field}`}
+                  placeholder={field.replace(/([A-Z])/g, ' $1')}
+                  value={modalData[field]}
+                  onChange={e => handleModalInputChange(field, e)}
+                />
+              }
             </div>
           ))}
           <div>

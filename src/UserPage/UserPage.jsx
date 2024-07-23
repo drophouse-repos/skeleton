@@ -1,4 +1,4 @@
-import { React, useEffect, useState, useContext } from "react";
+import { React, useEffect, useState, useContext, useRef } from "react";
 import "./UserPage.css";
 import { Modal, Input, Select } from "antd";
 import { FormOutlined, LeftCircleOutlined } from "@ant-design/icons";
@@ -10,8 +10,15 @@ import LazyLoad from 'react-lazyload';
 import { Orgcontext } from "../context/ApiContext";
 import { MessageBannerContext } from "../context/MessageBannerContext";
 import MessageBanner from "../components/MessageBanner";
+import {
+  LoadScript,
+  StandaloneSearchBox,
+} from '@react-google-maps/api';
+const libraries = ['places'];
+const apiKey = process.env.REACT_APP_GOOGLE_API;
 
 export default function UserPage() {
+  const searchBoxRef = useRef(null);
   const [isNormalModalOpen, setIsNormalModalOpen] = useState(false);
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
   const [modalItem, setModalItem] = useState("");
@@ -309,6 +316,31 @@ export default function UserPage() {
   const handleBaseModalInputChange = (field, value) => {
     setBaseModalData(prev => ({ ...prev, [field]: value }));
   };
+  const onPlacesChanged = () => {
+    const places = searchBoxRef.current.getPlaces();
+    if (places.length === 0) return;
+
+    const place = places[0];
+    const addressComponents = place.address_components;
+    if(!addressComponents)
+      return
+    handleModalInputChange('address1', place.name)
+    addressComponents.forEach(component => {
+      const types = component.types;
+      if (types.includes('neighborhood') || types.includes('sublocality_level_1')) {
+        handleModalInputChange('address2', component.long_name)
+      }
+      if (types.includes('administrative_area_level_3')) {
+        handleModalInputChange('city', component.long_name)
+      }
+      if (types.includes('administrative_area_level_1')) {
+        handleModalInputChange('state', component.short_name)
+      }
+      if (types.includes('postal_code')) {
+        handleModalInputChange('zipCode', component.long_name)
+      }
+    });
+  };
 
   return (
     <div className="w-screen max-w-xl">
@@ -380,11 +412,23 @@ export default function UserPage() {
               </div>
               <div>
                 <h2 className='text-start' style={{fontFamily : `${orgDetails[0].font}`}}>Address LINE 1<span className="text-red-600 ml-2">*</span></h2>
-                <input id="modalAddress1" className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500" placeholder="Address Line 1" 
-                value={modalData.address1} onChange={e => handleModalInputChange('address1', e.target.value)} />
+                <LoadScript googleMapsApiKey={apiKey} libraries={libraries}>
+                  <StandaloneSearchBox
+                    onLoad={ref => (searchBoxRef.current = ref)}
+                    onPlacesChanged={onPlacesChanged}
+                  >
+                    <input
+                      id="modalAddress1"
+                      className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500"
+                      placeholder="Address Line 1"
+                      value={modalData.address1}
+                      onChange={e => handleModalInputChange('address1', e.target.value)}
+                    />
+                  </StandaloneSearchBox>
+                </LoadScript> 
               </div>
               <div>
-                <h2 className='text-start' style={{fontFamily : `${orgDetails[0].font}`}}>Address LINE 2<span className="text-red-600 ml-2">*</span></h2>
+                <h2 className='text-start' style={{fontFamily : `${orgDetails[0].font}`}}>Address LINE 2</h2>
                 <input id="modalAddress2" className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500" placeholder="Address Line 2" 
                 value={modalData.address2} onChange={e => handleModalInputChange('address2', e.target.value)} />
               </div>
