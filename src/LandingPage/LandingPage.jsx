@@ -24,7 +24,6 @@ function GetBackendImage() {
   return imageList;
 }
 
-
 const LandingPage = () => {
   const { user } = useUser();
   const {priceMap, getPriceNum} = useContext(PricesContext);
