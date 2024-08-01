@@ -311,18 +311,18 @@ const InformationPage = () => {
       return
     handleModalInputChange('address1', place.name)
     addressComponents.forEach(component => {
-      const types = component.types;
+      const { types, long_name, short_name } = component;
       if (types.includes('neighborhood') || types.includes('sublocality_level_1')) {
-        handleModalInputChange('address2', component.long_name)
-      }
+        handleModalInputChange('address2', long_name);
+      } 
       if (types.includes('administrative_area_level_3')) {
-        handleModalInputChange('city', component.long_name)
-      }
+        handleModalInputChange('city', long_name);
+      } 
       if (types.includes('administrative_area_level_1')) {
-        handleModalInputChange('state', component.short_name)
-      }
+        handleModalInputChange('state', short_name);
+      } 
       if (types.includes('postal_code')) {
-        handleModalInputChange('zipCode', component.long_name)
+        handleModalInputChange('zipCode', long_name);
       }
     });
   };
