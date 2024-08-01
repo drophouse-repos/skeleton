@@ -326,7 +326,23 @@ const InformationPage = () => {
       }
     });
   };
-
+  const getIconForField = (field) => {
+    const iconMap = {
+      firstName: 'person',
+      lastName: 'person',
+      email: 'email',
+      phone: 'phone',
+      address1: 'location_on',
+      address2: 'location_on',
+      city: 'location_city',
+      zipCode: 'mail',
+      state: 'location_on'
+    };
+  
+    // Return the icon name from the map or a default icon
+    return iconMap[field] || 'help'; // 'help' is a fallback icon
+  };
+  
   return (
     <div>
       {showMessageBanner && <MessageBanner message={messageBannerText} keyTrigger={bannerKey} />}
@@ -363,40 +379,53 @@ const InformationPage = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {['firstName', 'lastName', 'email', 'phone', 'address1', 'address2', 'city', 'zipCode'].map(field => (
             <div key={field}>
-              <h2 className='text-start'>{field.replace(/([A-Z])/g, ' $1').toUpperCase()}<span className="text-red-600 ml-2">{field === 'address2' ? '' : '*'}</span></h2>
+              <h2 className='text-start'>{field === 'address2' ? 'BUILDING/UNIT NO. ' : field==='address1' ? 'ADDRESS LINE' : field.replace(/([A-Z])/g, ' $1').toUpperCase()}<span className="text-red-600 ml-2">{field === 'address2' ? '' : '*'}</span></h2>
               {field == 'address1' ?
                 <LoadScript googleMapsApiKey={apiKey} libraries={libraries}>
-                  <StandaloneSearchBox
-                    onLoad={ref => (searchBoxRef.current = ref)}
-                    onPlacesChanged={onPlacesChanged}
-                  >
+                <StandaloneSearchBox
+                  onLoad={ref => (searchBoxRef.current = ref)}
+                  onPlacesChanged={onPlacesChanged}
+                  className="custom-search-box"
+                >
+                  <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
+                    <span className="material-icons p-2">location_on</span>
                     <ClassInput
                       id={`modal${field}`}
-                      placeholder={field.replace(/([A-Z])/g, ' $1')}
+                      placeholder='Address Line'
                       value={modalData[field]}
                       onChange={e => handleModalInputChange(field, e)}
+                      className="flex-1 p-2 focus:outline-none focus:border-primary-500 input-infopage"
                     />
-                  </StandaloneSearchBox>
-                </LoadScript> 
+                  </div>
+                </StandaloneSearchBox>
+              </LoadScript>
               :
-                <ClassInput
-                  id={`modal${field}`}
-                  placeholder={field.replace(/([A-Z])/g, ' $1')}
-                  value={modalData[field]}
-                  onChange={e => handleModalInputChange(field, e)}
-                />
+              <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
+              <span className="material-icons p-2">{getIconForField(field)}</span>
+              <ClassInput
+                id={`modal${field}`}
+                placeholder={field === 'address2' ? 'Building/Unit No. ' : field.replace(/([A-Z])/g, ' $1')}
+                value={modalData[field]}
+                onChange={e => handleModalInputChange(field, e)}
+                className="flex-1 p-2 focus:outline-none focus:border-primary-500 input-infopage"
+              />
+            </div>
               }
             </div>
           ))}
           <div>
             <h2 className='text-start' style={{fontFamily : `${orgDetails[0].font}`}}>STATE<span className="text-red-600 ml-2">*</span></h2>
-            <Select id="modalState"
-              placeholder="SELECT STATE"
-              value={modalData.state}
-              style={{ width: "100%", height: "40px", marginBottom: "10px", padding:"0px", borderColor:"lightgrey"
-              ,borderWidth:"2px", boxShadow:"none", borderRadius:'0px'}}
-              onChange={(value) => { handleModalInputChange('state', value)}}
-              options={USStatesNames} />
+            <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
+            <span className="material-icons p-2">{getIconForField('state')}</span>
+              <Select id="modalState"
+                placeholder="SELECT STATE"
+                value={modalData.state}
+                style={{ width: "100%", height: "40px", marginBottom: "10px", padding:"0px", borderColor:"lightgrey"
+                ,borderWidth:"2px", boxShadow:"none", borderRadius:'0px'}}
+                onChange={(value) => { handleModalInputChange('state', value)}}
+                className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500 input-infopage"
+                options={USStatesNames} />
+              </div>
           </div>
         </div>
         
