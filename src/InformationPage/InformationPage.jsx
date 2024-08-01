@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import "./InformationPage.css";
 import { useContext } from 'react';
 import { MessageBannerContext } from "../context/MessageBannerContext";
@@ -15,9 +15,16 @@ import { createCheckoutSession, createStudentCheckout } from '../utils/fetch';
 import ClassInput from '../components/ClassInput';
 import { Orgcontext } from '../context/ApiContext';
 const emailRegex = /\S+@\S+\.\S+/;
+import {
+  LoadScript,
+  StandaloneSearchBox,
+} from '@react-google-maps/api';
+const libraries = ['places'];
+const apiKey = process.env.REACT_APP_GOOGLE_API;
 
 const InformationPage = () => {
   const location = useLocation();
+  const searchBoxRef = useRef(null);
   const { productInfo } = location.state || {};
   
   const initialFormData = () => {
@@ -294,7 +301,48 @@ const InformationPage = () => {
   const handleModalInputChange = (field, value) => {
     setModalData(prev => ({ ...prev, [field]: value }));
   };
+  const onPlacesChanged = () => {
+    const places = searchBoxRef.current.getPlaces();
+    if (places.length === 0) return;
 
+    const place = places[0];
+    const addressComponents = place.address_components;
+    if(!addressComponents)
+      return
+    handleModalInputChange('address1', place.name)
+    addressComponents.forEach(component => {
+      const { types, long_name, short_name } = component;
+      if (types.includes('street_number') || types.includes('premise')) {
+        handleModalInputChange('address2', long_name);
+      } 
+      if (types.includes('administrative_area_level_3')) {
+        handleModalInputChange('city', long_name);
+      } 
+      if (types.includes('administrative_area_level_1')) {
+        handleModalInputChange('state', short_name);
+      } 
+      if (types.includes('postal_code')) {
+        handleModalInputChange('zipCode', long_name);
+      }
+    });
+  };
+  const getIconForField = (field) => {
+    const iconMap = {
+      firstName: 'person',
+      lastName: 'person',
+      email: 'email',
+      phone: 'phone',
+      address1: 'location_on',
+      address2: 'location_on',
+      city: 'location_city',
+      zipCode: 'mail',
+      state: 'location_on'
+    };
+  
+    // Return the icon name from the map or a default icon
+    return iconMap[field] || 'help'; // 'help' is a fallback icon
+  };
+  
   return (
     <div>
       {showMessageBanner && <MessageBanner message={messageBannerText} keyTrigger={bannerKey} />}
@@ -331,24 +379,53 @@ const InformationPage = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {['firstName', 'lastName', 'email', 'phone', 'address1', 'address2', 'city', 'zipCode'].map(field => (
             <div key={field}>
-              <h2 className='text-start'>{field.replace(/([A-Z])/g, ' $1').toUpperCase()}<span className="text-red-600 ml-2">{field === 'address2' ? '' : '*'}</span></h2>
+              <h2 className='text-start'>{field === 'address2' ? 'BUILDING/UNIT NO. ' : field==='address1' ? 'ADDRESS LINE' : field.replace(/([A-Z])/g, ' $1').toUpperCase()}<span className="text-red-600 ml-2">{field === 'address2' ? '' : '*'}</span></h2>
+              {field == 'address1' ?
+                <LoadScript googleMapsApiKey={apiKey} libraries={libraries}>
+                <StandaloneSearchBox
+                  onLoad={ref => (searchBoxRef.current = ref)}
+                  onPlacesChanged={onPlacesChanged}
+                  className="custom-search-box"
+                >
+                  <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
+                    <span className="material-icons p-2">location_on</span>
+                    <ClassInput
+                      id={`modal${field}`}
+                      placeholder='Address Line'
+                      value={modalData[field]}
+                      onChange={e => handleModalInputChange(field, e)}
+                      className="flex-1 p-2 focus:outline-none focus:border-primary-500 input-infopage"
+                    />
+                  </div>
+                </StandaloneSearchBox>
+              </LoadScript>
+              :
+              <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
+              <span className="material-icons p-2">{getIconForField(field)}</span>
               <ClassInput
                 id={`modal${field}`}
-                placeholder={field.replace(/([A-Z])/g, ' $1')}
+                placeholder={field === 'address2' ? 'Building/Unit No. ' : field.replace(/([A-Z])/g, ' $1')}
                 value={modalData[field]}
                 onChange={e => handleModalInputChange(field, e)}
+                className="flex-1 p-2 focus:outline-none focus:border-primary-500 input-infopage"
               />
+            </div>
+              }
             </div>
           ))}
           <div>
             <h2 className='text-start' style={{fontFamily : `${orgDetails[0].font}`}}>STATE<span className="text-red-600 ml-2">*</span></h2>
-            <Select id="modalState"
-              placeholder="SELECT STATE"
-              value={modalData.state}
-              style={{ width: "100%", height: "40px", marginBottom: "10px", padding:"0px", borderColor:"lightgrey"
-              ,borderWidth:"2px", boxShadow:"none", borderRadius:'0px'}}
-              onChange={(value) => { handleModalInputChange('state', value)}}
-              options={USStatesNames} />
+            <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
+            <span className="material-icons p-2">{getIconForField('state')}</span>
+              <Select id="modalState"
+                placeholder="SELECT STATE"
+                value={modalData.state}
+                style={{ width: "100%", height: "40px", marginBottom: "10px", padding:"0px", borderColor:"lightgrey"
+                ,borderWidth:"2px", boxShadow:"none", borderRadius:'0px'}}
+                onChange={(value) => { handleModalInputChange('state', value)}}
+                className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500 input-infopage"
+                options={USStatesNames} />
+              </div>
           </div>
         </div>
         
