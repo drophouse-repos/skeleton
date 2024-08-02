@@ -317,31 +317,6 @@ export default function UserPage() {
   const handleBaseModalInputChange = (field, value) => {
     setBaseModalData(prev => ({ ...prev, [field]: value }));
   };
-  // const onPlacesChanged = () => {
-  //   const places = searchBoxRef.current.getPlaces();
-  //   if (places.length === 0) return;
-
-  //   const place = places[0];
-  //   const addressComponents = place.address_components;
-  //   if(!addressComponents)
-  //     return
-  //   handleModalInputChange('address1', place.name)
-  //   addressComponents.forEach(component => {
-  //     const types = component.types;
-  //     if (types.includes('neighborhood') || types.includes('sublocality_level_1')) {
-  //       handleModalInputChange('address2', component.long_name)
-  //     }
-  //     if (types.includes('administrative_area_level_3')) {
-  //       handleModalInputChange('city', component.long_name)
-  //     }
-  //     if (types.includes('administrative_area_level_1')) {
-  //       handleModalInputChange('state', component.short_name)
-  //     }
-  //     if (types.includes('postal_code')) {
-  //       handleModalInputChange('zipCode', component.long_name)
-  //     }
-  //   });
-  // };
   const onPlacesChanged = () => {
     const places = searchBoxRef.current.getPlaces();
     if (places.length === 0) return;
@@ -353,9 +328,6 @@ export default function UserPage() {
     handleModalInputChange('address1', place.name)
     addressComponents.forEach(component => {
       const { types, long_name, short_name } = component;
-      // if (types.includes('street_number') || types.includes('premise')) {
-      //   handleModalInputChange('address2', long_name);
-      // } 
       if (types.includes('administrative_area_level_3')) {
         handleModalInputChange('city', long_name);
       } 
@@ -483,72 +455,6 @@ export default function UserPage() {
               </div>
           </div>
         </div>
-            {/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <h2 className='text-start' style={{fontFamily : `${orgDetails[0].font}`}}>FIRST NAME<span className="text-red-600 ml-2">*</span></h2>
-                <input id="modalFirstName" className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500" placeholder="First Name" 
-                value={modalData.firstName} onChange={e => handleModalInputChange('firstName', e.target.value)} />
-              </div>
-              <div>
-                <h2 className='text-start' style={{fontFamily : `${orgDetails[0].font}`}}>LAST NAME<span className="text-red-600 ml-2">*</span></h2>
-                <input id="modalLastName" className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500" placeholder="Last Name" 
-                value={modalData.lastName} onChange={e => handleModalInputChange('lastName', e.target.value)} />
-              </div>
-              <div>
-                <h2 className='text-start' style={{fontFamily : `${orgDetails[0].font}`}}>EMAIL<span className="text-red-600 ml-2">*</span></h2>
-                <input id="modalEmail" className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500" placeholder="Email" 
-                value={modalData.email} onChange={e => handleModalInputChange('email', e.target.value)} />
-              </div>
-              <div>
-                <h2 className='text-start' style={{fontFamily : `${orgDetails[0].font}`}}>PHONE<span className="text-red-600 ml-2">*</span></h2>
-                <input id="modalPhone" className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500" placeholder="Phone" 
-                value={modalData.phone} onChange={e => handleModalInputChange('phone', e.target.value)} />
-              </div>
-              <div>
-                <h2 className='text-start' style={{fontFamily : `${orgDetails[0].font}`}}>Address LINE 1<span className="text-red-600 ml-2">*</span></h2>
-                <LoadScript googleMapsApiKey={apiKey} libraries={libraries}>
-                  <StandaloneSearchBox
-                    onLoad={ref => (searchBoxRef.current = ref)}
-                    onPlacesChanged={onPlacesChanged}
-                  >
-                    <input
-                      id="modalAddress1"
-                      className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500"
-                      placeholder="Address Line 1"
-                      value={modalData.address1}
-                      onChange={e => handleModalInputChange('address1', e.target.value)}
-                    />
-                  </StandaloneSearchBox>
-                </LoadScript> 
-              </div>
-              <div>
-                <h2 className='text-start' style={{fontFamily : `${orgDetails[0].font}`}}>Address LINE 2</h2>
-                <input id="modalAddress2" className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500" placeholder="Address Line 2" 
-                value={modalData.address2} onChange={e => handleModalInputChange('address2', e.target.value)} />
-              </div>
-              <div>
-                <h2 className='text-start' style={{fontFamily : `${orgDetails[0].font}`}}>CITY<span className="text-red-600 ml-2">*</span></h2>
-                <input id="modalCity" className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500" placeholder="City" 
-                value={modalData.city} onChange={e => handleModalInputChange('city', e.target.value)} />
-              </div>
-              <div>
-                <h2 className='text-start' style={{fontFamily : `${orgDetails[0].font}`}}>STATE<span className="text-red-600 ml-2">*</span></h2>
-                <Select id="modalState"
-                  placeholder="SELECT STATE"
-                  defaultValue="AL"
-                  style={{ width: "100%", height: "40px", marginBottom: "10px", padding:"0px", borderColor:"lightgrey"
-                  ,borderWidth:"2px", boxShadow:"none", borderRadius:'0px'}}
-                  onChange={(value) => { handleModalInputChange('state', value)}}
-                  options={USStatesNames} 
-                  value={modalData.state} />
-              </div>
-              <div>
-                <h2 className='text-start' style={{fontFamily : `${orgDetails[0].font}`}}>ZIP CODE<span className="text-red-600 ml-2">*</span></h2>
-                <input id="modalZipCode" className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500" placeholder="Zip Code" 
-                value={modalData.zipCode} onChange={e => handleModalInputChange('zipCode', e.target.value)} />
-              </div>
-            </div> */}
-
             <div className="flex flex-row w-full justify-end mt-3">
                 <button className="bg-gray-200 text-black-100 font-extrabold py-2 px-4 rounded-full mr-5" onClick={closeModal}>CANCEL</button>
                 <button
