@@ -1,6 +1,6 @@
 import React from "react";
 
-const ClassInput = ({ ref, className, onChange, placeholder, value }) => {
+const ClassInput = ({ ref, className, onChange, placeholder, value, id }) => {
 
     const defaultClassName = "border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500";
     return (
@@ -8,7 +8,7 @@ const ClassInput = ({ ref, className, onChange, placeholder, value }) => {
             (e) => {
                 onChange(e.target.value);
             }
-        } placeholder={placeholder} value={value}/>
+        } placeholder={placeholder} value={value} id={id}/>
     );
 };
 

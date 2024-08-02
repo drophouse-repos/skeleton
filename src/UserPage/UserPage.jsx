@@ -10,6 +10,7 @@ import LazyLoad from 'react-lazyload';
 import { Orgcontext } from "../context/ApiContext";
 import { MessageBannerContext } from "../context/MessageBannerContext";
 import MessageBanner from "../components/MessageBanner";
+import ClassInput from '../components/ClassInput';
 import {
   LoadScript,
   StandaloneSearchBox,
@@ -316,6 +317,31 @@ export default function UserPage() {
   const handleBaseModalInputChange = (field, value) => {
     setBaseModalData(prev => ({ ...prev, [field]: value }));
   };
+  // const onPlacesChanged = () => {
+  //   const places = searchBoxRef.current.getPlaces();
+  //   if (places.length === 0) return;
+
+  //   const place = places[0];
+  //   const addressComponents = place.address_components;
+  //   if(!addressComponents)
+  //     return
+  //   handleModalInputChange('address1', place.name)
+  //   addressComponents.forEach(component => {
+  //     const types = component.types;
+  //     if (types.includes('neighborhood') || types.includes('sublocality_level_1')) {
+  //       handleModalInputChange('address2', component.long_name)
+  //     }
+  //     if (types.includes('administrative_area_level_3')) {
+  //       handleModalInputChange('city', component.long_name)
+  //     }
+  //     if (types.includes('administrative_area_level_1')) {
+  //       handleModalInputChange('state', component.short_name)
+  //     }
+  //     if (types.includes('postal_code')) {
+  //       handleModalInputChange('zipCode', component.long_name)
+  //     }
+  //   });
+  // };
   const onPlacesChanged = () => {
     const places = searchBoxRef.current.getPlaces();
     if (places.length === 0) return;
@@ -326,20 +352,36 @@ export default function UserPage() {
       return
     handleModalInputChange('address1', place.name)
     addressComponents.forEach(component => {
-      const types = component.types;
-      if (types.includes('neighborhood') || types.includes('sublocality_level_1')) {
-        handleModalInputChange('address2', component.long_name)
-      }
+      const { types, long_name, short_name } = component;
+      // if (types.includes('street_number') || types.includes('premise')) {
+      //   handleModalInputChange('address2', long_name);
+      // } 
       if (types.includes('administrative_area_level_3')) {
-        handleModalInputChange('city', component.long_name)
-      }
+        handleModalInputChange('city', long_name);
+      } 
       if (types.includes('administrative_area_level_1')) {
-        handleModalInputChange('state', component.short_name)
-      }
+        handleModalInputChange('state', short_name);
+      } 
       if (types.includes('postal_code')) {
-        handleModalInputChange('zipCode', component.long_name)
+        handleModalInputChange('zipCode', long_name);
       }
     });
+  };
+  const getIconForField = (field) => {
+    const iconMap = {
+      firstName: 'person',
+      lastName: 'person',
+      email: 'email',
+      phone: 'phone',
+      address1: 'location_on',
+      address2: 'location_on',
+      city: 'location_city',
+      zipCode: 'mail',
+      state: 'location_on'
+    };
+  
+    // Return the icon name from the map or a default icon
+    return iconMap[field] || 'help'; // 'help' is a fallback icon
   };
 
   return (
@@ -389,7 +431,59 @@ export default function UserPage() {
             zIndex={40}
             width={'80%'}
           >
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {['firstName', 'lastName', 'email', 'phone', 'address1', 'address2', 'city', 'zipCode'].map(field => (
+            <div key={field}>
+              <h2 className='text-start'>{field === 'address2' ? 'BUILDING/UNIT NO. ' : field==='address1' ? 'ADDRESS LINE' : field.replace(/([A-Z])/g, ' $1').toUpperCase()}<span className="text-red-600 ml-2">{field === 'address2' ? '' : '*'}</span></h2>
+              {field == 'address1' ?
+                <LoadScript googleMapsApiKey={apiKey} libraries={libraries}>
+                <StandaloneSearchBox
+                  onLoad={ref => (searchBoxRef.current = ref)}
+                  onPlacesChanged={onPlacesChanged}
+                  className="custom-search-box"
+                >
+                  <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
+                    <span className="material-icons p-2">location_on</span>
+                    <ClassInput
+                      id={`modal${field}`}
+                      placeholder='Address Line'
+                      value={modalData[field]}
+                      onChange={e => handleModalInputChange(field, e)}
+                      className="flex-1 p-2 focus:outline-none focus:border-primary-500 input-infopage"
+                    />
+                  </div>
+                </StandaloneSearchBox>
+              </LoadScript>
+              :
+              <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
+              <span className="material-icons p-2">{getIconForField(field)}</span>
+              <ClassInput
+                id={`modal${field}`}
+                placeholder={field === 'address2' ? 'Building/Unit No. ' : field.replace(/([A-Z])/g, ' $1')}
+                value={modalData[field]}
+                onChange={e => handleModalInputChange(field, e)}
+                className="flex-1 p-2 focus:outline-none focus:border-primary-500 input-infopage"
+              />
+            </div>
+              }
+            </div>
+          ))}
+          <div>
+            <h2 className='text-start' style={{fontFamily : `${orgDetails[0].font}`}}>STATE<span className="text-red-600 ml-2">*</span></h2>
+            <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
+            <span className="material-icons p-2">{getIconForField('state')}</span>
+              <Select id="modalState"
+                placeholder="SELECT STATE"
+                value={modalData.state}
+                style={{ width: "100%", height: "40px", marginBottom: "10px", padding:"0px", borderColor:"lightgrey"
+                ,borderWidth:"2px", boxShadow:"none", borderRadius:'0px'}}
+                onChange={(value) => { handleModalInputChange('state', value)}}
+                className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500 input-infopage"
+                options={USStatesNames} />
+              </div>
+          </div>
+        </div>
+            {/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <h2 className='text-start' style={{fontFamily : `${orgDetails[0].font}`}}>FIRST NAME<span className="text-red-600 ml-2">*</span></h2>
                 <input id="modalFirstName" className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500" placeholder="First Name" 
@@ -453,7 +547,7 @@ export default function UserPage() {
                 <input id="modalZipCode" className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500" placeholder="Zip Code" 
                 value={modalData.zipCode} onChange={e => handleModalInputChange('zipCode', e.target.value)} />
               </div>
-            </div>
+            </div> */}
 
             <div className="flex flex-row w-full justify-end mt-3">
                 <button className="bg-gray-200 text-black-100 font-extrabold py-2 px-4 rounded-full mr-5" onClick={closeModal}>CANCEL</button>
@@ -461,15 +555,15 @@ export default function UserPage() {
                   style={{fontFamily : `${orgDetails[0].font}`, backgroundColor: `${orgDetails[0].theme_color}`}}
                   className="bg-sky-600 text-zinc-100 font-extrabold py-2 px-4 rounded-full text-lg"
                   onClick={() => handleAddressItemEdit(
-                    document.getElementById("modalFirstName").value,
-                    document.getElementById("modalLastName").value,
-                    document.getElementById("modalEmail").value,
-                    document.getElementById("modalPhone").value,
-                    document.getElementById("modalAddress1").value,
-                    document.getElementById("modalAddress2").value,
-                    document.getElementById("modalCity").value,
+                    document.getElementById("modalfirstName").value,
+                    document.getElementById("modallastName").value,
+                    document.getElementById("modalemail").value,
+                    document.getElementById("modalphone").value,
+                    document.getElementById("modaladdress1").value,
+                    document.getElementById("modaladdress2").value,
+                    document.getElementById("modalcity").value,
                     document.getElementById("modalState").currentValue ? document.getElementById("modalState").currentValue : "AL",
-                    document.getElementById("modalZipCode").value,
+                    document.getElementById("modalzipCode").value,
                     modalAddressType
                   )}
                 >
