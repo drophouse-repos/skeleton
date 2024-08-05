@@ -49,7 +49,6 @@ export const fetchFavoriteImages = async (setLikedProducts, navigate) => {
 
 export async function fetchPostLike(liked, img_id, prompt, navigate) {
     try {
-        // Prepare the request payload
         const payload = {
             img_id: img_id,
             prompt: prompt,
