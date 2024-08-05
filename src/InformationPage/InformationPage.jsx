@@ -312,9 +312,6 @@ const InformationPage = () => {
     handleModalInputChange('address1', place.name)
     addressComponents.forEach(component => {
       const { types, long_name, short_name } = component;
-      if (types.includes('street_number') || types.includes('premise')) {
-        handleModalInputChange('address2', long_name);
-      } 
       if (types.includes('administrative_area_level_3')) {
         handleModalInputChange('city', long_name);
       } 
