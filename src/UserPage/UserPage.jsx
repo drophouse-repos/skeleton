@@ -371,7 +371,7 @@ export default function UserPage() {
         handleModalInputChange('zipCode', long_name);
       }
     });
-  };
+  }; 
   const getIconForField = (field) => {
     const iconMap = {
       firstName: 'person',
