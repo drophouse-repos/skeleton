@@ -11,6 +11,7 @@ import { Orgcontext } from "../context/ApiContext";
 import { MessageBannerContext } from "../context/MessageBannerContext";
 import MessageBanner from "../components/MessageBanner";
 import ClassInput from '../components/ClassInput';
+import { statesMapping } from "../utils/statesMapping";
 import {
   LoadScript,
   StandaloneSearchBox,
@@ -43,9 +44,34 @@ export default function UserPage() {
     address1: '',
     address2: '',
     city: '',
+    country: 'US',
     state: '',
     zipCode: '',
   });
+  const [statesOptions, setStatesOptions] = useState(statesMapping['United States']); // Default to US states
+  const handleCountryChange = (selectedOption) => {
+    console.log(selectedOption)
+    handleModalInputChange('country', selectedOption)
+    setStatesOptions(statesMapping[selectedOption] || []);
+    handleModalInputChange('state', statesMapping[selectedOption] || [])
+  };
+  // const countryOptions = [
+  //   { value: 'United States', label: 'United States' },
+  //   { value: 'Canada', label: 'Canada' },
+  //   { value: 'India', label: 'India'},
+  //   { value: 'United Kingdom', label: 'United Kingdom'},
+  //   { value: 'Australia', label: 'Australia'},
+  //   { value: 'Germany', label: 'Germany'}
+  // ];
+
+  const countryOptions = [
+    { value: 'US', label: 'United States' },
+    { value: 'CA', label: 'Canada' },
+    { value: 'IN', label: 'India' },
+    { value: 'GB', label: 'United Kingdom' },
+    { value: 'AU', label: 'Australia' },
+    { value: 'DE', label: 'Germany' }
+  ];
   const {
     showMessageBanner,
     setShowMessageBanner,
@@ -116,6 +142,7 @@ export default function UserPage() {
         address1: currentAddress.streetAddress,
         address2: currentAddress.streetAddress2,
         city: currentAddress.city,
+        country: currentAddress.country,
         state: currentAddress.stateProvince,
         zipCode: currentAddress.postalZipcode
       });
@@ -184,6 +211,7 @@ export default function UserPage() {
       address1: '',
       address2: '',
       city: '',
+      country: 'US',
       state: '',
       zipCode: ''
     });
@@ -232,7 +260,7 @@ export default function UserPage() {
     setIsNormalModalOpen(false)
   }
 
-  function handleAddressItemEdit(firstName, lastName, email, phone, address1, address2, city, state, zip, addressType) {
+  function handleAddressItemEdit(firstName, lastName, email, phone, address1, address2, city, country, state, zip, addressType) {
     const new_shipping_info = {
       firstName: firstName,
       lastName: lastName,
@@ -241,6 +269,7 @@ export default function UserPage() {
       streetAddress: address1,
       streetAddress2: address2,
       city: city,
+      country: country,
       stateProvince: state,
       postalZipcode: zip,
       addressType: addressType
@@ -328,6 +357,10 @@ export default function UserPage() {
     handleModalInputChange('address1', place.name)
     addressComponents.forEach(component => {
       const { types, long_name, short_name } = component;
+      if (types.includes('country')) {
+        handleModalInputChange('country', short_name);
+        setStatesOptions(statesMapping[short_name]);
+      }
       if (types.includes('administrative_area_level_3')) {
         handleModalInputChange('city', long_name);
       } 
@@ -404,7 +437,7 @@ export default function UserPage() {
             width={'80%'}
           >
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {['firstName', 'lastName', 'email', 'phone', 'address1', 'address2', 'city', 'zipCode'].map(field => (
+        {['firstName', 'lastName', 'email', 'phone', 'address1', 'address2', 'city','country', 'zipCode'].map(field => (
             <div key={field}>
               <h2 className='text-start'>{field === 'address2' ? 'BUILDING/UNIT NO. ' : field==='address1' ? 'ADDRESS LINE' : field.replace(/([A-Z])/g, ' $1').toUpperCase()}<span className="text-red-600 ml-2">{field === 'address2' ? '' : '*'}</span></h2>
               {field == 'address1' ?
@@ -427,7 +460,23 @@ export default function UserPage() {
                 </StandaloneSearchBox>
               </LoadScript>
               :
+              <>
+              {field == 'country' ? 
+              <>
               <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
+                <span className="material-icons p-2">{getIconForField('state')}</span>
+                <Select
+                  id="modalCountry"
+                  placeholder="SELECT COUNTRY"
+                  value={modalData.country}
+                  style={{ width: "100%", height: "40px", marginBottom: "10px", padding:"0px", borderColor:"lightgrey"
+                ,borderWidth:"2px", boxShadow:"none", borderRadius:'0px'}}
+                  onChange={handleCountryChange}
+                  options={countryOptions}
+                  className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500 input-infopage"
+                />
+                </div>
+        </>: <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
               <span className="material-icons p-2">{getIconForField(field)}</span>
               <ClassInput
                 id={`modal${field}`}
@@ -436,7 +485,8 @@ export default function UserPage() {
                 onChange={e => handleModalInputChange(field, e)}
                 className="flex-1 p-2 focus:outline-none focus:border-primary-500 input-infopage"
               />
-            </div>
+            </div>}
+            </>
               }
             </div>
           ))}
@@ -451,7 +501,7 @@ export default function UserPage() {
                 ,borderWidth:"2px", boxShadow:"none", borderRadius:'0px'}}
                 onChange={(value) => { handleModalInputChange('state', value)}}
                 className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500 input-infopage"
-                options={USStatesNames} />
+                options={statesOptions} />
               </div>
           </div>
         </div>
@@ -461,15 +511,26 @@ export default function UserPage() {
                   style={{fontFamily : `${orgDetails[0].font}`, backgroundColor: `${orgDetails[0].theme_color}`}}
                   className="bg-sky-600 text-zinc-100 font-extrabold py-2 px-4 rounded-full text-lg"
                   onClick={() => handleAddressItemEdit(
-                    document.getElementById("modalfirstName").value,
-                    document.getElementById("modallastName").value,
-                    document.getElementById("modalemail").value,
-                    document.getElementById("modalphone").value,
-                    document.getElementById("modaladdress1").value,
-                    document.getElementById("modaladdress2").value,
-                    document.getElementById("modalcity").value,
-                    document.getElementById("modalState").currentValue ? document.getElementById("modalState").currentValue : "AL",
-                    document.getElementById("modalzipCode").value,
+                    // document.getElementById("modalfirstName").value,
+                    // document.getElementById("modallastName").value,
+                    // document.getElementById("modalemail").value,
+                    // document.getElementById("modalphone").value,
+                    // document.getElementById("modaladdress1").value,
+                    // document.getElementById("modaladdress2").value,
+                    // document.getElementById("modalcity").value,
+                    // document.getElementById("modalCountry").value,
+                    // document.getElementById("modalState").currentValue ? document.getElementById("modalState").currentValue : "AL",
+                    // document.getElementById("modalzipCode").value,
+                    modalData.firstName,
+                    modalData.lastName,
+                    modalData.email,
+                    modalData.phone,
+                    modalData.address1,
+                    modalData.address2,
+                    modalData.city,
+                    modalData.country ? modalData.country : "US", // Default to 'US' if no country is selected
+                    modalData.state ? modalData.state : "AL", // Default to 'AL' if no state is selected
+                    modalData.zipCode,
                     modalAddressType
                   )}
                 >
