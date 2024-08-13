@@ -462,7 +462,7 @@ const InformationPage = () => {
                 ,borderWidth:"2px", boxShadow:"none", borderRadius:'0px'}}
                 onChange={(value) => { handleModalInputChange('state', value)}}
                 className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500 input-infopage"
-                options={USStatesNames} />
+                options={statesOptions} />
               </div>
           </div>
         </div>
