@@ -393,7 +393,7 @@ export default function UserPage() {
               </button>
             </div>
           </Modal>
-
+ 
           <Modal
             title={`Edit ${modalItem}`}
             open={isAddressModalOpen}
