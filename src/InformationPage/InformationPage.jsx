@@ -14,6 +14,7 @@ import { useLocation } from 'react-router-dom';
 import { createCheckoutSession, createStudentCheckout } from '../utils/fetch';
 import ClassInput from '../components/ClassInput';
 import { Orgcontext } from '../context/ApiContext';
+import { statesMapping } from "../utils/statesMapping";
 const emailRegex = /\S+@\S+\.\S+/;
 import {
   LoadScript,
@@ -51,6 +52,7 @@ const InformationPage = () => {
   const [selectedId, setSelectedId] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalAddressType, setModalAddressType] = useState("");
+  const [statesOptions, setStatesOptions] = useState(statesMapping['United States']); // Default to US states
   const [modalData, setModalData] = useState({
     firstName: '',
     lastName: '',
@@ -59,9 +61,18 @@ const InformationPage = () => {
     address1: '',
     address2: '',
     city: '',
+    country: 'US',
     state: '',
     zipCode: '',
   });
+  const countryOptions = [
+    { value: 'US', label: 'United States' },
+    { value: 'CA', label: 'Canada' },
+    { value: 'IN', label: 'India' },
+    { value: 'GB', label: 'United Kingdom' },
+    { value: 'AU', label: 'Australia' },
+    { value: 'DE', label: 'Germany' }
+  ];
   const { orgDetails } = useContext(Orgcontext)
 
   const {
@@ -79,7 +90,12 @@ const InformationPage = () => {
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const [isConfirmOrder, setisConfirmOrder] = useState(false);
   const closeConfirmationModal = () => setIsConfirmationModalOpen(false);
-
+  const handleCountryChange = (selectedOption) => {
+    console.log(selectedOption)
+    handleModalInputChange('country', selectedOption)
+    setStatesOptions(statesMapping[selectedOption] || []);
+    handleModalInputChange('state', statesMapping[selectedOption] || [])
+  };
   useEffect(() => {
     if(isConfirmOrder)
     {
@@ -150,8 +166,8 @@ const InformationPage = () => {
   };
 
   const handleAddressItemEdit = () => {
-    const { firstName, lastName, email, phone, address1, address2, city, state, zipCode } = modalData;
-    if (!firstName || !lastName || !email || !phone || !address1 || !city || !state || !zipCode) {
+    const { firstName, lastName, email, phone, address1, address2, city, country, state, zipCode } = modalData;
+    if (!firstName || !lastName || !email || !phone || !address1 || !city || !country || !state || !zipCode) {
       setMessageBannerText('Please fill in all required fields.');
       setShowMessageBanner(true);
       setBannerKey(prevKey => prevKey + 1);
@@ -171,6 +187,7 @@ const InformationPage = () => {
       streetAddress: address1,
       streetAddress2: address2,
       city: city,
+      country: country,
       stateProvince: state,
       postalZipcode: zipCode,
       addressType: 'primary'
@@ -208,6 +225,7 @@ const InformationPage = () => {
       address1: '',
       address2: '',
       city: '',
+      country: 'US',
       state: '',
       zipCode: ''
     });
@@ -292,6 +310,7 @@ const InformationPage = () => {
         address1: currentAddress.streetAddress,
         address2: currentAddress.streetAddress2,
         city: currentAddress.city,
+        country: currentAddress.country,
         state: currentAddress.stateProvince,
         zipCode: currentAddress.postalZipcode
       });
@@ -312,6 +331,10 @@ const InformationPage = () => {
     handleModalInputChange('address1', place.name)
     addressComponents.forEach(component => {
       const { types, long_name, short_name } = component;
+      if (types.includes('country')) {
+        handleModalInputChange('country', short_name);
+        setStatesOptions(statesMapping[short_name]);
+      }
       if (types.includes('administrative_area_level_3')) {
         handleModalInputChange('city', long_name);
       } 
@@ -374,7 +397,7 @@ const InformationPage = () => {
         width={'80%'}
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {['firstName', 'lastName', 'email', 'phone', 'address1', 'address2', 'city', 'zipCode'].map(field => (
+        {['firstName', 'lastName', 'email', 'phone', 'address1', 'address2', 'city', 'country', 'zipCode'].map(field => (
             <div key={field}>
               <h2 className='text-start'>{field === 'address2' ? 'BUILDING/UNIT NO. ' : field==='address1' ? 'ADDRESS LINE' : field.replace(/([A-Z])/g, ' $1').toUpperCase()}<span className="text-red-600 ml-2">{field === 'address2' ? '' : '*'}</span></h2>
               {field == 'address1' ?
@@ -397,6 +420,23 @@ const InformationPage = () => {
                 </StandaloneSearchBox>
               </LoadScript>
               :
+              <>
+              {field == 'country' ? 
+              <>
+              <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
+                <span className="material-icons p-2">{getIconForField('state')}</span>
+                <Select
+                  id="modalCountry"
+                  placeholder="SELECT COUNTRY"
+                  value={modalData.country}
+                  style={{ width: "100%", height: "40px", marginBottom: "10px", padding:"0px", borderColor:"lightgrey"
+                ,borderWidth:"2px", boxShadow:"none", borderRadius:'0px'}}
+                  onChange={handleCountryChange}
+                  options={countryOptions}
+                  className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500 input-infopage"
+                />
+                </div>
+        </>:
               <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
               <span className="material-icons p-2">{getIconForField(field)}</span>
               <ClassInput
@@ -406,7 +446,8 @@ const InformationPage = () => {
                 onChange={e => handleModalInputChange(field, e)}
                 className="flex-1 p-2 focus:outline-none focus:border-primary-500 input-infopage"
               />
-            </div>
+            </div>}</>
+
               }
             </div>
           ))}
