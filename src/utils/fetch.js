@@ -76,7 +76,7 @@ export const fetchCartItems = async (navigate) => {
         const response = await axiosInstance.get("/view_cart");
         const data = response.data;
         if (response.status !== 200) throw new Error('Failed to fetch cart Items');
-        //setCartItems(data);
+        //setCartItems(data)
         return data;
     } catch (err) {
         return handleHttpError(err, navigate, 'fetchCartItems')
