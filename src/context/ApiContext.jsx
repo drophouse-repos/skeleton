@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import Loader from '../components/loader';
+import LoadingPage from '../components/newloader';
 import { fetchOrganisationlist } from '../utils/fetch';
 
 export const Orgcontext = createContext();
@@ -75,8 +76,9 @@ const OrganisationDetails = ({ children }) => {
     return (
         <div>
             {loading ? (
-                <Loader />
-            ) : (
+                // <Loader />
+                <LoadingPage />
+                ) : (
                 <Orgcontext.Provider value={{ 
                     orgDetails, orgId, name, mask, logo, themeColor, font, favicon, product, landingpage
                 }}>

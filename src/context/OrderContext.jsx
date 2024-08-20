@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import Loader from '../components/loader'
+import LoadingPage from '../components/newloader';
 import { fetchOrderHistory } from '../utils/fetch';
 
 export const OrderContext = createContext();
@@ -42,7 +43,8 @@ export const OrderProvider=({children}) => {
   		{
   			loading 
   			? (
-  				<Loader />
+  				// <Loader />
+				<LoadingPage />
   			)
   			: (
   				<OrderContext.Provider value={{isOrderPlaced, loading}}>

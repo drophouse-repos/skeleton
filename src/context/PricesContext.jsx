@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import Loader from '../components/loader'
+import LoadingPage from '../components/newloader';
 import { fetchPrices } from '../utils/fetch';
 
 export const PricesContext = createContext();
@@ -28,7 +29,8 @@ export const PricesProvider=({children}) => {
   		{
   			loading 
   			? (
-  				<Loader />
+  				// <Loader />
+				<LoadingPage />
   			)
   			: (
   				<PricesContext.Provider value={{priceMap, loading, getPriceNum}}>

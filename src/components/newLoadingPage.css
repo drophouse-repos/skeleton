@@ -1,0 +1,50 @@
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #bfffcc;
+  }
+  
+  .loading-logo {
+    width: 350px;
+    margin-bottom: 20px;
+  }
+  
+  .loading-prompt {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3; /* Light grey */
+    border-top: 5px solid #36D7B7; /* Blue-green */
+    border-radius: 50%;
+    animation: spin 1.5s linear infinite;
+  }
+  
+  /* Colorful loader */
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+      border-top-color: #36D7B7; /* Blue-green */
+    }
+    25% {
+      border-top-color: #f39c12; /* Orange */
+    }
+    50% {
+      border-top-color: #e74c3c; /* Red */
+    }
+    75% {
+      border-top-color: #9b59b6; /* Purple */
+    }
+    100% {
+      transform: rotate(360deg);
+      border-top-color: #36D7B7; /* Blue-green */
+    }
+  }
+  
