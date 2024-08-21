@@ -330,6 +330,69 @@ export const fetchImageBase64 = async(signed_url) => {
     }
 }
 
+export const fetchcountry = async() => {
+    var token = 'q2HRk6J5pJHS8n2iHWyiHBM6Gqd1Np5wlMN3yGHbQye8eKd84Qe61i4on8yB56_PVSU'
+    try{
+        const axiosInstancenew = axiosInstance.create({
+            baseURL: 'https://www.universal-tutorial.com/api',
+            headers: {
+              Accept: 'application/json',
+              'api-token': token,
+              'user-email': 'muthuselvam.m99@gmail.com'
+            }
+        });
+        const response = await axiosInstancenew.get('/getaccesstoken');
+        console.log("response for country api token fetch : ",response)
+        const countryList = response.data;
+        console.log(countryList);
+        return countryList;
+    } catch (error) {
+        console.error('Error fetching the country list:', error);
+        throw error;
+    }
+}
+
+export const fetchcountrylist = async() => {
+    var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfZW1haWwiOiJtdXRodXNlbHZhbS5tOTlAZ21haWwuY29tIiwiYXBpX3Rva2VuIjoicTJIUms2SjVwSkhTOG4yaUhXeWlIQk02R3FkMU5wNXdsTU4zeUdIYlF5ZThlS2Q4NFFlNjFpNG9uOHlCNTZfUFZTVSJ9LCJleHAiOjE3MjQzMTQ1MTd9.W8rJK-npf5utPkMYAW2-EdP65FZfwB2EfIz0-19Qh6Q'
+    try{
+        const axiosInstancenew = axiosInstance.create({
+            baseURL: 'https://www.universal-tutorial.com/api',
+            headers: {
+              Accept: 'application/json',
+              "Authorization": "Bearer "+ token,
+            }
+        });
+        const response = await axiosInstancenew.get('/countries');
+        console.log("response for country api token fetch : ",response)
+        const countryList = response.data;
+        console.log(countryList);
+        return countryList;
+    } catch (error) {
+        console.error('Error fetching the country list:', error);
+        throw error;
+    }
+}
+export const fetchstatelist = async(selectedoption) => {
+    var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfZW1haWwiOiJtdXRodXNlbHZhbS5tOTlAZ21haWwuY29tIiwiYXBpX3Rva2VuIjoicTJIUms2SjVwSkhTOG4yaUhXeWlIQk02R3FkMU5wNXdsTU4zeUdIYlF5ZThlS2Q4NFFlNjFpNG9uOHlCNTZfUFZTVSJ9LCJleHAiOjE3MjQzMTQ1MTd9.W8rJK-npf5utPkMYAW2-EdP65FZfwB2EfIz0-19Qh6Q'
+    try{
+        const axiosInstancenew = axiosInstance.create({
+            baseURL: 'https://www.universal-tutorial.com/api',
+            headers: {
+              Accept: 'application/json',
+              "Authorization": "Bearer "+ token,
+            }
+        });
+        const response = await axiosInstancenew.get(`/states/${selectedoption}`);
+        console.log("response for country api token fetch : ",response)
+        const stateList = response.data;
+        console.log(stateList);
+        return stateList;
+    } catch (error) {
+        console.error('Error fetching the country list:', error);
+        throw error;
+    }
+}
+
 
 export const fetchOrganisationlist = async (navigate) => {
     try {
