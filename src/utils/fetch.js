@@ -353,7 +353,7 @@ export const fetchcountry = async() => {
 }
 
 export const fetchcountrylist = async() => {
-    var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfZW1haWwiOiJtdXRodXNlbHZhbS5tOTlAZ21haWwuY29tIiwiYXBpX3Rva2VuIjoicTJIUms2SjVwSkhTOG4yaUhXeWlIQk02R3FkMU5wNXdsTU4zeUdIYlF5ZThlS2Q4NFFlNjFpNG9uOHlCNTZfUFZTVSJ9LCJleHAiOjE3MjQzMTQ1MTd9.W8rJK-npf5utPkMYAW2-EdP65FZfwB2EfIz0-19Qh6Q'
+    var token = process.env.REACT_APP_COUNTRY_LIST_API
     try{
         const axiosInstancenew = axiosInstance.create({
             baseURL: 'https://www.universal-tutorial.com/api',
@@ -373,7 +373,7 @@ export const fetchcountrylist = async() => {
     }
 }
 export const fetchstatelist = async(selectedoption) => {
-    var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfZW1haWwiOiJtdXRodXNlbHZhbS5tOTlAZ21haWwuY29tIiwiYXBpX3Rva2VuIjoicTJIUms2SjVwSkhTOG4yaUhXeWlIQk02R3FkMU5wNXdsTU4zeUdIYlF5ZThlS2Q4NFFlNjFpNG9uOHlCNTZfUFZTVSJ9LCJleHAiOjE3MjQzMTQ1MTd9.W8rJK-npf5utPkMYAW2-EdP65FZfwB2EfIz0-19Qh6Q'
+    var token = process.env.REACT_APP_COUNTRY_LIST_API
     try{
         const axiosInstancenew = axiosInstance.create({
             baseURL: 'https://www.universal-tutorial.com/api',
