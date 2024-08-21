@@ -277,7 +277,6 @@ export default function UserPage() {
       })
     setIsNormalModalOpen(false)
   }
-
   function handleAddressItemEdit(firstName, lastName, email, phone, address1, address2, city, country, state, zip, addressType) {
     const new_shipping_info = {
       firstName: firstName,
