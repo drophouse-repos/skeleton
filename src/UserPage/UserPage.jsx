@@ -11,7 +11,6 @@ import { Orgcontext } from "../context/ApiContext";
 import { MessageBannerContext } from "../context/MessageBannerContext";
 import MessageBanner from "../components/MessageBanner";
 import ClassInput from '../components/ClassInput';
-import { statesMapping } from "../utils/statesMapping";
 import {
   LoadScript,
   StandaloneSearchBox,
