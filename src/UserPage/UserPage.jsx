@@ -452,7 +452,7 @@ export default function UserPage() {
                 ,borderWidth:"2px", boxShadow:"none", borderRadius:'0px'}}
                 onChange={(value) => { handleModalInputChange('state', value)}}
                 className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500 input-infopage"
-                options={statesOptions} />
+                options={USStatesNames} />
               </div>
           </div>
         </div>
@@ -462,24 +462,15 @@ export default function UserPage() {
                   style={{fontFamily : `${orgDetails[0].font}`, backgroundColor: `${orgDetails[0].theme_color}`}}
                   className="bg-sky-600 text-zinc-100 font-extrabold py-2 px-4 rounded-full text-lg"
                   onClick={() => handleAddressItemEdit(
-                    // document.getElementById("modalfirstName").value,
-                    // document.getElementById("modallastName").value,
-                    // document.getElementById("modalemail").value,
-                    // document.getElementById("modalphone").value,
-                    // document.getElementById("modaladdress1").value,
-                    // document.getElementById("modaladdress2").value,
-                    // document.getElementById("modalcity").value,
-                    // document.getElementById("modalState").currentValue ? document.getElementById("modalState").currentValue : "AL",
-                    // document.getElementById("modalzipCode").value,
-                    modalData.firstName,
-                    modalData.lastName,
-                    modalData.email,
-                    modalData.phone,
-                    modalData.address1,
-                    modalData.address2,
-                    modalData.city,
-                    modalData.state ? modalData.state : "AL", // Default to 'AL' if no state is selected
-                    modalData.zipCode,
+                    document.getElementById("modalfirstName").value,
+                    document.getElementById("modallastName").value,
+                    document.getElementById("modalemail").value,
+                    document.getElementById("modalphone").value,
+                    document.getElementById("modaladdress1").value,
+                    document.getElementById("modaladdress2").value,
+                    document.getElementById("modalcity").value,
+                    document.getElementById("modalState").currentValue ? document.getElementById("modalState").currentValue : "AL",
+                    document.getElementById("modalzipCode").value,
                     modalAddressType
                   )}
                 >
