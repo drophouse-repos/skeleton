@@ -71,12 +71,12 @@ const InformationPage = () => {
       try {
           const fetch = await fetchcountrylist()
           const countryListData = Object.values(fetch).map(item => ({
-              value: item.country_name,
+              value: item.country_short_name,
               label: item.country_name
           }))
           setCountryList(countryListData)
           const countryData = fetch.reduce((acc, item) => {
-            acc[item.country_name] = item.country_short_name;
+            acc[item.country_short_name] = item.country_name;
             return acc;
           }, {});
           setCountryMap(countryData)
@@ -94,7 +94,7 @@ const InformationPage = () => {
     }
     try{
       handleModalInputChange('country',selectedoption)
-      const fetch = await fetchstatelist(selectedoption)
+      const fetch = await fetchstatelist(countryMap[selectedoption])
       const stateListData = Object.values(fetch).map(item => ({
         value: item.state_name,
         label: item.state_name
@@ -216,7 +216,7 @@ const InformationPage = () => {
       streetAddress: address1,
       streetAddress2: address2,
       city: city,
-      country: countryMap[country],
+      country: country,
       stateProvince: state,
       postalZipcode: zipCode,
       addressType: 'primary'
@@ -361,8 +361,8 @@ const InformationPage = () => {
     addressComponents.forEach(component => {
       const { types, long_name, short_name } = component;
       if (types.includes('country')) {
-        handleModalInputChange('country', long_name);
-        handleCountryChange(long_name, false)
+        handleModalInputChange('country', short_name);
+        handleCountryChange(short_name, false)
       }
       if (types.includes('administrative_area_level_3')) {
         handleModalInputChange('city', long_name);
