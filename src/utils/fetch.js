@@ -348,7 +348,7 @@ export const fetchcountrylist = async() => {
         console.error('Error fetching the country list:', error);
         throw error;
     }
-}
+} 
 export const fetchstatelist = async(selectedoption) => {
     try{
         const axiosInstancenew = axiosInstance.create({
