@@ -331,12 +331,23 @@ export const fetchImageBase64 = async(signed_url) => {
 }
 
 export const fetchcountrylist = async() => {
+    var token = process.env.REACT_APP_COUNTRY_LIST_API
     try{
+
+        const axiosInstancefortoken = axiosInstance.create({
+            baseURL: 'https://www.universal-tutorial.com/api',
+            headers: {
+              Accept: 'application/json',
+              'api-token': token,
+              'user-email': 'muthuselvam.m99@gmail.com'
+            }
+        });
+        const api_token = await axiosInstancefortoken.get('/getaccesstoken');
         const axiosInstancenew = axiosInstance.create({
             baseURL: 'https://www.universal-tutorial.com/api',
             headers: {
               Accept: 'application/json',
-              "Authorization": `Bearer ${process.env.REACT_APP_COUNTRY_LIST_API}`,
+              "Authorization": `Bearer ${api_token.data.auth_token}`,
             }
         });
         const response = await axiosInstancenew.get('/countries');
@@ -348,14 +359,25 @@ export const fetchcountrylist = async() => {
         console.error('Error fetching the country list:', error);
         throw error;
     }
-} 
+}
 export const fetchstatelist = async(selectedoption) => {
+    var token = process.env.REACT_APP_COUNTRY_LIST_API
     try{
+
+        const axiosInstancefortoken = axiosInstance.create({
+            baseURL: 'https://www.universal-tutorial.com/api',
+            headers: {
+              Accept: 'application/json',
+              'api-token': token,
+              'user-email': 'muthuselvam.m99@gmail.com'
+            }
+        });
+        const api_token = await axiosInstancefortoken.get('/getaccesstoken');
         const axiosInstancenew = axiosInstance.create({
             baseURL: 'https://www.universal-tutorial.com/api',
             headers: {
               Accept: 'application/json',
-              "Authorization": `Bearer ${process.env.REACT_APP_COUNTRY_LIST_API}`,
+              "Authorization": `Bearer ${api_token.data.auth_token}`,
             }
         });
         const response = await axiosInstancenew.get(`/states/${selectedoption}`);
