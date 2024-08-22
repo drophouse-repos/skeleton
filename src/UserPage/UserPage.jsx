@@ -151,6 +151,7 @@ export default function UserPage() {
   }
   const prefillModal = (addressType) => {
     const currentAddress = findAddress(addressType);
+    handleCountryChange(currentAddress.country,false)
     if (currentAddress) {
       setModalData({
         firstName: currentAddress.firstName,
