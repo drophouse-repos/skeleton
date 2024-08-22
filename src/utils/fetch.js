@@ -330,36 +330,13 @@ export const fetchImageBase64 = async(signed_url) => {
     }
 }
 
-export const fetchcountry = async() => {
-    var token = 'q2HRk6J5pJHS8n2iHWyiHBM6Gqd1Np5wlMN3yGHbQye8eKd84Qe61i4on8yB56_PVSU'
-    try{
-        const axiosInstancenew = axiosInstance.create({
-            baseURL: 'https://www.universal-tutorial.com/api',
-            headers: {
-              Accept: 'application/json',
-              'api-token': token,
-              'user-email': 'muthuselvam.m99@gmail.com'
-            }
-        });
-        const response = await axiosInstancenew.get('/getaccesstoken');
-        console.log("response for country api token fetch : ",response)
-        const countryList = response.data;
-        console.log(countryList);
-        return countryList;
-    } catch (error) {
-        console.error('Error fetching the country list:', error);
-        throw error;
-    }
-}
-
 export const fetchcountrylist = async() => {
-    var token = process.env.REACT_APP_COUNTRY_LIST_API
     try{
         const axiosInstancenew = axiosInstance.create({
             baseURL: 'https://www.universal-tutorial.com/api',
             headers: {
               Accept: 'application/json',
-              "Authorization": "Bearer "+ token,
+              "Authorization": `Bearer ${process.env.REACT_APP_COUNTRY_LIST_API}`,
             }
         });
         const response = await axiosInstancenew.get('/countries');
@@ -373,13 +350,12 @@ export const fetchcountrylist = async() => {
     }
 }
 export const fetchstatelist = async(selectedoption) => {
-    var token = process.env.REACT_APP_COUNTRY_LIST_API
     try{
         const axiosInstancenew = axiosInstance.create({
             baseURL: 'https://www.universal-tutorial.com/api',
             headers: {
               Accept: 'application/json',
-              "Authorization": "Bearer "+ token,
+              "Authorization": `Bearer ${process.env.REACT_APP_COUNTRY_LIST_API}`,
             }
         });
         const response = await axiosInstancenew.get(`/states/${selectedoption}`);
