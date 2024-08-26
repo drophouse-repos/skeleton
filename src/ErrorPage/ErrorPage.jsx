@@ -14,11 +14,11 @@ const ErrorPage = () => {
 
   return (
     <div className="error-container">
-        <h1>Oops!</h1>
-        {errorMessage && <p>Error: {errorMessage}<p></p> Source: {errorSource}</p>}
-        <p>We're sorry, but something went wrong. Please contact support@drophouse.art</p>
-        <button onClick={() => window.location.href='/'}>Go Home</button>
-      </div>
+      <h1>Oops!</h1>
+      {errorMessage && <p>Error: {errorMessage}<p></p> Source: {errorSource}</p>}
+      <p>We're sorry, but something went wrong. Please contact support@drophouse.art</p>
+      <button onClick={() => window.location.href='/'}>Go Home</button>
+    </div>
   );
 }
 
