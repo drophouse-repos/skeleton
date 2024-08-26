@@ -79,6 +79,7 @@ const InformationPage = () => {
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const [isConfirmOrder, setisConfirmOrder] = useState(false);
   const closeConfirmationModal = () => setIsConfirmationModalOpen(false);
+
   useEffect(() => {
     if(isConfirmOrder)
     {
@@ -396,7 +397,6 @@ const InformationPage = () => {
                 </StandaloneSearchBox>
               </LoadScript>
               :
-              <>
               <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
               <span className="material-icons p-2">{getIconForField(field)}</span>
               <ClassInput
@@ -407,7 +407,6 @@ const InformationPage = () => {
                 className="flex-1 p-2 focus:outline-none focus:border-primary-500 input-infopage"
               />
             </div>
-            </>
               }
             </div>
           ))}
