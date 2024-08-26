@@ -76,7 +76,7 @@ const OrganisationDetails = ({ children }) => {
         <div>
             {loading ? (
                 <Loader />
-                ) : (
+            ) : (
                 <Orgcontext.Provider value={{ 
                     orgDetails, orgId, name, mask, logo, themeColor, font, favicon, product, landingpage
                 }}>

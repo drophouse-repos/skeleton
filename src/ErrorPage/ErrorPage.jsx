@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import './ErrorPage.css'; // Make sure to link the CSS file
 import { useLocation } from 'react-router-dom';
-import errorImg from '.././assets/500-error.png'
 
 const ErrorPage = () => {
   const location = useLocation();

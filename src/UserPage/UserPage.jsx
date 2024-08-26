@@ -427,7 +427,7 @@ export default function UserPage() {
                 </StandaloneSearchBox>
               </LoadScript>
               :
-              <><div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
+              <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
               <span className="material-icons p-2">{getIconForField(field)}</span>
               <ClassInput
                 id={`modal${field}`}
@@ -437,7 +437,6 @@ export default function UserPage() {
                 className="flex-1 p-2 focus:outline-none focus:border-primary-500 input-infopage"
               />
             </div>
-            </>
               }
             </div>
           ))}
