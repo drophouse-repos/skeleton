@@ -364,15 +364,19 @@ const InformationPage = () => {
       if (types.includes('country')) {
         handleModalInputChange('country', short_name);
         handleCountryChange(short_name, false)
+        console.log("Country : ",long_name)
       }
-      if (types.includes('administrative_area_level_3')) {
+      if (types.includes('administrative_area_level_3') || types.includes('locality')) {
         handleModalInputChange('city', long_name);
+        console.log("city : ",long_name)
       } 
       if (types.includes('administrative_area_level_1')) {
         handleModalInputChange('state', long_name);
+        console.log("state : ",long_name)
       } 
       if (types.includes('postal_code')) {
         handleModalInputChange('zipCode', long_name);
+        console.log("zipcode : ",long_name)
       }
     });
   };

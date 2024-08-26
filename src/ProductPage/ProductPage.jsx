@@ -166,15 +166,10 @@ const ProductPage = () => {
 
   const selectedProduct = productListLoad.find(item => item.Product_Name === apparel);
 
-  const [sizes, setSizes] = useState([]);
-  useEffect(() => {
-    if (selectedProduct?.Product_Sizes) {
-      setSizes([{ value: '', label: '' }, ...selectedProduct.Product_Sizes.map(size => ({
-        value: size,
-        label: size,
-      }))]);
-    }
-  }, [selectedProduct,apparel]);
+  const sizes = selectedProduct?.Product_Sizes?.map(size => ({
+    value: size,
+    label: size,
+  })) || [];
   const [toggleActivated, setToggleActivated] = useState(false);
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -315,16 +310,12 @@ const ProductPage = () => {
     productGalleryRef.current.galleryGoTo(0);
     setCurrentColor("white");
     setColor("white");
-    setSize('')
     setApparel(value);
   };
 
   const handleSizeChange = (value) => {
     setSize(value);
   };
-  const handlechangeblanksize = () => {
-    setSizes(sizes.filter(option => option.value !== ''));
-  }
 
   const handleProductGalleryChange = (selectedColor) => {
     setCurrentColor(selectedColor);
@@ -334,11 +325,6 @@ const ProductPage = () => {
       handleCartBtnDisable();
       return
     }
-    if(size == ''){
-        setMessageBannerText('Please select size!!!');
-        setShowMessageBanner(true);
-    }
-    else{
         const thumbnail = await productGalleryRef.current.getSelectedPreviewImage(apparel, color, editedImage);
       
         const productPopupInfo = {
@@ -372,7 +358,6 @@ const ProductPage = () => {
         setProductPopupInfo(productPopupInfo);
         setProductPopupIsShown(true);
         setImageToCart(true);
-    }
   }
 
   const handleBuy = async () => {
@@ -380,11 +365,6 @@ const ProductPage = () => {
       handleCartBtnDisable();
       return
     }
-    if(size == ''){
-      setMessageBannerText('Please select size!!!');
-      setShowMessageBanner(true);
-    }
-    else {
         const thumbnail = await productGalleryRef.current.getSelectedPreviewImage(apparel, color, editedImage);
         if (generatedImage.img_id === null) {
         } else {
@@ -405,7 +385,6 @@ const ProductPage = () => {
               ]
           };
           navigate('/information', { state: { productInfo: productInfo } });
-        }
     }
   }
 
@@ -565,7 +544,7 @@ const ProductPage = () => {
               <Select
                 style={{fontFamily : `${orgDetails[0].font}`}}
                 className={`${(window.innerWidth <= 544 ? `w-[8rem]` : `w-[15rem]` )} border-none outline-none`}
-                value={size || ''}
+                value={size}
                 onChange={handleSizeChange}
                 options={sizes}
                 defaultValue={{ value: '', label: '' }}

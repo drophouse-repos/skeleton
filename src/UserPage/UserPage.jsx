@@ -379,7 +379,7 @@ export default function UserPage() {
         handleModalInputChange('country', short_name);
         handleCountryChange(short_name, false)
       }
-      if (types.includes('administrative_area_level_3')) {
+      if (types.includes('administrative_area_level_3') || types.includes('locality')) {
         handleModalInputChange('city', long_name);
       } 
       if (types.includes('administrative_area_level_1')) {

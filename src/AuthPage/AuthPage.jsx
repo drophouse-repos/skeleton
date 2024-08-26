@@ -105,7 +105,7 @@ const AuthPage = () => {
       console.error('Error sending magic link:', error);
     }
   };
- 
+
   const resendMagicLink = () => {
     if (email && resendTimer === 0) {
       sendMagicLink(email); 
