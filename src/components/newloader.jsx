@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import logo from ".././assets/logo_footer_t.png"; // Replace with the path to your logo
 import "./newLoadingPage.css"; // Import the CSS file
+import BouncingDotsLoader from "./loadingdots";
 
 const LoadingPage = () => {
   const prompts = [
@@ -15,7 +16,7 @@ const LoadingPage = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentPrompt((prevPrompt) => (prevPrompt + 1) % prompts.length);
-    }, 2000); // Change the prompt every 2 seconds
+    }, 4000); // Change the prompt every 2 seconds
 
     return () => clearInterval(interval);
   }, []);
@@ -24,7 +25,7 @@ const LoadingPage = () => {
     <div className="loading-container">
       <img src={logo} alt="Logo" className="loading-logo" />
       <div className="loading-prompt">"{prompts[currentPrompt]}"</div>
-      <div className="loading-spinner"></div>
+      <BouncingDotsLoader />
     </div>
   );
 };
