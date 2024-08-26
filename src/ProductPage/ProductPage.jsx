@@ -325,39 +325,39 @@ const ProductPage = () => {
       handleCartBtnDisable();
       return
     }
-        const thumbnail = await productGalleryRef.current.getSelectedPreviewImage(apparel, color, editedImage);
-      
-        const productPopupInfo = {
-          title: `${orgDetails[0].name} ${!(apparel) == 'mug' ? `${color.charAt(0).toUpperCase() + color.slice(1)}` : ``} ${apparel.charAt(0).toUpperCase() + apparel.slice(1)}`,
-          size: size,
-          price: getPriceNum(apparel),
-          image: thumbnail,
-        };
-        const productInfo = {
-          apparel: apparel,
-          size: size,
-          color: color,
-          img_id: generatedImage.img_id,
-          prompt: prompt,
-          timestamp: new Date().toISOString(),
-          thumbnail: thumbnail,
-          toggled: toggled ? toggled : false,
-          price: getPriceNum(apparel) * 100,
-        }
-        const succeeded = await fetchAddToCart(productInfo, navigate);
-        if (!succeeded.success) {
-          if (succeeded.navigated)
-            return
-          setMessageBannerText(succeeded.message);
-          setShowMessageBanner(true);
-          setBannerKey(prevKey => prevKey + 1);
-          return;
-        }
-        setCartNumber(prev => prev + 1);
-        setProductPopupTitle("ADDED TO Cart");
-        setProductPopupInfo(productPopupInfo);
-        setProductPopupIsShown(true);
-        setImageToCart(true);
+    const thumbnail = await productGalleryRef.current.getSelectedPreviewImage(apparel, color, editedImage);
+  
+    const productPopupInfo = {
+      title: `${orgDetails[0].name} ${!(apparel) == 'mug' ? `${color.charAt(0).toUpperCase() + color.slice(1)}` : ``} ${apparel.charAt(0).toUpperCase() + apparel.slice(1)}`,
+      size: size,
+      price: getPriceNum(apparel),
+      image: thumbnail,
+    };
+    const productInfo = {
+      apparel: apparel,
+      size: size,
+      color: color,
+      img_id: generatedImage.img_id,
+      prompt: prompt,
+      timestamp: new Date().toISOString(),
+      thumbnail: thumbnail,
+      toggled: toggled ? toggled : false,
+      price: getPriceNum(apparel) * 100,
+    }
+    const succeeded = await fetchAddToCart(productInfo, navigate);
+    if (!succeeded.success) {
+      if (succeeded.navigated)
+        return
+      setMessageBannerText(succeeded.message);
+      setShowMessageBanner(true);
+      setBannerKey(prevKey => prevKey + 1);
+      return;
+    }
+    setCartNumber(prev => prev + 1);
+    setProductPopupTitle("ADDED TO Cart");
+    setProductPopupInfo(productPopupInfo);
+    setProductPopupIsShown(true);
+    setImageToCart(true);
   }
 
   const handleBuy = async () => {
@@ -365,26 +365,26 @@ const ProductPage = () => {
       handleCartBtnDisable();
       return
     }
-        const thumbnail = await productGalleryRef.current.getSelectedPreviewImage(apparel, color, editedImage);
-        if (generatedImage.img_id === null) {
-        } else {
-          const productInfo = {
-            "products":
-              [
-                {
-                  apparel: apparel,
-                  size: size,
-                  color: color,
-                  img_id: generatedImage.img_id,
-                  prompt: prompt,
-                  timestamp: new Date().toISOString(),
-                  thumbnail: thumbnail,
-                  toggled: toggled ? toggled : false,
-                  price: getPriceNum(apparel) * 100,
-                }
-              ]
-          };
-          navigate('/information', { state: { productInfo: productInfo } });
+    const thumbnail = await productGalleryRef.current.getSelectedPreviewImage(apparel, color, editedImage);
+    if (generatedImage.img_id === null) {
+    } else {
+      const productInfo = {
+        "products":
+          [
+            {
+              apparel: apparel,
+              size: size,
+              color: color,
+              img_id: generatedImage.img_id,
+              prompt: prompt,
+              timestamp: new Date().toISOString(),
+              thumbnail: thumbnail,
+              toggled: toggled ? toggled : false,
+              price: getPriceNum(apparel) * 100,
+            }
+          ]
+      };
+      navigate('/information', { state: { productInfo: productInfo } });
     }
   }
 
@@ -547,8 +547,6 @@ const ProductPage = () => {
                 value={size}
                 onChange={handleSizeChange}
                 options={sizes}
-                defaultValue={{ value: '', label: '' }}
-                onFocus={handlechangeblanksize}
               />
             )}
             <span></span>
