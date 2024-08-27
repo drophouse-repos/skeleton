@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { loadState } from '../utils';
 import Loader from '../components/loader'
+import LoadingPage from '../components/newloader';
 export const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
@@ -27,7 +28,8 @@ export const AppProvider = ({ children }) => {
     {
         loading
         ? (
-            <Loader />
+            // <Loader />
+            <LoadingPage />
         )
         : (
             <AppContext.Provider value={{ 
