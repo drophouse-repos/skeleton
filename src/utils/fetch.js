@@ -83,7 +83,6 @@ export const fetchCartItems = async (navigate) => {
         return handleHttpError(err, navigate, 'fetchCartItems')
     }
 };
-
 export const fetchRemoveFromCart = async (img_id, navigate, setCartNumber) => {
     try {
         const response = await axiosInstance.post('/remove_from_cart', {"img_id": img_id});
