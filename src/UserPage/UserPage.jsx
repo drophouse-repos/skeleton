@@ -161,6 +161,7 @@ export default function UserPage() {
         address1: currentAddress.streetAddress,
         address2: currentAddress.streetAddress2,
         city: currentAddress.city,
+        country: currentAddress.country,
         state: currentAddress.stateProvince,
         zipCode: currentAddress.postalZipcode
       });
@@ -277,7 +278,6 @@ export default function UserPage() {
       })
     setIsNormalModalOpen(false)
   }
-
   function handleAddressItemEdit(firstName, lastName, email, phone, address1, address2, city, country, state, zip, addressType) {
     const new_shipping_info = {
       firstName: firstName,
@@ -287,6 +287,7 @@ export default function UserPage() {
       streetAddress: address1,
       streetAddress2: address2,
       city: city,
+      country: country,
       stateProvince: state,
       postalZipcode: zip,
       addressType: addressType
@@ -374,7 +375,6 @@ export default function UserPage() {
     handleModalInputChange('address1', place.name)
     addressComponents.forEach(component => {
       const { types, long_name, short_name } = component;
-
       if (types.includes('country')) {
         handleModalInputChange('country', short_name);
         handleCountryChange(short_name, false)
@@ -455,7 +455,7 @@ export default function UserPage() {
             width={'80%'}
           >
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {['firstName', 'lastName', 'email', 'phone', 'address1', 'address2', 'city', 'zipCode'].map(field => (
+        {['firstName', 'lastName', 'email', 'phone', 'address1', 'address2', 'city','country', 'zipCode'].map(field => (
             <div key={field}>
               <h2 className='text-start'>{field === 'address2' ? 'BUILDING/UNIT NO. ' : field==='address1' ? 'ADDRESS LINE' : field.replace(/([A-Z])/g, ' $1').toUpperCase()}<span className="text-red-600 ml-2">{field === 'address2' ? '' : '*'}</span></h2>
               {field == 'address1' ?
@@ -482,7 +482,6 @@ export default function UserPage() {
               {field == 'country' ? 
               <>
               <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
-
                 <span className="material-icons p-2">{getIconForField('state')}</span>
                 <Select
                   id="modalCountry"
