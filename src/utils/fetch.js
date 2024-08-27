@@ -77,7 +77,7 @@ export const fetchCartItems = async (navigate) => {
         const response = await axiosInstance.get("/view_cart");
         const data = response.data;
         if (response.status !== 200) throw new Error('Failed to fetch cart Items');
-        //setCartItems(data);
+        //setCartItems(data)
         return data;
     } catch (err) {
         return handleHttpError(err, navigate, 'fetchCartItems')
@@ -328,6 +328,67 @@ export const fetchImageBase64 = async(signed_url) => {
         return await convertBase64Promise;
     }catch (err) {
         console.log("Fetch Saved Signed Image Url Fail");
+    }
+}
+
+export const fetchcountrylist = async() => {
+    var token = process.env.REACT_APP_COUNTRY_LIST_API
+    try{
+
+        const axiosInstancefortoken = axiosInstance.create({
+            baseURL: 'https://www.universal-tutorial.com/api',
+            headers: {
+              Accept: 'application/json',
+              'api-token': token,
+              'user-email': 'muthuselvam.m99@gmail.com'
+            }
+        });
+        const api_token = await axiosInstancefortoken.get('/getaccesstoken');
+        const axiosInstancenew = axiosInstance.create({
+            baseURL: 'https://www.universal-tutorial.com/api',
+            headers: {
+              Accept: 'application/json',
+              "Authorization": `Bearer ${api_token.data.auth_token}`,
+            }
+        });
+        const response = await axiosInstancenew.get('/countries');
+        console.log("response for country api token fetch : ",response)
+        const countryList = response.data;
+        console.log(countryList);
+        return countryList;
+    } catch (error) {
+        console.error('Error fetching the country list:', error);
+        throw error;
+    }
+}
+export const fetchstatelist = async(selectedoption) => {
+    var token = process.env.REACT_APP_COUNTRY_LIST_API
+    try{
+
+        const axiosInstancefortoken = axiosInstance.create({
+            baseURL: 'https://www.universal-tutorial.com/api',
+            headers: {
+              Accept: 'application/json',
+              'api-token': token,
+              'user-email': 'muthuselvam.m99@gmail.com'
+            }
+        });
+        const api_token = await axiosInstancefortoken.get('/getaccesstoken');
+        const axiosInstancenew = axiosInstance.create({
+            baseURL: 'https://www.universal-tutorial.com/api',
+            headers: {
+              Accept: 'application/json',
+              "Authorization": `Bearer ${api_token.data.auth_token}`,
+            }
+        });
+        const response = await axiosInstancenew.get(`/states/${selectedoption}`);
+        console.log("response for country api token fetch : ",response)
+        const stateList = response.data;
+        console.log(stateList);
+        return stateList;
+    } catch (error) {
+        console.error('Error fetching the country list:', error);
+        throw error;
     }
 }
 
