@@ -1,0 +1,31 @@
+/* src/components/ProductList.css
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    padding: 16px;
+  }
+   */
+   /* src/components/ProductList.css */
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Display 3 cards per row */
+    gap: 16px;
+    padding: 16px;
+}
+
+@media (max-width: 1200px) {
+    .product-list {
+        grid-template-columns: repeat(2, 1fr); /* Display 2 cards per row on medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .product-list {
+        grid-template-columns: repeat(1, 1fr); /* Display 1 card per row on small screens */
+    }
+}
+
+.product-card-catelog {
+    margin-top: 5%;
+}

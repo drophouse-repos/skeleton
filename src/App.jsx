@@ -29,6 +29,7 @@ import ContactPage from './ContactPage/ContactPage';
 import Loader from './components/loader'
 import LoadingPage from './components/newloader';
 import OrganisationDetails from './context/ApiContext';
+import ProductSection from './ProductSection/ProductSection';
 const PrivateRoute = ({ children }) => {
 	const { user, loading } = useUser();
 	if(!loading)
@@ -78,6 +79,7 @@ useEffect(() => {
 			<Route path="/cart" element={<PrivateRoute><CartPage /></PrivateRoute>} />
 			<Route path="/driver" element={<PrivateRoute><DriverPage /></PrivateRoute>} />
 			<Route path="/contact" element={<ContactPage />} />
+			<Route path="/productsection" element={<ProductSection />} />
 			</Routes>
 			<Legal />
 		</div>
