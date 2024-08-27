@@ -1,4 +1,4 @@
-# prod-fe-v2
+# skeleton
 Front-end for drophouse version 2
 
 ```npm install```
