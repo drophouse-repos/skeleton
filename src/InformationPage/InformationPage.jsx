@@ -11,7 +11,7 @@ import { Modal, Input, Select } from "antd";
 import { FormOutlined } from "@ant-design/icons";
 import SelectableCard from '../components/SelectableCard';
 import { useLocation } from 'react-router-dom';
-import { createCheckoutSession, createStudentCheckout } from '../utils/fetch';
+import { createCheckoutSession, createStudentCheckout, fetchcountrylist, fetchstatelist } from '../utils/fetch';
 import ClassInput from '../components/ClassInput';
 import { Orgcontext } from '../context/ApiContext';
 const emailRegex = /\S+@\S+\.\S+/;
@@ -37,6 +37,7 @@ const InformationPage = () => {
       streetAddress: '',
       streetAddress2: '',
       city: '',
+      country: 'United States',
       stateProvince: '',
       postalZipcode: '',
     };
@@ -59,9 +60,53 @@ const InformationPage = () => {
     address1: '',
     address2: '',
     city: '',
+    country: '',
     state: '',
     zipCode: '',
   });
+  const [countryList, setCountryList] = useState([])
+  const [countryMap, setCountryMap] = useState({});
+  useEffect(()=>{
+    const fetchCountryList = async () => {
+      try {
+          const fetch = await fetchcountrylist()
+          const countryListData = Object.values(fetch).map(item => ({
+              value: item.country_short_name,
+              label: item.country_name
+          }))
+          setCountryList(countryListData)
+          const countryData = fetch.reduce((acc, item) => {
+            acc[item.country_short_name] = item.country_name;
+            return acc;
+          }, {});
+          setCountryMap(countryData)
+      } catch {
+        console.log("error fetching country list")
+      }
+    }
+    fetchCountryList();
+  },[])
+  const [stateList, setStateList] = useState([])
+  const handleCountryChange = async (selectedoption,changestate) => {
+    // console.log(countryMap[selectedoption])
+    if(changestate){
+      handleModalInputChange('state',null)
+    }
+    try{
+      handleModalInputChange('country',selectedoption)
+      const fetch = await fetchstatelist(countryMap[selectedoption])
+      const stateListData = Object.values(fetch).map(item => ({
+        value: item.state_name,
+        label: item.state_name
+      }))
+      setStateList(stateListData)
+    } catch(err) {
+      console.log("error fetching state list : ",err);
+    }
+  }
+  
+
+
   const { orgDetails } = useContext(Orgcontext)
 
   const {
@@ -150,8 +195,8 @@ const InformationPage = () => {
   };
 
   const handleAddressItemEdit = () => {
-    const { firstName, lastName, email, phone, address1, address2, city, state, zipCode } = modalData;
-    if (!firstName || !lastName || !email || !phone || !address1 || !city || !state || !zipCode) {
+    const { firstName, lastName, email, phone, address1, address2, city, country, state, zipCode } = modalData;
+    if (!firstName || !lastName || !email || !phone || !address1 || !city || !country || !state || !zipCode) {
       setMessageBannerText('Please fill in all required fields.');
       setShowMessageBanner(true);
       setBannerKey(prevKey => prevKey + 1);
@@ -171,6 +216,7 @@ const InformationPage = () => {
       streetAddress: address1,
       streetAddress2: address2,
       city: city,
+      country: country,
       stateProvince: state,
       postalZipcode: zipCode,
       addressType: 'primary'
@@ -208,6 +254,7 @@ const InformationPage = () => {
       address1: '',
       address2: '',
       city: '',
+      country: '',
       state: '',
       zipCode: ''
     });
@@ -283,6 +330,7 @@ const InformationPage = () => {
 
   const prefillModal = (addressType) => {
     const currentAddress = findAddress(addressType);
+    handleCountryChange(currentAddress.country,false)
     if (currentAddress) {
       setModalData({
         firstName: currentAddress.firstName,
@@ -292,6 +340,7 @@ const InformationPage = () => {
         address1: currentAddress.streetAddress,
         address2: currentAddress.streetAddress2,
         city: currentAddress.city,
+        country: currentAddress.country,
         state: currentAddress.stateProvince,
         zipCode: currentAddress.postalZipcode
       });
@@ -312,14 +361,22 @@ const InformationPage = () => {
     handleModalInputChange('address1', place.name)
     addressComponents.forEach(component => {
       const { types, long_name, short_name } = component;
-      if (types.includes('administrative_area_level_3')) {
+      if (types.includes('country')) {
+        handleModalInputChange('country', short_name);
+        handleCountryChange(short_name, false)
+        console.log("Country : ",long_name)
+      }
+      if (types.includes('administrative_area_level_3') || types.includes('locality')) {
         handleModalInputChange('city', long_name);
+        console.log("city : ",long_name)
       } 
       if (types.includes('administrative_area_level_1')) {
-        handleModalInputChange('state', short_name);
+        handleModalInputChange('state', long_name);
+        console.log("state : ",long_name)
       } 
       if (types.includes('postal_code')) {
         handleModalInputChange('zipCode', long_name);
+        console.log("zipcode : ",long_name)
       }
     });
   };
@@ -374,7 +431,7 @@ const InformationPage = () => {
         width={'80%'}
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {['firstName', 'lastName', 'email', 'phone', 'address1', 'address2', 'city', 'zipCode'].map(field => (
+        {['firstName', 'lastName', 'email', 'phone', 'address1', 'address2', 'city', 'country', 'zipCode'].map(field => (
             <div key={field}>
               <h2 className='text-start'>{field === 'address2' ? 'BUILDING/UNIT NO. ' : field==='address1' ? 'ADDRESS LINE' : field.replace(/([A-Z])/g, ' $1').toUpperCase()}<span className="text-red-600 ml-2">{field === 'address2' ? '' : '*'}</span></h2>
               {field == 'address1' ?
@@ -397,6 +454,23 @@ const InformationPage = () => {
                 </StandaloneSearchBox>
               </LoadScript>
               :
+              <>
+              {field == 'country' ? 
+              <>
+              <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
+                <span className="material-icons p-2">{getIconForField('state')}</span>
+                <Select
+                  id="modalCountry"
+                  placeholder="SELECT COUNTRY"
+                  value={modalData.country}
+                  style={{ width: "100%", height: "40px", marginBottom: "10px", padding:"0px", borderColor:"lightgrey"
+                  ,borderWidth:"2px", boxShadow:"none", borderRadius:'0px'}}
+                  onChange={(selectedOption) => handleCountryChange( selectedOption, true )}
+                  options={countryList}
+                  className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500 input-infopage"
+                />
+                </div>
+        </>:
               <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
               <span className="material-icons p-2">{getIconForField(field)}</span>
               <ClassInput
@@ -406,7 +480,7 @@ const InformationPage = () => {
                 onChange={e => handleModalInputChange(field, e)}
                 className="flex-1 p-2 focus:outline-none focus:border-primary-500 input-infopage"
               />
-            </div>
+            </div>}</>
               }
             </div>
           ))}
@@ -421,7 +495,7 @@ const InformationPage = () => {
                 ,borderWidth:"2px", boxShadow:"none", borderRadius:'0px'}}
                 onChange={(value) => { handleModalInputChange('state', value)}}
                 className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500 input-infopage"
-                options={USStatesNames} />
+                options={stateList} />
               </div>
           </div>
         </div>
