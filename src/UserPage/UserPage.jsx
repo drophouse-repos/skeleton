@@ -478,6 +478,9 @@ export default function UserPage() {
                 </StandaloneSearchBox>
               </LoadScript>
               :
+              <>
+              {field == 'country' ? 
+              <>
               <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
 
                 <span className="material-icons p-2">{getIconForField('state')}</span>
@@ -501,7 +504,8 @@ export default function UserPage() {
                 onChange={e => handleModalInputChange(field, e)}
                 className="flex-1 p-2 focus:outline-none focus:border-primary-500 input-infopage"
               />
-            </div>
+            </div>}
+            </>
               }
             </div>
           ))}
