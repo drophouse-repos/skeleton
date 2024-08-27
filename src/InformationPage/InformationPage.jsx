@@ -105,8 +105,6 @@ const InformationPage = () => {
     }
   }
   
-
-
   const { orgDetails } = useContext(Orgcontext)
 
   const {
@@ -195,8 +193,8 @@ const InformationPage = () => {
   };
 
   const handleAddressItemEdit = () => {
-    const { firstName, lastName, email, phone, address1, address2, city, country, state, zipCode } = modalData;
-    if (!firstName || !lastName || !email || !phone || !address1 || !city || !country || !state || !zipCode) {
+    const { firstName, lastName, email, phone, address1, address2, city, state, zipCode } = modalData;
+    if (!firstName || !lastName || !email || !phone || !address1 || !city || !state || !zipCode) {
       setMessageBannerText('Please fill in all required fields.');
       setShowMessageBanner(true);
       setBannerKey(prevKey => prevKey + 1);
@@ -216,7 +214,6 @@ const InformationPage = () => {
       streetAddress: address1,
       streetAddress2: address2,
       city: city,
-      country: country,
       stateProvince: state,
       postalZipcode: zipCode,
       addressType: 'primary'
@@ -340,7 +337,6 @@ const InformationPage = () => {
         address1: currentAddress.streetAddress,
         address2: currentAddress.streetAddress2,
         city: currentAddress.city,
-        country: currentAddress.country,
         state: currentAddress.stateProvince,
         zipCode: currentAddress.postalZipcode
       });
@@ -431,7 +427,7 @@ const InformationPage = () => {
         width={'80%'}
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {['firstName', 'lastName', 'email', 'phone', 'address1', 'address2', 'city', 'country', 'zipCode'].map(field => (
+        {['firstName', 'lastName', 'email', 'phone', 'address1', 'address2', 'city', 'zipCode'].map(field => (
             <div key={field}>
               <h2 className='text-start'>{field === 'address2' ? 'BUILDING/UNIT NO. ' : field==='address1' ? 'ADDRESS LINE' : field.replace(/([A-Z])/g, ' $1').toUpperCase()}<span className="text-red-600 ml-2">{field === 'address2' ? '' : '*'}</span></h2>
               {field == 'address1' ?
@@ -454,6 +450,7 @@ const InformationPage = () => {
                 </StandaloneSearchBox>
               </LoadScript>
               :
+
               <>
               {field == 'country' ? 
               <>
@@ -471,6 +468,7 @@ const InformationPage = () => {
                 />
                 </div>
         </>:
+
               <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
               <span className="material-icons p-2">{getIconForField(field)}</span>
               <ClassInput
@@ -480,6 +478,7 @@ const InformationPage = () => {
                 onChange={e => handleModalInputChange(field, e)}
                 className="flex-1 p-2 focus:outline-none focus:border-primary-500 input-infopage"
               />
+
             </div>}</>
               }
             </div>
@@ -495,6 +494,7 @@ const InformationPage = () => {
                 ,borderWidth:"2px", boxShadow:"none", borderRadius:'0px'}}
                 onChange={(value) => { handleModalInputChange('state', value)}}
                 className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500 input-infopage"
+
                 options={stateList} />
               </div>
           </div>
