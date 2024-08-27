@@ -166,10 +166,15 @@ const ProductPage = () => {
 
   const selectedProduct = productListLoad.find(item => item.Product_Name === apparel);
 
-  const sizes = selectedProduct?.Product_Sizes?.map(size => ({
-    value: size,
-    label: size,
-  })) || [];
+  const [sizes, setSizes] = useState([]);
+  useEffect(() => {
+    if (selectedProduct?.Product_Sizes) {
+      setSizes([{ value: '', label: '' }, ...selectedProduct.Product_Sizes.map(size => ({
+        value: size,
+        label: size,
+      }))]);
+    }
+  }, [selectedProduct,apparel]);
   const [toggleActivated, setToggleActivated] = useState(false);
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -310,12 +315,16 @@ const ProductPage = () => {
     productGalleryRef.current.galleryGoTo(0);
     setCurrentColor("white");
     setColor("white");
+    setSize('')
     setApparel(value);
   };
 
   const handleSizeChange = (value) => {
     setSize(value);
   };
+  const handlechangeblanksize = () => {
+    setSizes(sizes.filter(option => option.value !== ''));
+  }
 
   const handleProductGalleryChange = (selectedColor) => {
     setCurrentColor(selectedColor);
@@ -325,39 +334,45 @@ const ProductPage = () => {
       handleCartBtnDisable();
       return
     }
-    const thumbnail = await productGalleryRef.current.getSelectedPreviewImage(apparel, color, editedImage);
-  
-    const productPopupInfo = {
-      title: `${orgDetails[0].name} ${!(apparel) == 'mug' ? `${color.charAt(0).toUpperCase() + color.slice(1)}` : ``} ${apparel.charAt(0).toUpperCase() + apparel.slice(1)}`,
-      size: size,
-      price: getPriceNum(apparel),
-      image: thumbnail,
-    };
-    const productInfo = {
-      apparel: apparel,
-      size: size,
-      color: color,
-      img_id: generatedImage.img_id,
-      prompt: prompt,
-      timestamp: new Date().toISOString(),
-      thumbnail: thumbnail,
-      toggled: toggled ? toggled : false,
-      price: getPriceNum(apparel) * 100,
+    if(size == ''){
+        setMessageBannerText('Please select size!!!');
+        setShowMessageBanner(true);
     }
-    const succeeded = await fetchAddToCart(productInfo, navigate);
-    if (!succeeded.success) {
-      if (succeeded.navigated)
-        return
-      setMessageBannerText(succeeded.message);
-      setShowMessageBanner(true);
-      setBannerKey(prevKey => prevKey + 1);
-      return;
+    else{
+        const thumbnail = await productGalleryRef.current.getSelectedPreviewImage(apparel, color, editedImage);
+      
+        const productPopupInfo = {
+          title: `${orgDetails[0].name} ${!(apparel) == 'mug' ? `${color.charAt(0).toUpperCase() + color.slice(1)}` : ``} ${apparel.charAt(0).toUpperCase() + apparel.slice(1)}`,
+          size: size,
+          price: getPriceNum(apparel),
+          image: thumbnail,
+        };
+        const productInfo = {
+          apparel: apparel,
+          size: size,
+          color: color,
+          img_id: generatedImage.img_id,
+          prompt: prompt,
+          timestamp: new Date().toISOString(),
+          thumbnail: thumbnail,
+          toggled: toggled ? toggled : false,
+          price: getPriceNum(apparel) * 100,
+        }
+        const succeeded = await fetchAddToCart(productInfo, navigate);
+        if (!succeeded.success) {
+          if (succeeded.navigated)
+            return
+          setMessageBannerText(succeeded.message);
+          setShowMessageBanner(true);
+          setBannerKey(prevKey => prevKey + 1);
+          return;
+        }
+        setCartNumber(prev => prev + 1);
+        setProductPopupTitle("ADDED TO Cart");
+        setProductPopupInfo(productPopupInfo);
+        setProductPopupIsShown(true);
+        setImageToCart(true);
     }
-    setCartNumber(prev => prev + 1);
-    setProductPopupTitle("ADDED TO Cart");
-    setProductPopupInfo(productPopupInfo);
-    setProductPopupIsShown(true);
-    setImageToCart(true);
   }
 
   const handleBuy = async () => {
@@ -365,26 +380,32 @@ const ProductPage = () => {
       handleCartBtnDisable();
       return
     }
-    const thumbnail = await productGalleryRef.current.getSelectedPreviewImage(apparel, color, editedImage);
-    if (generatedImage.img_id === null) {
-    } else {
-      const productInfo = {
-        "products":
-          [
-            {
-              apparel: apparel,
-              size: size,
-              color: color,
-              img_id: generatedImage.img_id,
-              prompt: prompt,
-              timestamp: new Date().toISOString(),
-              thumbnail: thumbnail,
-              toggled: toggled ? toggled : false,
-              price: getPriceNum(apparel) * 100,
-            }
-          ]
-      };
-      navigate('/information', { state: { productInfo: productInfo } });
+    if(size == ''){
+      setMessageBannerText('Please select size!!!');
+      setShowMessageBanner(true);
+    }
+    else {
+        const thumbnail = await productGalleryRef.current.getSelectedPreviewImage(apparel, color, editedImage);
+        if (generatedImage.img_id === null) {
+        } else {
+          const productInfo = {
+            "products":
+              [
+                {
+                  apparel: apparel,
+                  size: size,
+                  color: color,
+                  img_id: generatedImage.img_id,
+                  prompt: prompt,
+                  timestamp: new Date().toISOString(),
+                  thumbnail: thumbnail,
+                  toggled: toggled ? toggled : false,
+                  price: getPriceNum(apparel) * 100,
+                }
+              ]
+          };
+          navigate('/information', { state: { productInfo: productInfo } });
+        }
     }
   }
 
@@ -544,9 +565,11 @@ const ProductPage = () => {
               <Select
                 style={{fontFamily : `${orgDetails[0].font}`}}
                 className={`${(window.innerWidth <= 544 ? `w-[8rem]` : `w-[15rem]` )} border-none outline-none`}
-                value={size}
+                value={size || ''}
                 onChange={handleSizeChange}
                 options={sizes}
+                defaultValue={{ value: '', label: '' }}
+                onFocus={handlechangeblanksize}
               />
             )}
             <span></span>
