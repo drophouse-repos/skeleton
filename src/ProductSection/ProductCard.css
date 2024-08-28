@@ -46,13 +46,14 @@
     position: relative;
     width: 100%;
     overflow: hidden;
+    background-color: #cccccc;
 }
 
 .product-images {
     width: 100%;
     display: block;
-    border-bottom: 1px solid #ddd;
-    border-radius: 8px 8px 0 0;
+    /* border-bottom: 1px solid #ddd; */
+    /* border-radius: 8px 8px 0 0; */
 }
 
 .product-sizes {
@@ -76,4 +77,36 @@
 
 .image-container:hover .product-sizes {
     opacity: 1;
+}
+
+.product-images {
+    width: 100%;
+    display: block;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* border-radius: 8px; */
+}
+.product-images.front {
+    position: relative;
+}
+.product-images.no-back {
+    position: relative; /* Makes sure the single image behaves as expected */
+    opacity: 1; /* Ensures it's fully visible */
+    transform: none; /* Ensures no scale transformation */
+}
+.product-images.back {
+    opacity: 0;
+    transform: scale(1.1); /* Slightly zoomed out by default */
+}
+
+.image-container:hover .product-images.front {
+    opacity: 0;
+    transform: scale(1.1);
+}
+
+.image-container:hover .product-images.back {
+    opacity: 1;
+    transform: scale(1);
 }
