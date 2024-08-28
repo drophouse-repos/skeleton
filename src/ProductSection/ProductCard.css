@@ -1,0 +1,112 @@
+/* src/components/ProductCard.css */
+.product-card {
+    /* border: 1px solid #ddd; */
+    border-radius: 8px;
+    /* padding: 16px; */
+    text-align: center;
+    /* background-color: #fff; */
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    transition: transform 0.2s;
+  }
+  
+  .product-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .product-images {
+    max-width: 100%;
+    height: auto;
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  .product-name {
+    font-size: 1em;
+    margin-bottom: 8px;
+    text-align: left;
+    font-weight: bold;
+  }
+  
+  .product-description {
+    font-size: 1em;
+    margin-bottom: 16px;
+    color: #666;
+    text-align: left;
+    font-weight: bold;
+  }
+  
+  .product-price {
+    font-size: 1em;
+    font-weight: bold;
+    color: #333;
+    text-align: left;
+  }
+
+  .image-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background-color: #cccccc;
+}
+
+.product-images {
+    width: 100%;
+    display: block;
+    /* border-bottom: 1px solid #ddd; */
+    /* border-radius: 8px 8px 0 0; */
+}
+
+.product-sizes {
+    position: absolute;
+    bottom: 25px;
+    right: 8px;
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.size-box {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.image-container:hover .product-sizes {
+    opacity: 1;
+}
+
+.product-images {
+    width: 100%;
+    display: block;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* border-radius: 8px; */
+}
+.product-images.front {
+    position: relative;
+}
+.product-images.no-back {
+    position: relative; /* Makes sure the single image behaves as expected */
+    opacity: 1; /* Ensures it's fully visible */
+    transform: none; /* Ensures no scale transformation */
+}
+.product-images.back {
+    opacity: 0;
+    transform: scale(1.1); /* Slightly zoomed out by default */
+}
+
+.image-container:hover .product-images.front {
+    opacity: 0;
+    transform: scale(1.1);
+}
+
+.image-container:hover .product-images.back {
+    opacity: 1;
+    transform: scale(1);
+}
