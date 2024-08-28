@@ -565,7 +565,7 @@ const ProductPage = () => {
               <Select
                 style={{fontFamily : `${orgDetails[0].font}`}}
                 className={`${(window.innerWidth <= 544 ? `w-[8rem]` : `w-[15rem]` )} border-none outline-none`}
-                value={size || ''}
+                value={size}
                 onChange={handleSizeChange}
                 options={sizes}
                 defaultValue={{ value: '', label: '' }}
