@@ -27,6 +27,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from "@vercel/speed-insights/react"
 import ContactPage from './ContactPage/ContactPage';
 import Loader from './components/loader'
+import LoadingPage from './components/newloader';
 import OrganisationDetails from './context/ApiContext';
 const PrivateRoute = ({ children }) => {
 	const { user, loading } = useUser();
@@ -47,7 +48,8 @@ useEffect(() => {
 	return (
 		<div>
 		{loading ? (
-			<Loader />
+			// <Loader />
+			<LoadingPage />
 		  ) : (
 			<OrganisationDetails>
 		<AppProvider>
