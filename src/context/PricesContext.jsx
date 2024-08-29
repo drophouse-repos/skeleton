@@ -29,7 +29,6 @@ export const PricesProvider=({children}) => {
   		{
   			loading 
   			? (
-  				// <Loader />
 				<LoadingPage />
   			)
   			: (
