@@ -17,7 +17,7 @@ const LoadingPage = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentPrompt((prevPrompt) => (prevPrompt + 1) % prompts.length);
-    }, 4000); // Change the prompt every 2 seconds
+    }, 4000); 
 
     return () => clearInterval(interval);
   }, []);
