@@ -9,8 +9,8 @@
    /* src/components/ProductList.css */
 .product-list {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Display 3 cards per row */
-    gap: 16px;
+    grid-template-columns: repeat(3, 1fr); /* Display 3 cards per row */
+    gap: 5px;
     padding: 16px;
 }
 
