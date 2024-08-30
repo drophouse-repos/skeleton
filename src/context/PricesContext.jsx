@@ -4,7 +4,6 @@ import { fetchPrices } from '../utils/fetch';
 import LoadingPage from '../components/newloader';
 
 export const PricesContext = createContext();
-
 export const PricesProvider=({children}) => {
     const [loading, setLoading] = useState(true);
 	const [priceMap, setPriceMap] = useState(false);
