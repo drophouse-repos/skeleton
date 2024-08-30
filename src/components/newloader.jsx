@@ -25,7 +25,8 @@ const LoadingPage = () => {
   return (
     <div className="loading-container">
       <img src={logo} alt="Logo" className="loading-logo" />
-      <div className="loading-prompt">"{prompts[currentPrompt]}"</div>
+      <h1 className="design-ideas" style={{fontSize: '30px',fontFamily:'ARSENAL',marginBottom:'15px'}}>Design Ideas</h1>
+      <div className="loading-prompt" style={{fontFamily: `ARSENAL`,maxWidth:'80vw',marginBottom:'100px'}}>{prompts[currentPrompt]}</div>
       <BouncingDotsLoader />
     </div>
   );
