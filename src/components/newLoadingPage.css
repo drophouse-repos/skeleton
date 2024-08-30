@@ -50,3 +50,17 @@
     border-top-color: #36D7B7; /* Blue-green */
   }
 }
+
+.loading-prompt {
+  color: #555;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.loading-prompt.fade-in {
+  opacity: 1;
+}
+
+.loading-prompt.fade-out {
+  opacity: 0;
+}
