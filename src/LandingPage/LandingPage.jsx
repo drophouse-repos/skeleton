@@ -78,28 +78,28 @@ setCardProduct(landingpage.map(item => { return item.SampleProduct_asset; }))
 
   const [scrolled, setScrolled] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const offset = window.scrollY;
-      if (offset > 500) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     const offset = window.scrollY;
+  //     if (offset > 500) {
+  //       setScrolled(true);
+  //     } else {
+  //       setScrolled(false);
+  //     }
+  //   };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  //   window.addEventListener('scroll', handleScroll);
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScroll);
+  //   };
+  // }, []);
 
   let className = 'top';
-  if (scrolled) {
-    if (window.innerWidth <= 544){
-    className += ' scrolled';
-    }
-  }
+  // if (scrolled) {
+  //   if (window.innerWidth <= 544){
+  //   className += ' scrolled';
+  //   }
+  // }
 
   const handleOrderPlaced = () => {
       setShowMessageBanner(true);
