@@ -46,17 +46,17 @@ const NavBarModal = ({ onClose, user, handleSignOut }) => {
         </div>
         <div className="flex justify-center">
           <div className="w-16 h-16 rounded-full bg-purple-800 flex items-center justify-center text-white text-2xl font-medium"
-          style={{fontFamily : `${orgDetails[0].font}`}}> 
+          style={{fontFamily : `${orgDetails.font}`}}> 
             {user.firstName ? user.firstName.charAt(0) : '?'}
           </div>
         </div>
         <div className="flex justify-between items-center mt-4">
-          <h2 className="text-md md:text-lg text-gray-900 flex-1 text-center" style={{fontFamily : `${orgDetails[0].font}`}}>
+          <h2 className="text-md md:text-lg text-gray-900 flex-1 text-center" style={{fontFamily : `${orgDetails.font}`}}>
             Hi, {user.firstName}!
           </h2>
         </div>
         
-        <h4 className="text-sm text-gray-900 mb-6 mt-2 text-center" style={{fontFamily : `${orgDetails[0].font}`}}>
+        <h4 className="text-sm text-gray-900 mb-6 mt-2 text-center" style={{fontFamily : `${orgDetails.font}`}}>
           {user.email}
         </h4>
         
@@ -68,7 +68,7 @@ const NavBarModal = ({ onClose, user, handleSignOut }) => {
                 onClose()
             }}
             className="py-2 px-4 bg-blue-500 hover:bg-blue-600 rounded text-white text-lg font-bold"
-            style={{fontFamily : `${orgDetails[0].font}`, backgroundColor: `${orgDetails[0].theme_color}`}}
+            style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
           >
             View Details
           </button>
@@ -80,7 +80,7 @@ const NavBarModal = ({ onClose, user, handleSignOut }) => {
                 onClose()
             }}
             className="py-2 px-4 border border-black text-black hover:bg-gray-100 rounded bg-transparent text-lg"
-            style={{fontFamily : `${orgDetails[0].font}`}}
+            style={{fontFamily : `${orgDetails.font}`}}
           >
             Sign out
           </button>

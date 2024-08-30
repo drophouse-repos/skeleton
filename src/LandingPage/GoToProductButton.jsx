@@ -16,7 +16,7 @@ const GoToProductButton = ({ text, link, className, type, color }) => {
     }
 
     return (
-        <button style={{fontFamily : `${orgDetails[0].font}`, backgroundColor : `${orgDetails[0].theme_color}`}} className={`${(window.innerWidth <= 544) ? `btn-mbl`: ``} font-bolder tracking-wider text-xl ${className}`} onClick={handleButtonClick}>
+        <button style={{whiteSpace:'nowrap',fontFamily : `${orgDetails.font}`, backgroundColor : `${orgDetails.theme_color}`}} className={`${(window.innerWidth <= 544) ? `btn-mbl`: ``} font-bolder tracking-wider text-xl ${className}`} onClick={handleButtonClick}>
             {text}
         </button>
     );

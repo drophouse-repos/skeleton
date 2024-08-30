@@ -8,7 +8,7 @@ const PromptBoxButton = forwardRef(({ text, onClick, className, loading, disable
   return (
     <button
       ref={ref}
-      style={{ fontFamily: orgDetails[0].font, width: window.innerWidth <= 544 ? '100%' : '' }}
+      style={{ fontFamily: orgDetails.font, width: window.innerWidth <= 544 ? '100%' : '' }}
       className={`bg-teal-500 text-zinc-100 font-extrabold py-2 px-4 rounded-xl whitespace-nowrap ${className}`}
       onClick={onClick}
       disabled={loading || disabled}

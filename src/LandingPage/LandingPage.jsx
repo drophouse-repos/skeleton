@@ -51,26 +51,30 @@ const LandingPage = () => {
     setProduct_list(name);
 }, [landingpage]);
 console.log("landingpage",landingpage)
-const [CardProduct, setCardProduct] = useState();
+const [CardProduct_front, setCardProduct_front] = useState();
+const [CardProduct_back, setCardProduct_back] = useState();
 useEffect(()=>{
-setCardProduct(landingpage.map(item => { return item.SampleProduct_asset; }))
+  setCardProduct_front(landingpage.map(item => { return item.SampleProduct_asset_front; }))
+  setCardProduct_back(landingpage.map(item => { return item.SampleProduct_asset_back; }))
 },[landingpage])
 
 
   const products = [];
 
   if(landingpage && landingpage && product_list && (landingpage.length == product_list.length && 
-    landingpage.length == CardProduct.length && product_list.length == CardProduct.length))
+    landingpage.length == CardProduct_front.length && product_list.length == CardProduct_front.length))
   {
     for(var i=0; i<landingpage.length; i++)
     {
-      let item_img = CardProduct[i]
+      let item_img = CardProduct_front[i]
+      let item_img_back = CardProduct_back[i]
       var obj = {
         type: landingpage[i].SampleProduct_Name,
         name: `${name} AI Designed ${product_list[i]}`,
         price: getPriceNum(landingpage[i].SampleProduct_Name),
         color: 'white',
-        imageList: [item_img]
+        imageList_front: [item_img],
+        imageList_back: [item_img_back]
       }
       products.push(obj);
     }
@@ -125,9 +129,9 @@ setCardProduct(landingpage.map(item => { return item.SampleProduct_asset; }))
             className={`${className} top-[8%] md:top-[8%] flex flex-col items-center`}
           >
 
-            <RShowcase imageList={GetBackendImage()} changeInterval={3000} RMask={orgDetails[0].mask}/>
+            <RShowcase imageList={GetBackendImage()} changeInterval={3000} RMask={orgDetails.mask}/>
             <div className="h-4"></div>
-            <div style={{fontFamily : `${orgDetails[0].font}`}} className="text-black text-5xl text-center">
+            <div style={{fontFamily : `${orgDetails.font}`}} className="text-black text-5xl text-center">
               Personalized 
               <br />
                     {name}

@@ -71,7 +71,7 @@ const FavoritePage = () => {
       className="flex back-button py-1 px-0"
       >
         <LeftCircleOutlined style={{ fontSize: '20px', marginRight: "1em", paddingTop: '3px'}} />
-        <div className="text-lg" style={{fontFamily : `${orgDetails[0].font}`}}>Back To Products</div>
+        <div className="text-lg" style={{fontFamily : `${orgDetails.font}`}}>Back To Products</div>
       </button>
       <div></div> 
     </div>
@@ -90,29 +90,29 @@ const FavoritePage = () => {
             />
             {product.bought && (
               <div className="absolute top-0 left-0 mt-2 ml-2 text-white bg-green-500 font-bold py-1 px-2 rounded"
-               style={{fontFamily : `${orgDetails[0].font}`}}>
+               style={{fontFamily : `${orgDetails.font}`}}>
                 Bought
               </div>
             )}
             <button 
               onClick={(event) => handleDeleteImage(product.img_id, product.prompt, event)}
               className="absolute top-0 right-0 mt-2 mr-2 text-white bg-red-500 hover:bg-red-700 font-bold py-1 px-2 rounded"
-              style={{fontFamily : `${orgDetails[0].font}`}}
+              style={{fontFamily : `${orgDetails.font}`}}
             >
               Delete
             </button>
           </div>
           <div className="mt-2">
-            <p className="text-xl text-center text-gray-700" style={{fontFamily : `${orgDetails[0].font}`}}>{product.prompt}</p>
+            <p className="text-xl text-center text-gray-700" style={{fontFamily : `${orgDetails.font}`}}>{product.prompt}</p>
           </div>
         </div>
       ))}
     </div>
     <div className={`${likedProducts.length === 0? '' : 'hidden'} w-full col-span-6`}>
-        <div className='text-lg md:text-2xl mb-2 mt-16' style={{fontFamily : `${orgDetails[0].font}`}}>Empty Favorite Product</div>
-        <div className='text-lg md:text-2xl mb-10' style={{fontFamily : `${orgDetails[0].font}`}}>Please go to add your design.</div>
+        <div className='text-lg md:text-2xl mb-2 mt-16' style={{fontFamily : `${orgDetails.font}`}}>Empty Favorite Product</div>
+        <div className='text-lg md:text-2xl mb-10' style={{fontFamily : `${orgDetails.font}`}}>Please go to add your design.</div>
         <button className='bg-sky-600 text-zinc-100 font-extrabold py-2 px-4 rounded-full w-[10rem] mb-10 text-lg' onClick={(e) =>  navigate('/product')} 
-        style={{fontFamily : `${orgDetails[0].font}`, backgroundColor: `${orgDetails[0].theme_color}`}}>Design Now</button>
+        style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}>Design Now</button>
     </div>
   </div>
   );

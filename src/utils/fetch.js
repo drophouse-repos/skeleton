@@ -403,6 +403,17 @@ export const fetchOrganisationlist = async (navigate) => {
     }
 };
 
+export const fetchOrganisation_by_id = async (org_id, navigate) => {
+    try {
+        const response = await axiosInstance.post("/get_organisation_by_id",org_id);
+        const data = response.data;
+        if (response.status !== 200) throw new Error('Failed to fetch Organisations');
+        return data;
+    } catch (err) {
+        return handleHttpError(err, navigate, 'fetchOrganisation_by_id')
+    }
+};
+
 function handleHttpError(err, navigate, funcName) {
     if (err.response) {
         const status = err.response.status;

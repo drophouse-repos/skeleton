@@ -23,7 +23,7 @@ function ProductInformation(){
         // const hoodieClips = landingpage.filter(item => item.SampleProduct_Name === 'hoodie').map(item => item[0].SampleProduct_asset);
         const  getFirstAsset =  (productName) => {
             const filteredProducts = landingpage.filter(item => item.SampleProduct_Name === productName);
-            const sampleproduct = Object.values(filteredProducts).map(item => {return {name : item.SampleProduct_Name,asset : item.SampleProduct_asset}});
+            const sampleproduct = Object.values(filteredProducts).map(item => {return {name : item.SampleProduct_Name,asset : item._front}});
             if (sampleproduct[0]) {
                 return sampleproduct[0].asset;
             } else {
@@ -146,18 +146,18 @@ function ProductInformation(){
             <div className="flex flex-row">
                 {productImageList}
             </div>
-            <div className="whitespace-normal text-justify p-[1rem] border-[1px] border-slate-400 rounded-lg sm:text-sm md:text-md lg:text-xl" style={{fontFamily : `${orgDetails[0].font}`}}>
+            <div className="whitespace-normal text-justify p-[1rem] border-[1px] border-slate-400 rounded-lg sm:text-sm md:text-md lg:text-xl" style={{fontFamily : `${orgDetails.font}`}}>
                 {productInformation[activeIndex].productDesp}
                 <ul className="list-disc">
                     <span className="block h-[4rem]"></span>
-                    {productInformation[activeIndex].productDetail.split(";").map((dataListContent, index)=> <li key={index} className="ml-[2rem] text-left indent-2" style={{fontFamily : `${orgDetails[0].font}`}}>{dataListContent}</li>)}
+                    {productInformation[activeIndex].productDetail.split(";").map((dataListContent, index)=> <li key={index} className="ml-[2rem] text-left indent-2" style={{fontFamily : `${orgDetails.font}`}}>{dataListContent}</li>)}
                     <span className="block h-[4rem]"></span>
                 </ul>
             </div>
 
-            <div className="w-full mt-8 mb-4 text-left text-2xl" style={{fontFamily : `${orgDetails[0].font}`}}>Size Information</div>
+            <div className="w-full mt-8 mb-4 text-left text-2xl" style={{fontFamily : `${orgDetails.font}`}}>Size Information</div>
             <div className="whitespace-normal text-left p-[1rem] border-[1px] border-slate-400 rounded-lg sm:text-sm md:text-md lg:text-xl">
-                <span style={{fontFamily : `${orgDetails[0].font}`}}>{sizeInformation[activeIndex].productDesp}</span>
+                <span style={{fontFamily : `${orgDetails.font}`}}>{sizeInformation[activeIndex].productDesp}</span>
                 <img className="mt-[1vh]" onClick={()=> (window.innerWidth <= 544) ? setIsModalOpen(true) : []} src={sizeInformation[activeIndex].productSizeInfo} alt="product size information" />
                 <Modal
                         open={isModalOpen}
@@ -194,18 +194,18 @@ function ProductInformation(){
 
             <div className="text-left my-[2rem] text-lg w-full" >
                 {sizeInformation[activeIndex].unitInformation.map((unit, index)=> <span key={index} className={`ml-[1.5rem] inline-block pb-[1rem] border-b-2 ${index === unitIndex ? "font-bold border-slate-400" : "border-transparent"}`} onClick={()=>setUnitIndex(index)}
-                    style={{fontFamily : `${orgDetails[0].font}`}} >{unit.unitName}</span>)}
+                    style={{fontFamily : `${orgDetails.font}`}} >{unit.unitName}</span>)}
             </div>
 
             <table className="border-collapse border border-slate-400 ...">
                 <thead>
                     <tr>
-                        {sizeInformation[activeIndex].unitInformation[unitIndex].title.map((title, index)=><th key={index} clasName="border border-slate-300 ..." style={{fontFamily : `${orgDetails[0].font}`}}>{title}</th>)}
+                        {sizeInformation[activeIndex].unitInformation[unitIndex].title.map((title, index)=><th key={index} clasName="border border-slate-300 ..." style={{fontFamily : `${orgDetails.font}`}}>{title}</th>)}
                     </tr>
                 </thead>
                 <tbody>
                     {sizeInformation[activeIndex].unitInformation[unitIndex].sizeData.map((data, index)=> <tr key={index}>
-                        {data.map((d, index)=> <td key={index} className="border border-slate-300 ..." style={{fontFamily : `${orgDetails[0].font}`}} dangerouslySetInnerHTML={{ __html: d }}></td>)}
+                        {data.map((d, index)=> <td key={index} className="border border-slate-300 ..." style={{fontFamily : `${orgDetails.font}`}} dangerouslySetInnerHTML={{ __html: d }}></td>)}
                     </tr>)}
                 </tbody>
             </table>

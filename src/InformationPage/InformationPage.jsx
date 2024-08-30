@@ -176,15 +176,15 @@ const InformationPage = () => {
 
   const renderShippingInfoContent = (shippingInfo) => {
     if (!shippingInfo || shippingInfo === '') {
-      return <p className="text-lg" style={{fontFamily : `${orgDetails[0].font}`}}>Not Applicable</p>;
+      return <p className="text-lg" style={{fontFamily : `${orgDetails.font}`}}>Not Applicable</p>;
     } else {
       return (
         <div>
           <br />
-          <p className="text-lg" style={{fontFamily : `${orgDetails[0].font}`}}>{shippingInfo.firstName} {shippingInfo.lastName}</p>
-          <p className="text-lg" style={{fontFamily : `${orgDetails[0].font}`}}>{shippingInfo.streetAddress} {shippingInfo.streetAddress2}, {shippingInfo.city}, {shippingInfo.stateProvince}, {shippingInfo.postalZipcode}</p>
-          <p className="text-lg" style={{fontFamily : `${orgDetails[0].font}`}}>{shippingInfo.email}</p>
-          <p className="text-lg" style={{fontFamily : `${orgDetails[0].font}`}}>{shippingInfo.phone}</p>
+          <p className="text-lg" style={{fontFamily : `${orgDetails.font}`}}>{shippingInfo.firstName} {shippingInfo.lastName}</p>
+          <p className="text-lg" style={{fontFamily : `${orgDetails.font}`}}>{shippingInfo.streetAddress} {shippingInfo.streetAddress2}, {shippingInfo.city}, {shippingInfo.stateProvince}, {shippingInfo.postalZipcode}</p>
+          <p className="text-lg" style={{fontFamily : `${orgDetails.font}`}}>{shippingInfo.email}</p>
+          <p className="text-lg" style={{fontFamily : `${orgDetails.font}`}}>{shippingInfo.phone}</p>
         </div>
       );
     }
@@ -267,8 +267,8 @@ const InformationPage = () => {
       return;
     }
     productInfo["shipping_info"] = findAddress('primary');
-    productInfo["org_id"] = orgDetails[0].org_id;
-    productInfo["org_name"] = orgDetails[0].name;
+    productInfo["org_id"] = orgDetails.org_id;
+    productInfo["org_name"] = orgDetails.name;
     console.log(productInfo)
     if(productInfo['shipping_info'] && productInfo['shipping_info']['firstName'] && productInfo['shipping_info']['email'] && productInfo['shipping_info']['lastName'] && productInfo['shipping_info']['phone'] && productInfo['shipping_info']['postalZipcode'] && productInfo['shipping_info']['stateProvince'] && productInfo['shipping_info']['streetAddress'] && productInfo['shipping_info']['city'])
     {
@@ -422,7 +422,7 @@ const InformationPage = () => {
           </div>
       )}
       <Modal
-        title={<p className="text-lg" style={{fontFamily : `${orgDetails[0].font}`}}>{`Edit Address`}</p>}
+        title={<p className="text-lg" style={{fontFamily : `${orgDetails.font}`}}>{`Edit Address`}</p>}
         open={isModalOpen}
         okButtonProps={{ style: { display: "none" } }}
         cancelButtonProps={{ style: { display: "none" } }}
@@ -485,7 +485,7 @@ const InformationPage = () => {
             </div>
           ))}
           <div>
-            <h2 className='text-start' style={{fontFamily : `${orgDetails[0].font}`}}>STATE<span className="text-red-600 ml-2">*</span></h2>
+            <h2 className='text-start' style={{fontFamily : `${orgDetails.font}`}}>STATE<span className="text-red-600 ml-2">*</span></h2>
             <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
             <span className="material-icons p-2">{getIconForField('state')}</span>
               <Select id="modalState"
@@ -504,7 +504,7 @@ const InformationPage = () => {
           <div className="flex flex-row w-full justify-end">
             <button className="bg-gray-200 text-black-100 font-extrabold py-2 px-4 rounded-full mr-5" onClick={handleCancel}>CANCEL</button>
             <button
-              style={{fontFamily : `${orgDetails[0].font}`, backgroundColor: `${orgDetails[0].theme_color}`}}
+              style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
               className="bg-sky-600 text-zinc-100 font-extrabold py-2 px-4 rounded-full text-lg"
               onClick={handleAddressItemEdit}
             >
@@ -515,9 +515,9 @@ const InformationPage = () => {
 
 
       <form className="infoForm" onSubmit={handleSubmit}>
-        <div className="apparel-text font-bold text-lg" style={{fontFamily : `${orgDetails[0].font}`}}>Provide your information to continue</div>
+        <div className="apparel-text font-bold text-lg" style={{fontFamily : `${orgDetails.font}`}}>Provide your information to continue</div>
         <SelectableCard index={1} onClick={handleCardClick} selected={selectedId === 1}>
-          <h2 className="text-lg" style={{fontFamily : `${orgDetails[0].font}`}}>Address</h2>
+          <h2 className="text-lg" style={{fontFamily : `${orgDetails.font}`}}>Address</h2>
           {renderShippingInfoContent(findAddress("primary"))}
           <FormOutlined
             onClick={(e) => {
@@ -535,11 +535,11 @@ const InformationPage = () => {
             checked={termsAccepted}
             onChange={e => setTermsAccepted(e.target.checked)}
           />
-          <label style={{fontFamily : `${orgDetails[0].font}`}}>
-            I agree to the <a href="/Terms.pdf" target="_blank" style={{fontFamily : `${orgDetails[0].font}`}}>Terms and Conditions</a>
+          <label style={{fontFamily : `${orgDetails.font}`}}>
+            I agree to the <a href="/Terms.pdf" target="_blank" style={{fontFamily : `${orgDetails.font}`}}>Terms and Conditions</a>
           </label>
         </div>
-        <button className="continueBtn" type="submit" disabled={isLoading} style={{fontFamily : `${orgDetails[0].font}`, color: `${orgDetails[0].theme_color}`}}>
+        <button className="continueBtn" type="submit" disabled={isLoading} style={{fontFamily : `${orgDetails.font}`, color: `${orgDetails.theme_color}`}}>
           {isLoading ? (
             <div className="snippet" data-title="dot-elastic">
           <div className="stage">

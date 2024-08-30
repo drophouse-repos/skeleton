@@ -77,10 +77,10 @@ export default function NavBar() {
         }}
       >
         {icon}
-        <div className="text-xl" style={{fontFamily : `${orgDetails[0].font}`}} 
+        <div className="text-xl" style={{fontFamily : `${orgDetails.font}`}} 
           onMouseEnter={(e)=>{
             if(e && e.target && e.target.style)
-              e.target.style.color = orgDetails[0].theme_color
+              e.target.style.color = orgDetails.theme_color
           }}
           onMouseLeave={(e)=>{
             if(e && e.target && e.target.style)

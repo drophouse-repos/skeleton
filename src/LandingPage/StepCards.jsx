@@ -14,16 +14,16 @@ function StepCard({ title, description, image, index }) {
       <div className="flex flex-row w-full justify-start px-2">
         <div className="mr-2 text-[#ffffff] whitespace-nowrap">
           {/* <span>Step </span> */}
-          <span style={{fontFamily : `${orgDetails[0].font}`}} className={`text-bold text-lg`}>{index}.</span>
+          <span style={{fontFamily : `${orgDetails.font}`}} className={`text-bold text-lg`}>{index}.</span>
         </div>
-        <div style={{fontFamily : `${orgDetails[0].font}`}} className={`text-color text-bold text-lg`}>{title}</div>
+        <div style={{fontFamily : `${orgDetails.font}`}} className={`text-color text-bold text-lg`}>{title}</div>
       </div>
 
       <div className="w-full">
         <img src={image} alt={title} />
       </div>
 
-      <div style={{fontFamily : `${orgDetails[0].font}`}} className={`text-bold text-lg`}>{description}</div>
+      <div style={{fontFamily : `${orgDetails.font}`}} className={`text-bold text-lg`}>{description}</div>
     </div>
   );
 }

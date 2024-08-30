@@ -31,10 +31,10 @@ const Legal = () => {
           <a className="ml-3" href="https://twitter.com/RoseHulman?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><img src="/xtwitter.svg" alt="X" /></a>
         </div>
         <div className="legal-links">
-          <h4 style={{fontFamily : `${orgDetails[0].font}`, color : `${orgDetails[0].theme_color}`}} onClick={privacyPolicyBtn}> PRIVACY </h4>
-          <h4 style={{fontFamily : `${orgDetails[0].font}`, color : `${orgDetails[0].theme_color}`}} onClick={TermsBtn}> TERMS </h4>
-          <h4 style={{fontFamily : `${orgDetails[0].font}`, color : `${orgDetails[0].theme_color}`}} onClick={teamBtn}> TEAM </h4> 
-          <h4 style={{fontFamily : `${orgDetails[0].font}`, color : `${orgDetails[0].theme_color}`}} onClick={faqBtn}> FAQ </h4>
+          <h4 style={{fontFamily : `${orgDetails.font}`, color : `${orgDetails.theme_color}`}} onClick={privacyPolicyBtn}> PRIVACY </h4>
+          <h4 style={{fontFamily : `${orgDetails.font}`, color : `${orgDetails.theme_color}`}} onClick={TermsBtn}> TERMS </h4>
+          <h4 style={{fontFamily : `${orgDetails.font}`, color : `${orgDetails.theme_color}`}} onClick={teamBtn}> TEAM </h4> 
+          <h4 style={{fontFamily : `${orgDetails.font}`, color : `${orgDetails.theme_color}`}} onClick={faqBtn}> FAQ </h4>
         </div> 
       </div>
     </footer>

@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import Loader from '../components/loader';
-import { fetchOrganisationlist } from '../utils/fetch';
+import { fetchOrganisationlist, fetchOrganisation_by_id } from '../utils/fetch';
 import LoadingPage from '../components/newloader';
 
 export const Orgcontext = createContext();
@@ -20,11 +20,13 @@ const OrganisationDetails = ({ children }) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const items = await fetchOrganisationlist(); // Assuming fetchOrganisationlist returns the JSON structure you provided
-
+            try { // Assuming fetchOrganisationlist returns the JSON structure you provided
+                const org_id = {
+                    org_id: process.env.REACT_APP_ORGANISATION_ID
+                }
+                const item = await fetchOrganisation_by_id(org_id);
                 // Filter out the organisation with org_id === '1002'
-                const organisationData = Object.values(items).filter(item => item.org_id === `${process.env.REACT_APP_ORGANISATION_ID}`).map(item => {
+                // const organisationData = items.map(item => {
                     // Extract organisation-level details
                     setOrgId(item.org_id);
                     setName(item.name);
@@ -36,7 +38,8 @@ const OrganisationDetails = ({ children }) => {
 
                     const landingpage_data = item.landingpage.map(sampleproduct => ({
                         SampleProduct_Name: sampleproduct.name,
-                        SampleProduct_asset: sampleproduct.asset
+                        SampleProduct_asset_front: sampleproduct.asset,
+                        SampleProduct_asset_back: sampleproduct.asset_back
                     }))
                     setLandingPage(landingpage_data);
                     // Extract product-level details
@@ -58,10 +61,9 @@ const OrganisationDetails = ({ children }) => {
                     setProducts(productsData);
 
                     // Return combined organisation and product details
-                    return { ...item, LandingPage: landingpage , Products: productsData };
-                });
-
-                setOrgDetails(organisationData);
+                    setOrgDetails({ ...item, LandingPage: landingpage , Products: productsData });
+                // });
+                // setOrgDetails(organisationData);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching data:', error);
