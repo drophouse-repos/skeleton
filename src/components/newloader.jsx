@@ -13,10 +13,14 @@ const LoadingPage = () => {
   ];
 
   const [currentPrompt, setCurrentPrompt] = useState(0);
-
+  const [fadeState, setFadeState] = useState("fade-in");
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentPrompt((prevPrompt) => (prevPrompt + 1) % prompts.length);
+      setFadeState("fade-out");
+      setTimeout(() => {
+        setCurrentPrompt((prevPrompt) => (prevPrompt + 1) % prompts.length);
+        setFadeState("fade-in");
+      }, 800); // Delay to match the transition duration
     }, 4000); 
 
     return () => clearInterval(interval);
@@ -26,7 +30,7 @@ const LoadingPage = () => {
     <div className="loading-container">
       <img src={logo} alt="Logo" className="loading-logo" />
       <h1 className="design-ideas" style={{fontSize: '30px',fontFamily:'ARSENAL',marginBottom:'15px'}}>Design Ideas</h1>
-      <div className="loading-prompt" style={{fontFamily: `ARSENAL`,maxWidth:'80vw',marginBottom:'100px'}}>{prompts[currentPrompt]}</div>
+      <div className={`loading-prompt ${fadeState}`} style={{fontFamily: `ARSENAL`,maxWidth:'80vw',marginBottom:'100px'}}>{prompts[currentPrompt]}</div>
       <BouncingDotsLoader />
     </div>
   );
