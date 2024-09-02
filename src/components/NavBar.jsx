@@ -25,13 +25,12 @@ import { updateFavicon } from '../utils';
 export default function NavBar() {
   const { orgDetails } = useContext(Orgcontext)
   const [navbarHide, setNavbarHide] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
   const [isInLandingPage, setIsInLandingPage] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const { user, handleSignOut } = useUser();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const { cartNumber, setCartNumber } = useContext(AppContext);
+  const { cartNumber, setCartNumber,menuOpen, setMenuOpen } = useContext(AppContext);
   const onMenuClose = () => {
     setMenuOpen(false);
   };

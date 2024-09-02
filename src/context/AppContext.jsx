@@ -16,6 +16,7 @@ export const AppProvider = ({ children }) => {
   const [aiTaskId, setAiTaskId] = useState(loadState('aiTaskId', 0, 'appState'));
   const [dictionaryId, setDictionaryId] = useState(loadState('aiTaskId', '', 'appState'));
   const [isActive, setIsActive] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   useEffect(() => {
     setLoading(true);
     const state = { prompt, apparel, size, color, price, aiSuggestions };
@@ -42,7 +43,8 @@ export const AppProvider = ({ children }) => {
               cartNumber, setCartNumber,
               aiTaskId, setAiTaskId,
               dictionaryId, setDictionaryId,
-              isActive, setIsActive
+              isActive, setIsActive,
+              menuOpen, setMenuOpen
             }}>
               {children}
             </AppContext.Provider>
