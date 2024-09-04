@@ -304,18 +304,22 @@ const ProductPage = () => {
       productGalleryRef.current.galleryGoTo(0);
       setCurrentColor("white");
       setColor("white");
+      setSize('M')
     }
-    if(value === 'cap'){
+    else if(value === 'cap'){
       setCurrentGalleryIndex(0);
       productGalleryRef.current.galleryGoTo(0);
       setCurrentColor("white");
       setColor("white");
+      setSize('M')
+    }
+    else {
+      setSize('')
     }
     setCurrentGalleryIndex(0);
     productGalleryRef.current.galleryGoTo(0);
     setCurrentColor("white");
     setColor("white");
-    setSize('')
     setApparel(value);
   };
 
