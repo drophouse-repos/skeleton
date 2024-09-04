@@ -60,6 +60,7 @@ const ThankYouPage = () => {
       {showMessageBanner && <MessageBanner message={messageBannerText} keyTrigger={bannerKey} />}
       <Confetti />
       <div className="message-box">
+      <span className='thank-you-close-btn' onClick={() => navigate('/')}>X</span>
         <h1>Thank You!</h1>
         <p>Your order has been placed successfully. We will send you an email shortly with your order confirmation.</p>
         <div className="h-4"></div>
@@ -75,7 +76,7 @@ const ThankYouPage = () => {
 
           <div className="button-group">
             <ClassButton text="Submit" className="feedback-btn" type="submit" />
-            <ClassButton text="Go Back" className="home-btn text-white border-2 border-white rounded-lg px-4 text-x" link="/" />
+            {/* <ClassButton text="Go Back" className="home-btn text-white border-2 border-white rounded-lg px-4 text-x" link="/" /> */}
           </div>
         </form>
       </div>

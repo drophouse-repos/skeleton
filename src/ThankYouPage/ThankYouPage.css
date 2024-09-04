@@ -29,6 +29,8 @@
     width: 100%; 
     text-align: center;
     box-sizing: border-box;
+    position: relative;
+    margin-top: 50px;
   }
   
   .message-box h1 {
@@ -132,3 +134,19 @@
     }
   }
   
+
+  .thank-you-close-btn {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: red;
+    height: 30px;
+    width: 30px;
+    border-radius: 20px;
+    color: white;
+    font-size: 17px;
+    text-align: center;
+    align-items: center;
+    padding: 2px;
+    cursor: pointer;
+  }
