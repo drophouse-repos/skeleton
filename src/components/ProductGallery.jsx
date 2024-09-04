@@ -404,7 +404,6 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
     };
   
     const enhanceImage = (url) => {
-      // Apply image enhancement transformations
       const enhancedUrl = `${url.replace('/upload/', '/upload/e_gen_restore/')}`;
       return enhancedUrl;
     };
@@ -415,8 +414,6 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
     const transformedCanvas = document.createElement('canvas');
     transformedCanvas.width = 512;
     transformedCanvas.height = 512;
-    // transformedCanvas.width = 1080;
-    // transformedCanvas.height = 1080;
     const ctx = transformedCanvas.getContext('2d');
     const image = new Image();
     let tmp = imageRef.current.innerHTML;
