@@ -1,15 +1,90 @@
 .landing-random-image {
-    display: block;
-    width: auto;
-    height: 100%;
-    animation: image-switch 1s linear;
+  display: block;
+  width: auto;
+  height: 100%;
+  animation: image-switch 1s linear;
 }
 
 @keyframes image-switch {
-    0% {
-      opacity: 0.5;
-    }
-    100% {
-      opacity: 1;
-    }
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.buy-btn-slider {
+position: relative;
+overflow: hidden;
+}
+
+.buy-btn-slider::before {
+content: "";
+position: absolute;
+top: 0;
+left: -100%;
+width: 200%;
+height: 100%;
+background: linear-gradient(120deg, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 70%);
+transition: transform 0.7s ease;
+transform: skewX(-25deg);
+opacity: 0;
+}
+
+.buy-btn-slider:hover::before {
+transform: translateX(100%) skewX(-25deg);
+opacity: 1;
+}
+.image-container-main {
+perspective: 1000px;
+}
+.image-container {
+transform-style: preserve-3d;
+transition: transform 0.8s ease-in-out;
+position: relative;
+display: flex;
+align-items: center;
+justify-content: center;
+height: auto;
+width: 100%;
+min-width: 100%;
+}
+
+.back-img {
+position: absolute;
+width: 90%;
+height: auto;
+display: block;
+backface-visibility: hidden;
+object-fit: cover;
+}
+
+.landing-random-image {
+opacity: 1;
+display: block;
+width: 90%;
+height: auto;
+transform: rotateY(0deg);
+}
+
+.back-img {
+opacity: 0;
+transform: rotateY(180deg);
+
+}
+
+.landing-random-image,
+.back-img {
+transition: opacity 0.8s ease-in-out;
+}
+
+.image-container-main:hover .image-container{
+transform: rotateY(180deg);
+}
+.image-container-main:hover .back-img {
+opacity: 1;
+}
+
+.image-container:hover .landing-random-image {
+opacity: 0;
 }

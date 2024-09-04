@@ -36,7 +36,8 @@ const OrganisationDetails = ({ children }) => {
 
                     const landingpage_data = item.landingpage.map(sampleproduct => ({
                         SampleProduct_Name: sampleproduct.name,
-                        SampleProduct_asset: sampleproduct.asset
+                        SampleProduct_asset_front: sampleproduct.asset,
+                        SampleProduct_asset_back: sampleproduct.asset_back,
                     }))
                     setLandingPage(landingpage_data);
                     // Extract product-level details
