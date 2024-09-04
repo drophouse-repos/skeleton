@@ -38,4 +38,5 @@ export const PricesProvider=({children}) => {
   		}
   		</div>
   	);
+	
 }
