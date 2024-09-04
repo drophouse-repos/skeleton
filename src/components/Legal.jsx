@@ -27,7 +27,7 @@ const Legal = () => {
       <div className="general">
         <div className="social-icons flex flex-row justify-center">
           <a className="mr-3" href="mailto:support@drophouse.art"><img src="/contact.svg" alt="Email" /></a>
-          <a className="ml-3 mr-3" href="https://www.instagram.com/rosehulman/?hl=en"><img src="/instagram.svg" alt="Instagram" /></a>
+          <a className="ml-3 mr-3" href="https://www.instagram.com/drophousegenai/" target='_blank'><img src="/instagram.svg" alt="Instagram" /></a>
           <a className="ml-3" href="https://twitter.com/RoseHulman?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><img src="/xtwitter.svg" alt="X" /></a>
         </div>
         <div className="legal-links">
