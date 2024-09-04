@@ -33,7 +33,7 @@ export default function ProductSection({prop}) {
   function ProductSectionContainer() {
     
     const navigate = useNavigate();
-    const { apparel, setApparel, setColor } = useContext(AppContext);
+    const { apparel, setApparel, setColor, setMenuOpen } = useContext(AppContext);
 
     const items = product_count;
     const itemsDesc = product_disc;
@@ -66,9 +66,10 @@ export default function ProductSection({prop}) {
             title={item.title}
             image={item.image}
             onClick={() => {
+              setMenuOpen(false)
               setApparel(item.type);
               setColor(item.color);
-              navigate("/product");
+              navigate("/product");              
             }}
           />
         ))}
