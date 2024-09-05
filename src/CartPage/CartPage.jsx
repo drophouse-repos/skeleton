@@ -49,7 +49,7 @@ function CartPage() {
                 const transformedData = items.cart.map(item => ({
                     image: item.image,
                     img_id: item.img_id,
-                    title: `${orgDetails[0].name} ${(item.apparel) == 'mug' ? `` : `${item.color.charAt(0).toUpperCase() + item.color.slice(1)}`}  ${item.apparel.charAt(0).toUpperCase() + item.apparel.slice(1)}`,
+                    title: `${orgDetails.name} ${(item.apparel) == 'mug' ? `` : `${item.color.charAt(0).toUpperCase() + item.color.slice(1)}`}  ${item.apparel.charAt(0).toUpperCase() + item.apparel.slice(1)}`,
                     prompt: item.prompt,
                     apparel: item.apparel,
                     color: item.color,
@@ -133,13 +133,13 @@ function CartPage() {
                                 className="back-button flex items-center justify-center"
                             >
                                 <LeftCircleOutlined style={{ fontSize: '1.1rem', marginRight: "1em" }} />
-                                <div className="text-xl" style={{fontFamily : `${orgDetails[0].font}`}}>Back To Products</div>
+                                <div className="text-xl" style={{fontFamily : `${orgDetails.font}`}}>Back To Products</div>
                             </button>
                         </div>
-                        <span className='mt-[1rem] md:mt-auto text-md col-auto md:text-lg justify-self-center md:justify-self-end lg:hidden' style={{fontFamily : `${orgDetails[0].font}`}}>Subtotal: ${totalPrice.toFixed(2)}</span>
+                        <span className='mt-[1rem] md:mt-auto text-md col-auto md:text-lg justify-self-center md:justify-self-end lg:hidden' style={{fontFamily : `${orgDetails.font}`}}>Subtotal: ${totalPrice.toFixed(2)}</span>
                     </div>
                     <div className='border-b-2 border-[#DDDDDD] grid grid-cols-1 justify-items-center lg:hidden'>
-                        <button className='mx-auto text-white h-[2rem] my-[1rem] rounded-3xl text-lg font-medium w-[10rem]' style={{fontFamily : `${orgDetails[0].font}`, backgroundColor: `${orgDetails[0].theme_color}`}} onClick={handleBuyAll}>Checkout</button>
+                        <button className='mx-auto text-white h-[2rem] my-[1rem] rounded-3xl text-lg font-medium w-[10rem]' style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}} onClick={handleBuyAll}>Checkout</button>
                     </div>
                     {cartItems.filter(item => !item.saveForLater).map((product, index) => (
                             <div className='flex flex-row border-b cursor-pointer' key={index} onClick={() => handleRowClick(product)}>
@@ -147,26 +147,26 @@ function CartPage() {
                                 <img src={product.thumbnail} alt="product" />
                             </div>
                             <ul className='w-full p-[1rem]'>
-                                <li className='grid grid-cols-3'><span className='text-left text-md md:text-3xl col-span-2' style={{fontFamily : `${orgDetails[0].font}`}}>{product.title}</span><span className='justify-self-end md:text-3xl' style={{fontFamily : `${orgDetails[0].font}`}}>${product.price.toFixed(2)}</span></li>
-                                <li className={`text-left text-slate-500 text-lg ${(product.title.includes('Mug')) || (product.title.includes('Cap')) ? `hidden` : ``}`} style={{fontFamily : `${orgDetails[0].font}`}}>Size: {product.size}</li>
-                                <li className='text-left text-slate-500 text-lg' style={{fontFamily : `${orgDetails[0].font}`}}>prompt: {product.prompt}</li>
+                                <li className='grid grid-cols-3'><span className='text-left text-md md:text-3xl col-span-2' style={{fontFamily : `${orgDetails.font}`}}>{product.title}</span><span className='justify-self-end md:text-3xl' style={{fontFamily : `${orgDetails.font}`}}>${product.price.toFixed(2)}</span></li>
+                                <li className={`text-left text-slate-500 text-lg ${(product.title.includes('Mug')) || (product.title.includes('Cap')) ? `hidden` : ``}`} style={{fontFamily : `${orgDetails.font}`}}>Size: {product.size}</li>
+                                <li className='text-left text-slate-500 text-lg' style={{fontFamily : `${orgDetails.font}`}}>prompt: {product.prompt}</li>
                                 <div className='grid grid-cols-2 gap-4 divide-x w-fit font-light text-[12px] md:text-base mt-[1rem] cursor-pointer text-red-900'>
-                                    <span onClick={(e) => deleteFromCart(index, e)} style={{fontFamily : `${orgDetails[0].font}`}}>Delete</span>
+                                    <span onClick={(e) => deleteFromCart(index, e)} style={{fontFamily : `${orgDetails.font}`}}>Delete</span>
                                 </div>
                             </ul>
                         </div>
                     ))}
                 </div>
                 <div className={`w-[300px] h-[300px] rounded-lg border border-slate-300 drop-shadow-2xl bg-white lg:col-span-2 mt-[4rem] p-[2rem] ${cartItems.length === 0? 'hidden' : 'cartCheckout'}`}>
-                    <div className='uppercase text-3xl font-medium border-b-2 border-gray-600 pb-[1rem]' style={{fontFamily : `${orgDetails[0].font}`}}>Summary</div>
-                    <div className='uppercase text-2xl font-medium mt-[2rem]' style={{fontFamily : `${orgDetails[0].font}`}}>Subtotal</div>
-                    <div className='uppercase text-xl font-normal text-slate-500' style={{fontFamily : `${orgDetails[0].font}`}}>$ {totalPrice.toFixed(2)}</div>
-                    <button className='mx-auto text-white h-[2rem] my-[1rem] rounded-3xl text-lg font-medium w-[10rem]' style={{fontFamily : `${orgDetails[0].font}`, backgroundColor: `${orgDetails[0].theme_color}`}} onClick={handleBuyAll}>Checkout</button>
+                    <div className='uppercase text-3xl font-medium border-b-2 border-gray-600 pb-[1rem]' style={{fontFamily : `${orgDetails.font}`}}>Summary</div>
+                    <div className='uppercase text-2xl font-medium mt-[2rem]' style={{fontFamily : `${orgDetails.font}`}}>Subtotal</div>
+                    <div className='uppercase text-xl font-normal text-slate-500' style={{fontFamily : `${orgDetails.font}`}}>$ {totalPrice.toFixed(2)}</div>
+                    <button className='mx-auto text-white h-[2rem] my-[1rem] rounded-3xl text-lg font-medium w-[10rem]' style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}} onClick={handleBuyAll}>Checkout</button>
                 </div>
                 <div className={`${cartItems.length === 0? '' : 'hidden'} w-full col-span-6`}>
-                    <div className='text-2xl md:text-2xl mb-2 mt-16' style={{fontFamily : `${orgDetails[0].font}`}}>Shopping Cart is empty.</div>
-                    <div className='text-2xl md:text-2xl mb-10' style={{fontFamily : `${orgDetails[0].font}`}}>Please go to add your design.</div>
-                    <button className='bg-sky-600 text-zinc-100 font-extrabold py-2 px-4 rounded-full w-[10rem] mb-10 text-lg' onClick={(e) =>  navigate('/product')} style={{fontFamily : `${orgDetails[0].font}`, backgroundColor: `${orgDetails[0].theme_color}`}}>Design Now</button>
+                    <div className='text-2xl md:text-2xl mb-2 mt-16' style={{fontFamily : `${orgDetails.font}`}}>Shopping Cart is empty.</div>
+                    <div className='text-2xl md:text-2xl mb-10' style={{fontFamily : `${orgDetails.font}`}}>Please go to add your design.</div>
+                    <button className='bg-sky-600 text-zinc-100 font-extrabold py-2 px-4 rounded-full w-[10rem] mb-10 text-lg' onClick={(e) =>  navigate('/product')} style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}>Design Now</button>
                 </div>
             </div>
         )

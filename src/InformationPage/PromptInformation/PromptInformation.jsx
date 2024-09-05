@@ -62,11 +62,11 @@ class PromptInformation extends Component {
                 >
                     {promptTips.map((data, index) => (
                         <div key={index}>
-                            <div className="text-pretty text-3xl font-medium mb-[2rem]" style={{ fontFamily: `${orgDetails[0].font}` }}>{data.title}</div>
+                            <div className="text-pretty text-3xl font-medium mb-[2rem]" style={{ fontFamily: `${orgDetails.font}` }}>{data.title}</div>
                             <div className="text-justify text-2xl h-[15rem] grid place-items-center" style={{height:`100%`}}>
-                                <span className="text-pretty" style={{ fontFamily: `${orgDetails[0].font}` }}>{data.tipDesp}</span>
+                                <span className="text-pretty" style={{ fontFamily: `${orgDetails.font}` }}>{data.tipDesp}</span>
                             </div>
-                            <div className="text-2xl" style={{ fontFamily: `${orgDetails[0].font}`}}>{index + 1}/{promptTips.length}</div>
+                            <div className="text-2xl" style={{ fontFamily: `${orgDetails.font}`}}>{index + 1}/{promptTips.length}</div>
                         </div>
                     ))}
                 </Carousel>
@@ -75,7 +75,7 @@ class PromptInformation extends Component {
                     <button
                         className="w-[8rem] md:w-[20rem] h-[3rem] text-white rounded-lg"
                         onClick={this.previous}
-                        style={{ fontFamily: `${orgDetails[0].font}`, backgroundColor: `${orgDetails[0].themeColor}` }}
+                        style={{ fontFamily: `${orgDetails.font}`, backgroundColor: `${orgDetails.themeColor}` }}
                     >
                         Prev
                     </button>
@@ -83,7 +83,7 @@ class PromptInformation extends Component {
                         <button
                             className="bg-[#0491F7] w-[8rem] md:w-[20rem] h-[3rem] text-white rounded-lg"
                             onClick={this.navigateToDesign}
-                            style={{ fontFamily: `${orgDetails[0].font}`, backgroundColor: `${orgDetails[0].themeColor}` }}
+                            style={{ fontFamily: `${orgDetails.font}`, backgroundColor: `${orgDetails.themeColor}` }}
                         >
                             Go to Design
                         </button>
@@ -91,15 +91,15 @@ class PromptInformation extends Component {
                         <button
                             className="bg-[#0491F7] w-[8rem] md:w-[20rem] h-[3rem] text-white rounded-lg"
                             onClick={this.next}
-                            style={{ fontFamily: `${orgDetails[0].font}`, backgroundColor: `${orgDetails[0].themeColor}` }}
+                            style={{ fontFamily: `${orgDetails.font}`, backgroundColor: `${orgDetails.themeColor}` }}
                         >
                             Next
                         </button>
                     )}
                 </div>
 
-                <div className="text-left text-xl my-[2rem]" style={{ fontFamily: `${orgDetails[0].font}` }}>Example</div>
-                <div className="text-lg text-justify mb-[4rem]" style={{ fontFamily: `${orgDetails[0].font}` }}>
+                <div className="text-left text-xl my-[2rem]" style={{ fontFamily: `${orgDetails.font}` }}>Example</div>
+                <div className="text-lg text-justify mb-[4rem]" style={{ fontFamily: `${orgDetails.font}` }}>
                     "Create an image of a mystical forest at dusk. The scene should feature ancient trees with glowing moss, a small pond reflecting the twilight sky, and fireflies around the water. The mood is serene and enchanting. Colors should be mainly greens, blues, and purples, with a realistic yet slightly dreamy style."
                 </div>
             </div>

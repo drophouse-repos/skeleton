@@ -164,7 +164,7 @@ const AuthPage = () => {
         <div className='h-fit'>
           <h1 className='mb-[2rem] text-[32px] text-black font-bold'>Sign In to Design Now</h1>
           <button 
-            style={{fontFamily : `${orgDetails[0].font}`, backgroundColor: `${orgDetails[0].theme_color}`}}
+            style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
             className= "mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl"
             onClick={() => window.location.href = 'https://server.drophouse.ai/saml/login'}>
             <span>Sign In</span>

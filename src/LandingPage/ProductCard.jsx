@@ -52,11 +52,11 @@ export default function ProductCard({ product, changeInterval, type }) {
 
 
                     <div className="flex flex-col  text-left bg-white justify-center items-center w-full rounded-t-none rounded-md pt-0  pb-0 py-2.5 m-0 mt-auto">
-                        <h2 style={{fontFamily : `${orgDetails[0].font}`,display: 'flex',width: '100%',justifyContent:'center',paddingLeft: '6px'}} className={`tracking-wide text-gray-600 font-bold m-0`}>
+                        <h2 style={{fontFamily : `${orgDetails.font}`,display: 'flex',width: '100%',justifyContent:'center',paddingLeft: '6px'}} className={`tracking-wide text-gray-600 font-bold m-0`}>
                             {product.name}
                         </h2>
 
-                        <h2 style={{fontFamily : `${orgDetails[0].font}`,display: 'flex',width: '100%',justifyContent:'center',paddingLeft: '6px'}} className={`text-bold text-left tracking-wide text-xl text-black font-extrabold`}>
+                        <h2 style={{fontFamily : `${orgDetails.font}`,display: 'flex',width: '100%',justifyContent:'center',paddingLeft: '6px'}} className={`text-bold text-left tracking-wide text-xl text-black font-extrabold`}>
                             ${product.price.toFixed(2)}
                         </h2>
 

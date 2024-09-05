@@ -15,7 +15,7 @@ const ClassButton = ({ text, link, className, onClick }) => {
     }
 
     return (
-        <button style={{fontFamily : `${orgDetails[0].font}`, backgroundColor: `${orgDetails[0].theme_color}`}} className={className} onClick={handleButtonClick}>
+        <button style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}} className={className} onClick={handleButtonClick}>
             {text}
         </button>
     );

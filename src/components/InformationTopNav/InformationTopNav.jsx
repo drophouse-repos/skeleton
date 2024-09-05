@@ -5,7 +5,7 @@ function InformationTopNav({title}){
     const { orgDetails } = useContext(Orgcontext)
     return (
         <div className="w-full">
-            <span className="w-[80%] inline-block text-left text-2xl align-middle" style={{fontFamily : `${orgDetails[0].font}`}}>{title}</span>
+            <span className="w-[80%] inline-block text-left text-2xl align-middle" style={{fontFamily : `${orgDetails.font}`}}>{title}</span>
             <span className="material-symbols-outlined w-[20%] inline-block text-right align-middle cursor-pointer" onClick={()=> {window.history.back()}}>close</span>
         </div>
     )

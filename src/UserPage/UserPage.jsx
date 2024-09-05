@@ -124,7 +124,7 @@ export default function UserPage() {
             order.item.forEach(item => {
               transformedData.push({
                 imageSrc: item.thumbnail,
-                title: `Customized ${orgDetails[0].name} ${item.color} ${item.apparel}`,
+                title: `Customized ${orgDetails.name} ${item.color} ${item.apparel}`,
                 type: item.apparel,
                 color: item.color,
                 size: item.size,
@@ -311,7 +311,7 @@ export default function UserPage() {
   function UserInfoItem({ label, value, showEditButton, addressType }) {
     return (
       <div className="flex flex-col justify-start items-start w-full">
-        <div className="flex flex-row w-full whitespace-nowrap text-md font-extrabold" style={{fontFamily : `${orgDetails[0].font}`}}>
+        <div className="flex flex-row w-full whitespace-nowrap text-md font-extrabold" style={{fontFamily : `${orgDetails.font}`}}>
           {label}
           {showEditButton && (
             <div className="flex flex-row justify-end w-full m-auto">
@@ -319,7 +319,7 @@ export default function UserPage() {
             </div>
           )}
         </div>
-        <div className="text-zinc-500 text-lg text-start pl-4" style={{fontFamily : `${orgDetails[0].font}`}}>{value}</div>
+        <div className="text-zinc-500 text-lg text-start pl-4" style={{fontFamily : `${orgDetails.font}`}}>{value}</div>
       </div>
     );
   }
@@ -333,22 +333,22 @@ export default function UserPage() {
         </div>
         <div className="w-full">
           <ul>
-            <li className="text-black text-xl text-left font-bold" style={{fontFamily : `${orgDetails[0].font}`}}>
+            <li className="text-black text-xl text-left font-bold" style={{fontFamily : `${orgDetails.font}`}}>
               {order.title}
             </li>
-            <li className="text-left text-gray-600 text-md" style={{fontFamily : `${orgDetails[0].font}`}}>
+            <li className="text-left text-gray-600 text-md" style={{fontFamily : `${orgDetails.font}`}}>
               ${order.price.toFixed(2)}
             </li>
-            <li className="text-left text-gray-600 text-md" style={{fontFamily : `${orgDetails[0].font}`}}>
+            <li className="text-left text-gray-600 text-md" style={{fontFamily : `${orgDetails.font}`}}>
               Type: {order.type}
             </li>
-            <li className="text-left text-gray-600 text-md" style={{fontFamily : `${orgDetails[0].font}`}}>
+            <li className="text-left text-gray-600 text-md" style={{fontFamily : `${orgDetails.font}`}}>
               Color: {order.color}
             </li>
-            <li className="text-left text-gray-600 text-md" style={{fontFamily : `${orgDetails[0].font}`}}>
+            <li className="text-left text-gray-600 text-md" style={{fontFamily : `${orgDetails.font}`}}>
               Size: {order.size}
             </li>
-            <li className="text-left text-gray-600 text-md" style={{fontFamily : `${orgDetails[0].font}`}}>
+            <li className="text-left text-gray-600 text-md" style={{fontFamily : `${orgDetails.font}`}}>
               Status: {order.shippingStatus}
             </li>
            
@@ -422,21 +422,21 @@ export default function UserPage() {
         </div>
         <div className="flex flex-col px-5 items-start space-y-2">
           <Modal
-            title={<p className="text-xl" style={{fontFamily : `${orgDetails[0].font}`}}>{`Edit ${modalItem}`}</p>}
+            title={<p className="text-xl" style={{fontFamily : `${orgDetails.font}`}}>{`Edit ${modalItem}`}</p>}
             open={isNormalModalOpen}
             okButtonProps={{ style: { display: "none" } }}
             cancelButtonProps={{ style: { display: "none" } }}
             closeIcon={false}
             zIndex={40}
           >
-            <h2 className='text-start text-lg mt-2' style={{fontFamily : `${orgDetails[0].font}`}}>New {modalItem}:<span className="text-red-600 ml-2">*</span></h2>
+            <h2 className='text-start text-lg mt-2' style={{fontFamily : `${orgDetails.font}`}}>New {modalItem}:<span className="text-red-600 ml-2">*</span></h2>
             <input id="modalPhone" className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500" placeholder="Phone Number" value={(baseModalData && baseModalData.phone) ? baseModalData.phone : ''}
             onChange={e => handleBaseModalInputChange('phone', e.target.value)} />
 
             <div className="flex flex-row w-full justify-end mt-3">
               <button className="bg-gray-200 text-black-100 font-extrabold py-2 px-4 rounded-full mr-5" onClick={closeModal}>CANCEL</button>
               <button
-                style={{fontFamily : `${orgDetails[0].font}`, backgroundColor: `${orgDetails[0].theme_color}`}}
+                style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
                 className="bg-sky-600 text-zinc-100 font-extrabold py-2 px-4 rounded-full text-lg"
                 onClick={() => { handlePhoneEdit(document.getElementById("modalPhone").value) }}
               >
@@ -509,7 +509,7 @@ export default function UserPage() {
             </div>
           ))}
           <div>
-            <h2 className='text-start' style={{fontFamily : `${orgDetails[0].font}`}}>STATE<span className="text-red-600 ml-2">*</span></h2>
+            <h2 className='text-start' style={{fontFamily : `${orgDetails.font}`}}>STATE<span className="text-red-600 ml-2">*</span></h2>
             <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
             <span className="material-icons p-2">{getIconForField('state')}</span>
               <Select id="modalState"
@@ -526,7 +526,7 @@ export default function UserPage() {
             <div className="flex flex-row w-full justify-end mt-3">
                 <button className="bg-gray-200 text-black-100 font-extrabold py-2 px-4 rounded-full mr-5" onClick={closeModal}>CANCEL</button>
                 <button
-                  style={{fontFamily : `${orgDetails[0].font}`, backgroundColor: `${orgDetails[0].theme_color}`}}
+                  style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
                   className="bg-sky-600 text-zinc-100 font-extrabold py-2 px-4 rounded-full text-lg"
                   onClick={() => handleAddressItemEdit(
                     modalData.firstName,
@@ -548,7 +548,7 @@ export default function UserPage() {
           </Modal>
 
           <br /><br />
-          <div className="text-black text-4xl font-bold pt-4" style={{fontFamily : `${orgDetails[0].font}`}}>
+          <div className="text-black text-4xl font-bold pt-4" style={{fontFamily : `${orgDetails.font}`}}>
             {getName()}
           </div>
 
@@ -565,7 +565,7 @@ export default function UserPage() {
 
           <div className="border-2 h-0 border-zinc-500 w-full rounded-full"></div>
 
-          <div style={{fontFamily : `${orgDetails[0].font}`}} className="text-black text-3xl font-bold">
+          <div style={{fontFamily : `${orgDetails.font}`}} className="text-black text-3xl font-bold">
             Order History:
           </div>
 
