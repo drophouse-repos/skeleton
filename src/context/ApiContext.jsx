@@ -21,12 +21,11 @@ const OrganisationDetails = ({ children }) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            try { // Assuming fetchOrganisationlist returns the JSON structure you provided
+            try { 
                 const org_id = {
                     org_id: process.env.REACT_APP_ORGANISATION_ID
                 }
                 const item = await fetchOrganisation_by_id(org_id);
-                // Filter out the organisation with org_id === '1002'
 
                     if(item.mask && !item.mask.includes('data:image'))
                         item.mask = await generate_presigned_url(item.mask, 'drophouse-skeleton-bucket')
