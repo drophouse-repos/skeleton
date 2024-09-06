@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from 'react';
 import Loader from '../components/loader';
 import { fetchOrganisationlist, fetchOrganisation_by_id } from '../utils/fetch';
 import LoadingPage from '../components/newloader';
-import { generate_presigned_url } from '../utils/aws_utils';
+import { generate_presigned_url, generate_base64_url } from '../utils/aws_utils';
 
 export const Orgcontext = createContext();
 
@@ -46,19 +46,27 @@ const OrganisationDetails = ({ children }) => {
 
                     for(var i=0; i<item.products.length; i++)
                     {
-                        if(item.products[i]['mask'] && !item.products[i]['mask'].includes('data:image'))
-                            item.products[i]['mask'] = await generate_presigned_url(item.products[i]['mask'], 'drophouse-skeleton-bucket') 
+                        if(item.products[i]['mask'] && !item.products[i]['mask'].includes('data:image')){
+                            // item.products[i]['mask'] = await generate_presigned_url(item.products[i]['mask'], 'drophouse-skeleton-bucket')
+                            item.products[i]['mask'] = await generate_base64_url(item.products[i]['mask'], 'drophouse-skeleton-bucket')
+                        }
                     
-                        if(item.products[i]['defaultProduct'] && !item.products[i]['defaultProduct'].includes('data:image'))
-                            item.products[i]['defaultProduct'] = await generate_presigned_url(item.products[i]['defaultProduct'], 'drophouse-skeleton-bucket') 
+                        if(item.products[i]['defaultProduct'] && !item.products[i]['defaultProduct'].includes('data:image')){
+                            // item.products[i]['defaultProduct'] = await generate_presigned_url(item.products[i]['defaultProduct'], 'drophouse-skeleton-bucket')
+                            item.products[i]['defaultProduct'] = await generate_base64_url(item.products[i]['defaultProduct'], 'drophouse-skeleton-bucket')
+                        }
 
                         for(var j in item.products[i]['colors'])
                         {
-                            if(item.products[i]['colors'][j]['asset']['front'] && !item.products[i]['colors'][j]['asset']['front'].includes('data:image'))
-                                item.products[i]['colors'][j]['asset']['front'] = await generate_presigned_url(item.products[i]['colors'][j]['asset']['front'], 'drophouse-skeleton-bucket') 
+                            if(item.products[i]['colors'][j]['asset']['front'] && !item.products[i]['colors'][j]['asset']['front'].includes('data:image')){
+                                // item.products[i]['colors'][j]['asset']['front'] = await generate_presigned_url(item.products[i]['colors'][j]['asset']['front'], 'drophouse-skeleton-bucket')
+                                item.products[i]['colors'][j]['asset']['front'] = await generate_base64_url(item.products[i]['colors'][j]['asset']['front'], 'drophouse-skeleton-bucket')
+                            }
 
-                            if(item.products[i]['colors'][j]['asset']['back'] && !item.products[i]['colors'][j]['asset']['back'].includes('data:image'))
-                                item.products[i]['colors'][j]['asset']['back'] = await generate_presigned_url(item.products[i]['colors'][j]['asset']['back'], 'drophouse-skeleton-bucket') 
+                            if(item.products[i]['colors'][j]['asset']['back'] && !item.products[i]['colors'][j]['asset']['back'].includes('data:image')){
+                                // item.products[i]['colors'][j]['asset']['back'] = await generate_presigned_url(item.products[i]['colors'][j]['asset']['back'], 'drophouse-skeleton-bucket')
+                                item.products[i]['colors'][j]['asset']['back'] = await generate_base64_url(item.products[i]['colors'][j]['asset']['back'], 'drophouse-skeleton-bucket')
+                            }
                         }
                     }
    
