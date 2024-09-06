@@ -25,7 +25,6 @@ const OrganisationDetails = ({ children }) => {
 
                 // Filter out the organisation with org_id === '1002'
                 const organisationData = Object.values(items).filter(item => item.org_id === `${process.env.REACT_APP_ORGANISATION_ID}`).map(item => {
-                    // Extract organisation-level details
                     setOrgId(item.org_id);
                     setName(item.name);
                     setMask(item.mask);
