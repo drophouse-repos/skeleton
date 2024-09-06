@@ -112,7 +112,6 @@ const OrganisationDetails = ({ children }) => {
     return (
         <div>
             {loading ? (
-                // <Loader />
                 <LoadingPage />
             ) : (
                 <Orgcontext.Provider value={{ 
