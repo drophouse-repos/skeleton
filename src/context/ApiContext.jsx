@@ -27,9 +27,7 @@ const OrganisationDetails = ({ children }) => {
                 }
                 const item = await fetchOrganisation_by_id(org_id);
                 // Filter out the organisation with org_id === '1002'
-                // const organisationData = items.map(item => {
-                    // Extract organisation-level details
-                console.log('before', item)
+
                     if(item.mask && !item.mask.includes('data:image'))
                         item.mask = await generate_presigned_url(item.mask, 'drophouse-skeleton-bucket')
                     
@@ -65,8 +63,7 @@ const OrganisationDetails = ({ children }) => {
                                 item.products[i]['colors'][j]['asset']['back'] = await generate_presigned_url(item.products[i]['colors'][j]['asset']['back'], 'drophouse-skeleton-bucket') 
                         }
                     }
-                    
-                    console.log('after', item)
+   
                     setOrgId(item.org_id);
                     setName(item.name);
                     setMask(item.mask);
