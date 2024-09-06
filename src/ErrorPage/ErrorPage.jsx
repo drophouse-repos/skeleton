@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import './ErrorPage.css'; // Make sure to link the CSS file
+import './ErrorPage.css';
 import { useLocation } from 'react-router-dom';
 import errorImg from '../assets/500-error.png'
 
