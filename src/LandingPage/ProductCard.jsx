@@ -28,7 +28,7 @@ export default function ProductCard({ product, changeInterval, type }) {
         let source_back = imageList_back[SequentialImageUpdateCount % imageList_back.length];
         // return (<img className="landing-random-image" src={source} alt={`${name} - ${SequentialImageUpdateCount}`} />);
         return (
-            <div className="image-container-main ">
+            <div className="image-container-main flex w-full">
             <div className="image-container">
               <img className="landing-random-image" src={source_front} alt={`${name} - ${SequentialImageUpdateCount}`} />
               <img className="back-img" src={source_back ? source_back : source_front} alt={`${name} - ${SequentialImageUpdateCount}`} />
@@ -42,7 +42,7 @@ export default function ProductCard({ product, changeInterval, type }) {
         <div className="flex flex-col items-center justify-center card-product-slider h-full">
             <div className="flex flex-col w-11/12 h-full items-center justify-center my-2 py-2 rounded-[10px] bg-white rounder-md mx-3 pb-0">
                 <div className="w-full flex flex-col h-full items-center">
-                    <div className="flex justify-center h-full">
+                    <div className="flex justify-center h-full w-full">
                         <SequentialImageCarousel
                             imageList_front={product.imageList_front}
                             imageList_back={product.imageList_back}
