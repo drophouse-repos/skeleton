@@ -73,6 +73,17 @@ const ProductPage = () => {
   const [indexColor, setIndexColor] = useState([])
   const [productList, setProductList] = useState([]);
   useEffect(() => {
+    if(apparel === 'mug'){
+      setSize('M')
+    }
+   else if(apparel === 'cap'){
+      setSize('M')
+    }
+    else {
+    setSize('')
+    }
+  },[apparel])
+  useEffect(() => {
     if (product) {
       setProductListLoad(product);
     }
