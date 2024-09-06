@@ -26,7 +26,6 @@ const OrganisationDetails = ({ children }) => {
                     org_id: process.env.REACT_APP_ORGANISATION_ID
                 }
                 const item = await fetchOrganisation_by_id(org_id);
-
                     if(item.mask && !item.mask.includes('data:image'))
                         item.mask = await generate_presigned_url(item.mask, 'drophouse-skeleton-bucket')
                     
@@ -47,18 +46,18 @@ const OrganisationDetails = ({ children }) => {
 
                     for(var i=0; i<item.products.length; i++)
                     {
-                        if(item.products[i]['mask'] && !item.products[i]['mask'].includes('data/image'))
+                        if(item.products[i]['mask'] && !item.products[i]['mask'].includes('data:image'))
                             item.products[i]['mask'] = await generate_presigned_url(item.products[i]['mask'], 'drophouse-skeleton-bucket') 
                     
-                        if(item.products[i]['defaultProduct'] && !item.products[i]['defaultProduct'].includes('data/image'))
+                        if(item.products[i]['defaultProduct'] && !item.products[i]['defaultProduct'].includes('data:image'))
                             item.products[i]['defaultProduct'] = await generate_presigned_url(item.products[i]['defaultProduct'], 'drophouse-skeleton-bucket') 
 
                         for(var j in item.products[i]['colors'])
                         {
-                            if(item.products[i]['colors'][j]['asset']['front'] && !item.products[i]['colors'][j]['asset']['front'].includes('data/image'))
+                            if(item.products[i]['colors'][j]['asset']['front'] && !item.products[i]['colors'][j]['asset']['front'].includes('data:image'))
                                 item.products[i]['colors'][j]['asset']['front'] = await generate_presigned_url(item.products[i]['colors'][j]['asset']['front'], 'drophouse-skeleton-bucket') 
 
-                            if(item.products[i]['colors'][j]['asset']['back'] && !item.products[i]['colors'][j]['asset']['back'].includes('data/image'))
+                            if(item.products[i]['colors'][j]['asset']['back'] && !item.products[i]['colors'][j]['asset']['back'].includes('data:image'))
                                 item.products[i]['colors'][j]['asset']['back'] = await generate_presigned_url(item.products[i]['colors'][j]['asset']['back'], 'drophouse-skeleton-bucket') 
                         }
                     }
