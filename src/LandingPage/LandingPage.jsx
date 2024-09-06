@@ -109,9 +109,9 @@ useEffect(()=>{
             className={`${className} top-[8%] md:top-[8%] flex flex-col items-center`}
           >
 
-            <RShowcase imageList={GetBackendImage()} changeInterval={3000} RMask={orgDetails[0].mask}/>
+            <RShowcase imageList={GetBackendImage()} changeInterval={3000} RMask={orgDetails.mask}/>
             <div className="h-4"></div>
-            <div style={{fontFamily : `${orgDetails[0].font}`}} className="text-black text-5xl text-center">
+            <div style={{fontFamily : `${orgDetails.font}`}} className="text-black text-5xl text-center">
               Personalized 
               <br />
                     {name}

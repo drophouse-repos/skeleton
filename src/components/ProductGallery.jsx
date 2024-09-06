@@ -514,14 +514,14 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
       <ProductGalleryFooter apparel={apparel} currentIndex={currentIndex} onFooterClick={(newColorIndex) => setCurrentIndex(newColorIndex)} />
       <div className={`Save-btn-contaiiner ${!isZoomEnabled ? 'hidden' : ''}`}>
         <button  ref={toggleZoomBtnRef} onClick={toggleZoom} 
-            style={{fontFamily : `${orgDetails[0].font}`, backgroundColor: `${orgDetails[0].theme_color}`}}
+            style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
             className="text-zinc-100 font-extrabold rounded-xl text-xl inline-block w-4/12 md:w-2/12 lg:w-2/12 save-btn">
             Save Design</button>
       </div>
       <div className={`grid grid-cols-12 mt-4 ${!isZoomEnabled ? '' : 'hidden'}`}>
         <div className="col-span-12">
           <button ref={toggleZoomBtnRef} onClick={toggleZoom} 
-            style={{fontFamily : `${orgDetails[0].font}`, backgroundColor: `${orgDetails[0].theme_color}`}}
+            style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
             className="text-zinc-100 font-extrabold py-2 px-4 rounded-xl text-xl inline-block w-4/12 md:w-2/12 lg:w-2/12">
             Edit Design
           </button>
