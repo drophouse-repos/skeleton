@@ -32,6 +32,7 @@ const ProductPage = () => {
   const [changeFromMug, setChangeFromMug] = useState(1);
   const {isOrderPlaced} = useContext(OrderContext)
 
+  
   if(isOrderPlaced)
   {
     window.location.href = "/user";
