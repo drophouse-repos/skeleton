@@ -23,9 +23,6 @@ const ProductPage = () => {
   const { product, orgDetails } = useContext(Orgcontext);
   const [productListLoad, setProductListLoad] = useState([]);
   const [productImageList, setProductImageList] = useState([]);
-
-
-
   const [tourOpen, setTourOpen] = useState(true);
   const [productPopupIsShown, setProductPopupIsShown] = useState(false);
   const [productPopupInfo, setProductPopupInfo] = useState({});

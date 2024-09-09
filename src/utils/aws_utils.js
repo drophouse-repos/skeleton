@@ -27,6 +27,20 @@ export const generate_presigned_url = async (img_id, bucket_name, expiration = 3
     }
 };
 
+export const generate_base64_url = async (img_id) => {
+    try {
+        const response = await axiosInstance.post("/convert_bucketurl_to_base64", {
+            'img_id':img_id
+        });
+        const data = response.data;
+        if (response.status !== 200) throw new Error(data.message);
+        return data.data_url ? data.data_url : null;
+    } catch (err) {
+        console.log('error in generate_base64_url', err)
+        return null
+    }
+}
+
 export const validateImageUrl = async (url) => {
     try {
         const response = await axios.get(url, { responseType: 'arraybuffer' });
