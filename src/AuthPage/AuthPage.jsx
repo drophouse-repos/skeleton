@@ -38,7 +38,6 @@ const AuthPage = () => {
     }
   };
 
-
   useEffect(() => {
     if(user.isLoggedIn && process.env.REACT_APP_AUTHTYPE_SAML === 'true')
       navigate('/product')
