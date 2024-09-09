@@ -29,8 +29,8 @@ const LoadingPage = () => {
   return (
     <div className="loading-container">
       <img src={logo} alt="Logo" className="loading-logo" />
-      <h1 className="design-ideas" style={{fontSize: '30px',fontFamily:'ARSENAL',marginBottom:'25px',position:'fixed',top:'25%'}}>Design Ideas</h1>
-      <div className={`loading-prompt ${fadeState}`} style={{fontFamily: `ARSENAL`,maxWidth:'80vw',marginBottom:'100px'}}>{prompts[currentPrompt]}</div>
+      <h1 className="design-ideas" style={{fontSize: '30px',fontFamily:'ARSENAL',marginBottom:'145px'}}>Design Ideas</h1>
+      <div className={`loading-prompt ${fadeState}`} style={{fontFamily: `ARSENAL`,maxWidth:'80vw',position:'absolute'}}>{prompts[currentPrompt]}</div>
       <BouncingDotsLoader />
     </div>
   );

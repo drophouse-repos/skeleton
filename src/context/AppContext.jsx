@@ -8,7 +8,7 @@ export const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [prompt, setPrompt] = useState(loadState('prompt', '', 'appState'));
   const [apparel, setApparel] = useState(loadState('apparel', 'tshirt','appState'));
-  const [size, setSize] = useState(loadState('size', 'M', 'appState'));
+  const [size, setSize] = useState(loadState('size', '', 'appState'));
   const [color, setColor] = useState(loadState('color', 'white','appState'));
   const [price, setPrice] = useState(loadState('price', 50, 'appState'));
   const [cartNumber, setCartNumber] = useState(loadState('cartItems', 0, 'appState'));

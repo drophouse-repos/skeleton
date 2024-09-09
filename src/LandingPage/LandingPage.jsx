@@ -25,6 +25,25 @@ function GetBackendImage() {
 }
 
 const LandingPage = () => {
+  const [isHidden, setIsHidden] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.innerWidth <= 544) { // Mobile screen
+        if (window.scrollY > 1100) {
+          setIsHidden(true);
+        } else {
+          setIsHidden(false);
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   const { user } = useUser();
   const {priceMap, getPriceNum} = useContext(PricesContext);
   const {isOrderPlaced} = useContext(OrderContext)
@@ -106,7 +125,7 @@ useEffect(()=>{
               paddingLeft: "5%",
             }}
 
-            className={`${className} top-[8%] md:top-[8%] flex flex-col items-center`}
+            className={`${className} top-[8%] md:top-[8%] flex flex-col items-center ${isHidden ? 'hidden' : ''}`}
           >
 
             <RShowcase imageList={GetBackendImage()} changeInterval={3000} RMask={orgDetails.mask}/>

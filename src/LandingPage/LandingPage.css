@@ -101,3 +101,10 @@
 .top.scrolled {
   display: none;
 }
+
+
+@media (max-width: 544px) {
+  .hidden {
+    display: none;
+  }
+}
