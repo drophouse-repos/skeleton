@@ -347,8 +347,9 @@ const ProductPage = () => {
       return
     }
     if(size == ''){
-        setMessageBannerText('Please select size!!!');
         setShowMessageBanner(true);
+        setMessageBannerText('Please select size!!!');
+        setBannerKey(prevKey => prevKey + 1);
     }
     else{
         const thumbnail = await productGalleryRef.current.getSelectedPreviewImage(apparel, color, editedImage);
@@ -393,8 +394,9 @@ const ProductPage = () => {
       return
     }
     if(size == ''){
-      setMessageBannerText('Please select size!!!');
       setShowMessageBanner(true);
+      setMessageBannerText('Please select size!!!');
+      setBannerKey(prevKey => prevKey + 1);
     }
     else {
         const thumbnail = await productGalleryRef.current.getSelectedPreviewImage(apparel, color, editedImage);
@@ -577,11 +579,15 @@ const ProductPage = () => {
               <Select
                 style={{fontFamily : `${orgDetails.font}`}}
                 className={`${(window.innerWidth <= 544 ? `w-[8rem]` : `w-[15rem]` )} border-none outline-none`}
-                value={size || ''}
+                value={size || undefined}
+                placeholder={'Select Size'}
                 onChange={handleSizeChange}
                 options={sizes}
-                defaultValue={{ value: '', label: '' }}
+                defaultValue={{ value: '', label: 'Select Size' }}
                 onFocus={handlechangeblanksize}
+                render={(value) => {
+                  return value === '' ? 'Select Size' : value;
+                }}
               />
             )}
             <span></span>
@@ -594,7 +600,7 @@ const ProductPage = () => {
               ${getPriceNum(apparel)}
             </span>
           </div>
-          <div className={` justify-center w-full md:w-[30rem] mx-auto text-lg md:text-2xl md:whitespace-nowrap gap-4 grid-cols-2 md:grid-cols-2  ${(process.env.REACT_APP_CART_ENABLED == 'true') ? `grid` : `flex mt-4`}`}>
+          <div className={`justify-center w-full md:w-[30rem] mx-auto text-lg md:text-2xl md:whitespace-nowrap gap-4 grid-cols-2 md:grid-cols-2  ${(process.env.REACT_APP_CART_ENABLED == 'true') ? `grid` : `flex mt-4`}`}>
             <button
               style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
               className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(process.env.REACT_APP_CART_ENABLED == 'true') ? (window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]` : `hidden`}`}
