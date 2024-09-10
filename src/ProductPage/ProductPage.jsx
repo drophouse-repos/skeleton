@@ -348,7 +348,7 @@ const ProductPage = () => {
     }
     if(size == ''){
         setShowMessageBanner(true);
-        setMessageBannerText('Please select size!!!');
+        setMessageBannerText('Please select your size');
         setBannerKey(prevKey => prevKey + 1);
     }
     else{
@@ -395,7 +395,7 @@ const ProductPage = () => {
     }
     if(size == ''){
       setShowMessageBanner(true);
-      setMessageBannerText('Please select size!!!');
+      setMessageBannerText('Please select your size');
       setBannerKey(prevKey => prevKey + 1);
     }
     else {
