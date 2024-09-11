@@ -13,6 +13,7 @@ export const generate_presigned_url = async (img_id, bucket_name, expiration = 3
 
     const s3 = new AWS.S3({ signatureVersion: "v4" });
     try {
+        console.log(img_id, bucket_name)
         let url = s3.getSignedUrl("getObject", {
             Bucket: bucket_name,
             Key: `${img_id}.jpg`,
