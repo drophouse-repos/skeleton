@@ -70,6 +70,7 @@ const AuthPage = () => {
         });
       } 
     });
+    
     return () => unsubscribe();
   }, [justLoggedIn]);
 

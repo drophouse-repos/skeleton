@@ -9,7 +9,7 @@
 
 .back-button {
   position: absolute; 
-  left: 0; /* ...to the left */
+  left: 0; 
   margin-left: 1rem; /* with a little margin from the edge */
 }
 
