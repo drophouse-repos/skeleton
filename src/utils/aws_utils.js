@@ -20,7 +20,6 @@ export const generate_presigned_url = async (img_id, bucket_name, expiration = 3
             Expires: expiration
         });
 
-        // url = await validateImageUrl(url);
         return url;
     } catch (error) {
         console.error("Error generating presigned URL:", error);
