@@ -1,0 +1,16 @@
+.notfoundpage-loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 85vh;
+  /* background-color: #bfffcc; */
+  /* background-color: #A9C8C0; */
+}
+
+.notfoundpage-image {
+  width: 40%;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+}

@@ -9,6 +9,7 @@ import { OrderProvider } from './context/OrderContext';
 import { MessageBannerProvider } from "./context/MessageBannerContext";
 import ThankYouPage from './ThankYouPage/ThankYouPage';
 import ErrorPage from './ErrorPage/ErrorPage';
+import NotFoundPage from './ErrorPage/NotFoundPage'
 import LandingPage from './LandingPage/LandingPage';
 import ProductPage from './ProductPage/ProductPage';
 import { UserProvider } from './context/UserContext';
@@ -78,6 +79,7 @@ useEffect(() => {
 			<Route path="/cart" element={<PrivateRoute><CartPage /></PrivateRoute>} />
 			<Route path="/driver" element={<PrivateRoute><DriverPage /></PrivateRoute>} />
 			<Route path="/contact" element={<ContactPage />} />
+			<Route path="*" element={<NotFoundPage />} />
 			</Routes>
 			<Legal />
 		</div>
