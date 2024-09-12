@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import logo from ".././assets/404-error.svg";
 import "./NotFoundPage.css";
 
-const LoadingPage = () => {
+const NotFoundPage = () => {
   const navigate = useNavigate();
   return (
     <div className="notfoundpage-loading-container">
@@ -29,4 +29,4 @@ const LoadingPage = () => {
   );
 };
 
-export default LoadingPage;
+export default NotFoundPage;
