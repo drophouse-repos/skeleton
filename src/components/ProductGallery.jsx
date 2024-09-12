@@ -170,6 +170,8 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
             navigate('/error-page');
           }
         }
+        if(succeeded.success)
+          isLiked ? setFavNumber(prevKey => prevKey - 1) : setFavNumber(prevKey => prevKey + 1)
       });
   };
 
@@ -434,12 +436,35 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
         className={`${isZoomEnabled ? 'hidden' : ''}`}
         {...settings_std}>
         {productListSlider.map((image, index) => (         
-          <div key={index} className={`relative grid justify-items-center items-center ${window.innerWidth <= 550 ? ``: `h-[32rem]`} md:h-72 lg:h-96 w-10-single-prod`}>
-            <img id={index} draggable="false" className={`absolute z-[-1] ${apparel === 'hoodie' ? 'Hoodie' : ''} ${apparel === 'tshirt' ? 'Tshirt' : ''} `} src={editedImage} alt="" 
-            style={{height:`${(window.innerWidth < 550) ? dimHeight : dimHeight - 2 }%`,width: `${dimWidth}%`,top:`${(window.innerWidth < 550) ? dimTop : dimTop + 1}%`,left:`${dimLeft}%`}}
+          // <div key={index} className={`relative grid justify-items-center items-center ${window.innerWidth <= 550 ? ``: `h-[32rem]`} md:h-72 lg:h-96 w-10-single-prod`}>
+          //   <img id={index} draggable="false" className={`absolute z-[-1] ${apparel === 'hoodie' ? 'Hoodie' : ''} ${apparel === 'tshirt' ? 'Tshirt' : ''} `} src={editedImage} alt="" 
+          //   style={{height:`${(window.innerWidth < 550) ? dimHeight : dimHeight - 2 }%`,width: `${dimWidth}%`,top:`${(window.innerWidth < 550) ? dimTop : dimTop + 1}%`,left:`${dimLeft}%`}}
+          //   />
+          //   <img draggable="false" src={isFront ? image.front : image.back} alt="" className={`object-contain mx-auto ${window.innerWidth <= 550 ? ``: `h-[32rem]`} md:h-72 lg:h-96 z-30`} />
+          // </div>
+          <div
+            key={index}
+            className={`relative grid justify-items-center items-center ${window.innerWidth <= 550 ? `` : `h-[32rem]`} md:h-72 lg:h-96 w-10-single-prod transition-transform duration-300 ease-in-out hover:scale-[225%] hover:mt-[12%] cursor-zoom-in`}
+          >
+            <img
+              id={index} draggable="false"
+              className={`absolute z-[-1] ${apparel === 'hoodie' ? 'Hoodie' : ''} ${
+                apparel === 'tshirt' ? 'Tshirt' : ''
+              }`}
+              src={editedImage} alt=""
+              style={{
+                height: `${window.innerWidth < 550 ? dimHeight : dimHeight - 2}%`,
+                width: `${dimWidth}%`,
+                top: `${window.innerWidth < 550 ? dimTop : dimTop + 1}%`,
+                left: `${dimLeft}%`,
+              }}
             />
-            <img draggable="false" src={isFront ? image.front : image.back} alt="" className={`object-contain mx-auto ${window.innerWidth <= 550 ? ``: `h-[32rem]`} md:h-72 lg:h-96 z-30`} />
+            <img
+              draggable="false" src={isFront ? image.front : image.back} alt=""
+              className={`object-contain mx-auto ${window.innerWidth <= 550 ? `` : `h-[32rem]`} md:h-72 lg:h-96 z-30`}
+            />
           </div>
+
         ))}         
       </Slider>
       ) : (
@@ -505,12 +530,33 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
         <div className="col-span-12">
           <button ref={toggleZoomBtnRef} onClick={toggleZoom} 
             style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
-            className="text-zinc-100 font-extrabold py-2 px-4 rounded-xl text-xl inline-block w-4/12 md:w-2/12 lg:w-2/12">
+            className="text-zinc-100 font-extrabold py-2 px-4 rounded-xl text-xl inline-block w-4/12 md:w-2/12 lg:w-2/12 mr-2">
             Edit Design
           </button>
+          {isActive ? (
+              isLiked ? (
+                <button ref={addFavBtnRef} onClick={handleLike} 
+                  style={{fontFamily : `${orgDetails.font}`, backgroundColor: `red`}}
+                  className="text-zinc-100 font-extrabold py-2 px-4 rounded-xl text-xl inline-block w-4/12 md:w-2/12 lg:w-2/12 ml-2">
+                  Unlike Design
+                </button>
+              ) : (
+                <button ref={addFavBtnRef} onClick={handleLike} 
+                  style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
+                  className="text-zinc-100 font-extrabold py-2 px-4 rounded-xl text-xl inline-block w-4/12 md:w-2/12 lg:w-2/12 ml-2">
+                  Like Design
+                </button>
+              )
+          ) : (
+            <button ref={addFavBtnRef} 
+              style={{fontFamily : `${orgDetails.font}`, backgroundColor: `lightgrey`}}
+              className="cursor-not-allowed text-zinc-100 font-extrabold py-2 px-4 rounded-xl text-xl inline-block w-4/12 md:w-2/12 lg:w-2/12 ml-2">
+              Like Design
+            </button>
+          )}
         </div>
       </div>
-        <div className="flex flex-row justify-end space-x-2 my-[1rem]">
+        {/*<div className="flex flex-row justify-end space-x-2 my-[1rem]">
           <div className="relative bottom-[50px] right-[5vw]">
             {isActive ? (
               isLiked ? (
@@ -530,8 +576,7 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
               <HeartOutlined className="scale-150 text-gray-400 cursor-not-allowed" ref={addFavBtnRef} />
             )}
           </div>
-        </div>
-
+        </div>*/}
     </div>
   );
 });
