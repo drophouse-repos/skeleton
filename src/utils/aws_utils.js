@@ -26,7 +26,6 @@ export const generate_presigned_url = async (img_id, bucket_name, expiration = 3
     }
 };
 
-
 export const generate_base64_url = async (img_id) => {
     try {
         const response = await axiosInstance.post("/convert_bucketurl_to_base64", {
