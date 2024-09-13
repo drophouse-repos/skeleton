@@ -461,7 +461,7 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
           // </div>
           <div
             key={index}
-            className={`relative grid justify-items-center items-center ${window.innerWidth <= 550 ? `` : `h-[32rem]`} md:h-72 lg:h-96 w-10-single-prod transition-transform duration-300 ease-in-out hover:scale-[225%] hover:mt-[12%] cursor-zoom-in`}
+            className={`relative grid justify-items-center items-center ${window.innerWidth <= 550 ? `` : `h-[32rem]`} md:h-72 lg:h-96 w-10-single-prod transition-transform duration-300 ease-in-out hover:scale-[225%] hover:mt-[15%] cursor-zoom-in`}
           >
             <img
               id={index} draggable="false"
@@ -490,7 +490,7 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
           className={`${isZoomEnabled ? 'hidden' : ''}`}
           {...settings}>
           {productListSlider.map((image, index) => (         
-            <div key={index} className={`relative grid justify-items-center items-center ${window.innerWidth <= 550 ? ``: `h-[32rem]`} md:h-72 lg:h-96 w-96`} >
+            <div key={index} className={`relative grid justify-items-center items-center ${window.innerWidth <= 550 ? ``: `h-[32rem]`} md:h-72 lg:h-96 w-96 transition-transform duration-300 ease-in-out hover:scale-[225%] hover:mt-[15%] cursor-zoom-in`} >
               {/* <div style={{ height: '422.2px', width: '422.2px',justifyContent: 'center' }}> */}
               <img id={index} draggable="false" className={`absolute z-[-1] ${apparel === 'hoodie' ? 'Hoodie' : ''} ${apparel === 'tshirt' ? 'Tshirt' : ''} `} src={editedImage} alt="" 
               style={{height:`${(window.innerWidth < 550) ? dimHeight : dimHeight - 3}%`,width: `${dimWidth}%`,top:`${(window.innerWidth < 550) ? dimTop : dimTop + 3}%`,left:`${dimLeft}%`}}
