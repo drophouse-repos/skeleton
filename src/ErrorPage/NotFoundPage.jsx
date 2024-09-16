@@ -13,9 +13,8 @@ const NotFoundPage = () => {
         fontFamily: 'ARSENAL',
         fontSize: 'clamp(22px, 4vw, 32px)'
       }}>
-        Page you are requesting is not found
+        404 - Its okay, don't panic. What do we do when we're lost?
       </h1>
-
       <button
         className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         style={{
@@ -23,10 +22,11 @@ const NotFoundPage = () => {
           fontSize: 'clamp(12px, 2vw, 16px)'
         }}
         onClick={() => navigate('/')}>
-        Go Home
+        Slowly head back home
       </button>
     </div>
   );
 };
+
 
 export default NotFoundPage;
