@@ -538,20 +538,20 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
                 <button ref={addFavBtnRef} onClick={handleLike} 
                   style={{fontFamily : `${orgDetails.font}`, backgroundColor: `red`}}
                   className="text-zinc-100 font-extrabold py-2 px-4 rounded-xl text-xl inline-block w-4/12 md:w-2/12 lg:w-2/12 ml-2">
-                  Unlike Design
+                  Unsave Design
                 </button>
               ) : (
                 <button ref={addFavBtnRef} onClick={handleLike} 
                   style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
                   className="text-zinc-100 font-extrabold py-2 px-4 rounded-xl text-xl inline-block w-4/12 md:w-2/12 lg:w-2/12 ml-2">
-                  Like Design
+                  Save Design
                 </button>
               )
           ) : (
             <button ref={addFavBtnRef} 
               style={{fontFamily : `${orgDetails.font}`, backgroundColor: `lightgrey`}}
               className="cursor-not-allowed text-zinc-100 font-extrabold py-2 px-4 rounded-xl text-xl inline-block w-4/12 md:w-2/12 lg:w-2/12 ml-2">
-              Like Design
+              Save Design
             </button>
           )}
         </div>
