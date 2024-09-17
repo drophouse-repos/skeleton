@@ -17,7 +17,6 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { enhanceImageClarity } from '../utils/enhanceImageClarity';
 import { Orgcontext } from '../context/ApiContext';
-import ZoomIcon from '../assets/zoom.png';
 import ProductPopup from "./ProductPopup";
 import ZoomIcon from '../assets/zoom.png';
 
@@ -66,7 +65,6 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
       window.removeEventListener('resize', updateImageHeight);
     };
   }, []);
-
   const [zoomerImg, setZoomerImg] = useState();
   // console.log("favicon url : ",favicon)
   useEffect(() => {
@@ -388,6 +386,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
       setBannerKey(prevKey => prevKey + 1);
     }
   }
+  
   const closeZoomerwindow = () => {
     // setToggleActivated(false);
     setButtonText(buttonText === 'Edit Design' ? 'Save Design' : 'Edit Design');
