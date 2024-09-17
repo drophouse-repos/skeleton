@@ -93,6 +93,12 @@
   .col-span-2 {
     font-size: 1.2rem;
   }
+  .slick-dots {
+    height: 15px !important;
+  }
+  #landing-product-slider .slick-arrow {
+    display: none !important;
+  }
 }
 .btn-mbl {
   padding: 2% 15% !important;
