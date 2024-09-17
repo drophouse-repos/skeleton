@@ -13,6 +13,7 @@ const ErrorPage = () => {
     sessionStorage.clear();
   }, []);
 
+  
   return (
     <>
     <div className="error-container" style={{width:'100%'}}>
