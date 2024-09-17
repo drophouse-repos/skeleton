@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { enhanceImageClarity } from '../utils/enhanceImageClarity';
 import { Orgcontext } from '../context/ApiContext';
-
+import ZoomIcon from '../assets/zoom.png';
 const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, currentIndex, setCurrentIndex, changeFromMug, isZoomEnabled, setIsZoomEnabled }, ref) => {
   const { apparel, setApparel, color, setColor, prompt } = useContext(AppContext);
   const [slideIndex, setSlideIndex] = useState(0);
@@ -37,6 +37,40 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
     Dim_height: 0,
     Dim_width: 0
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalImage, setModalImage] = useState('');
+  const [imgHeightZoom, setImgHeightZoom] = useState('80')
+  useEffect(() => {
+    const updateImageHeight = () => {
+      const screenWidth = window.innerWidth;
+
+      if (screenWidth <= 768) {
+        // Smaller screens (mobile)
+        setImgHeightZoom('50');
+      } else if (screenWidth <= 1024) {
+        // iPad Pro size
+        setImgHeightZoom('60');
+      } else {
+        // Laptop/Desktop
+        setImgHeightZoom('80');
+      }
+    };
+
+    updateImageHeight();
+    window.addEventListener('resize', updateImageHeight);
+    return () => {
+      window.removeEventListener('resize', updateImageHeight);
+    };
+  }, []);
+
+  const openModal = (image) => {
+    setModalImage(image);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   const [zoomerImg, setZoomerImg] = useState();
   // console.log("favicon url : ",favicon)
   useEffect(() => {
@@ -200,6 +234,8 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
   }, [productImageList]);
 
   console.log("Slides to show : ",slideToShow, "current index : ",currentIndex)
+  const [currentSlide, setCurrentSlide] = useState(0);
+
   const settings = {
     className: "center",
     centerMode: true,
@@ -315,6 +351,27 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
       setBannerKey(prevKey => prevKey + 1);
     }
   }
+  const [scale, setScale] = useState(1);
+  const [translate, setTranslate] = useState({ x: 50, y: 50 });
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const xPercent = ((e.clientX - rect.left) / rect.width) * 100; // X position as percentage
+    const yPercent = ((e.clientY - rect.top) / rect.height) * 100; // Y position as percentage
+
+    // Limit the translate values to ensure smooth zoom and keep focus near the center
+    const x = Math.min(Math.max(xPercent, 10), 60); // Keep the x between 10 and 90 for smoother zoom
+    const y = Math.min(Math.max(yPercent, 10), 60); // Same for y, prevents image from moving too far
+
+    setTranslate({ x, y });
+  };
+  const handleMouseEnter = () => {
+    setScale(1.4);
+  };
+  const handleMouseLeave = () => {
+    setScale(1);
+    setTranslate({ x: 50, y: 50 });
+  };
+  
   const closeZoomerwindow = () => {
     // setToggleActivated(false);
     setButtonText(buttonText === 'Edit Design' ? 'Save Design' : 'Edit Design');
@@ -446,6 +503,7 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
       <div className={`${isZoomEnabled ? 'hidden' : ''}`}>
       {/* for alumni modal */}
       {productImageList.length <= 2 ? (
+        <>
         <Slider
         ref={sliderRef}
         className={`${isZoomEnabled ? 'hidden' : ''}`}
@@ -456,10 +514,46 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
             style={{height:`${(window.innerWidth < 550) ? dimHeight : dimHeight - 2 }%`,width: `${dimWidth}%`,top:`${(window.innerWidth < 550) ? dimTop : dimTop + 1}%`,left:`${dimLeft}%`}}
             />
             <img draggable="false" src={isFront ? image.front : image.back} alt="" className={`object-contain mx-auto ${window.innerWidth <= 550 ? ``: `h-[32rem]`} md:h-72 lg:h-96 z-30`} />
+            {currentIndex === index &&
+            <div 
+              className="absolute bottom-2 right-2 z-40 cursor-pointer" 
+              onClick={() => openModal(isFront ? image.front : image.back)}>
+              <img src={ZoomIcon} alt="Zoom" className="w-6 h-6" />
+            </div>}
           </div>
         ))}         
       </Slider>
+      {isModalOpen && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center z-50">
+        <div className="relative" id="img-id-zoomer" style={{ position: "relative" }}>
+          <div class="img-container" 
+                onMouseEnter={handleMouseEnter}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+                style={{
+                  overflow: 'hidden',
+                  transform: `scale(${scale}) translate(${translate.x - 50}px, ${translate.y - 50}px)`,
+                  transition: 'transform 0.3s ease',
+                  position: 'relative',
+                  cursor: 'zoom-in',
+                }}
+                >
+              <img draggable="false"
+                className={`absolute z-[-1] ${apparel === 'hoodie' ? 'Hoodie' : ''} ${apparel === 'tshirt' ? 'Tshirt' : ''}`} src={editedImage} 
+                alt="" style={{height: `${dimHeight}%`,width: `${dimWidth}%`,top: `${dimTop}%`,left: `${dimLeft}%`}}
+              />
+              <img draggable="false" src={modalImage} alt="" style={{height:`${imgHeightZoom}vh`}}
+                className={`object-contain mx-auto ${window.innerWidth <= 550 ? `` : `h-[32rem]`} md:h-72 lg:h-96 z-30`}
+              />
+          </div>
+          <button onClick={closeModal} className="absolute top-2 right-2 text-white bg-red-600 px-3 py-1 rounded-xl" style={{top:'-20px',right:'-20px',position: 'absolute'}}>
+              X
+          </button>
+        </div>
+      </div>)}
+      </>
       ) : (
+        <>
         <Slider
           ref={sliderRef}
           className={`${isZoomEnabled ? 'hidden' : ''}`}
@@ -472,9 +566,44 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
               />
               <img draggable="false" src={isFront ? image.front : image.back} alt="" className={`object-contain mx-auto ${window.innerWidth <= 550 ? ``: `h-[32rem]`} md:h-72 lg:h-96 z-30`} />
             {/* </div> */}
+            {currentIndex === index &&
+              <div 
+                className="absolute bottom-2 right-2 z-40 cursor-pointer" 
+                onClick={() => openModal(isFront ? image.front : image.back)}>
+                <img src={ZoomIcon} alt="Zoom" className="w-6 h-6" />
+              </div>}
             </div>
           ))}         
         </Slider>
+        {isModalOpen && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center z-50">
+        <div className="relative" id="img-id-zoomer" style={{ position: "relative" }}>
+          <div class="img-container" 
+                onMouseEnter={handleMouseEnter}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+                style={{
+                  overflow: 'hidden',
+                  transform: `scale(${scale}) translate(${translate.x - 50}px, ${translate.y - 50}px)`,
+                  transition: 'transform 0.3s ease',
+                  position: 'relative',
+                  cursor: 'zoom-in',
+                }}
+                >
+              <img draggable="false"
+                className={`absolute z-[-1] ${apparel === 'hoodie' ? 'Hoodie' : ''} ${apparel === 'tshirt' ? 'Tshirt' : ''}`} src={editedImage} 
+                alt="" style={{height: `${dimHeight}%`,width: `${dimWidth}%`,top: `${dimTop}%`,left: `${dimLeft}%`}}
+              />
+              <img draggable="false" src={modalImage} alt="" style={{height:`${imgHeightZoom}vh`}}
+                className={`object-contain mx-auto ${window.innerWidth <= 550 ? `` : `h-[32rem]`} md:h-72 lg:h-96 z-30`}
+              />
+          </div>
+          <button onClick={closeModal} className="absolute top-2 right-2 text-white bg-red-600 px-3 py-1 rounded-xl" style={{top:'-20px',right:'-20px',position: 'absolute'}}>
+              X
+          </button>
+        </div>
+      </div>)}
+        </>
       )}
       </div>
       <div className={`row ${isZoomEnabled ? 'hidden' : 'flex'} 
