@@ -100,8 +100,8 @@ const ProductPage = () => {
   }, [productListLoad, apparel]);
   useEffect(() => {
     const productKeys = Object.keys(productList);
-    if (productKeys.length === 1 && color != indexColor[0]) {
-      setColor(indexColor[0]);
+    if (productKeys.length === 1 && indexColor.map(v => v.toLowerCase()).indexOf(color.toLowerCase()) >= 0) {
+      setColor(indexColor[indexColor.map(v => v.toLowerCase()).indexOf(color.toLowerCase())]);
       console.log("Color changed according to the product data");
       const fetchIndex = async () => {
         const index = await getIndexByName(color);
