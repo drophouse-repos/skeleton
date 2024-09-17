@@ -673,24 +673,23 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
             className="text-zinc-100 font-extrabold rounded-xl text-xl inline-block w-4/12 md:w-2/12 lg:w-2/12 save-btn">
             Save Design</button>
       </div>
-      <div className={`grid grid-cols-12 mt-4 ${!isZoomEnabled ? '' : 'hidden'}`}>
-        <div className="col-span-12">
+      <div className={`mt-6 justify-center w-full md:w-[30rem] mx-auto text-lg md:text-2xl md:whitespace-nowrap gap-4 grid-cols-2 md:grid-cols-2  grid ${!isZoomEnabled ? '' : 'hidden'}`}>
           <button ref={toggleZoomBtnRef} onClick={toggleZoom} 
             style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
-            className="text-zinc-100 font-extrabold py-2 px-4 rounded-xl text-xl inline-block w-4/12 md:w-2/12 lg:w-2/12 mr-2">
+            className="mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  w-[12rem]">
             Edit Design
           </button>
           {isActive ? (
               isLiked ? (
                 <button ref={addFavBtnRef} onClick={handleLike} 
                   style={{fontFamily : `${orgDetails.font}`, backgroundColor: `red`}}
-                  className="text-zinc-100 font-extrabold py-2 px-4 rounded-xl text-xl inline-block w-4/12 md:w-2/12 lg:w-2/12 ml-2">
+                  className="mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  w-[12rem]">
                   Unsave Design
                 </button>
               ) : (
                 <button ref={addFavBtnRef} onClick={handleLike} 
                   style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
-                  className="text-zinc-100 font-extrabold py-2 px-4 rounded-xl text-xl inline-block w-4/12 md:w-2/12 lg:w-2/12 ml-2">
+                  className="mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  w-[12rem]">
                   Save Design
                 </button>
               )
@@ -701,7 +700,6 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
               Save Design
             </button>
           )}
-        </div>
       </div>
         {/*<div className="flex flex-row justify-end space-x-2 my-[1rem]">
           <div className="relative bottom-[50px] right-[5vw]">
