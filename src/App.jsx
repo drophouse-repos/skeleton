@@ -49,7 +49,6 @@ useEffect(() => {
 	return (
 		<div>
 		{loading ? (
-			// <Loader />
 			<LoadingPage />
 		  ) : (
 			<OrganisationDetails>
