@@ -137,7 +137,7 @@ useEffect(()=>{
             <br />
               Drops
             </div>
-
+ 
             {!isOrderPlaced ?
               <ClassButton
                 text="Design Now"
