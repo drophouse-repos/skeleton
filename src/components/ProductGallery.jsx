@@ -679,7 +679,7 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
           ) : (
             <button ref={addFavBtnRef} 
               style={{fontFamily : `${orgDetails.font}`, backgroundColor: `lightgrey`}}
-              className="cursor-not-allowed text-zinc-100 font-extrabold py-2 px-4 rounded-xl text-xl inline-block w-4/12 md:w-2/12 lg:w-2/12 ml-2">
+              className="cursor-not-allowed mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  w-[12rem]">
               Save Design
             </button>
           )}
