@@ -13,6 +13,7 @@ import { fetchOrderHistory } from "../utils/fetch";
 import { MessageBannerContext } from "../context/MessageBannerContext";
 import MessageBanner from "../components/MessageBanner";
 import { Orgcontext } from '../context/ApiContext';
+import videoFile from '../assets/webintofinal.mp4'; 
 
 const ImageChangeInterval = 3000;
 function GetBackendImage() {
@@ -118,7 +119,7 @@ useEffect(()=>{
         <div className="grid justify-center place-items-start grid-cols-1 md:grid-cols-2">
           <div
             style={{
-              position: "sticky",
+              position: "relative",
               width: "100%",
               textAlign: "center",
               paddingRight: "5%",
@@ -130,13 +131,15 @@ useEffect(()=>{
 
             <RShowcase imageList={GetBackendImage()} changeInterval={3000} RMask={orgDetails.mask}/>
             <div className="h-4"></div>
-            <div style={{fontFamily : `${orgDetails.font}`}} className="text-black text-5xl text-center">
+            {/* <div style={{fontFamily : `${orgDetails.font}`}} className="text-black text-5xl text-center">
               Personalized 
               <br />
                     {name}
             <br />
               Drops
-            </div>
+            </div> */}
+            <h1 className="text-black text-5xl text-center" style={{fontWeight: '800',fontFamily : `${orgDetails.font}`}}>One-of-a-kind,
+            <br></br><span className="text-span-2" style={{color: `${orgDetails.theme_color}`}}>For Everyone</span> </h1>
 
             {!isOrderPlaced ?
               <ClassButton
@@ -162,7 +165,14 @@ useEffect(()=>{
           </div>
 
           <div className="mx-5 my-32">
-            <StepCards />
+            {/* <StepCards /> */}
+            <video autoPlay muted loop width="100%" controls 
+            style={{
+              borderRadius: '24px',
+              boxShadow: '0px 4px 8px rgba(169, 200, 192, 0.5)'}}>
+              <source src={videoFile} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
         </div>
 
