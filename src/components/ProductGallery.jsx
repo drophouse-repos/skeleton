@@ -653,7 +653,7 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
       <div className={`Save-btn-contaiiner ${!isZoomEnabled ? 'hidden' : ''}`}>
         <button  ref={toggleZoomBtnRef} onClick={toggleZoom} 
             style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
-            className="text-zinc-100 font-extrabold rounded-xl text-xl inline-block w-4/12 md:w-2/12 lg:w-2/12 save-btn">
+            className="mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  w-[12rem]">
             Save Design</button>
       </div>
       <div className={`mt-6 justify-center w-full md:w-[30rem] mx-auto text-lg md:text-2xl md:whitespace-nowrap gap-4 grid-cols-2 md:grid-cols-2  grid ${!isZoomEnabled ? '' : 'hidden'}`}>
