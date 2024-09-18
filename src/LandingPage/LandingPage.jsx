@@ -81,7 +81,7 @@ useEffect(()=>{
 
   const products = [];
 
-  if(landingpage && landingpage && product_list && (landingpage.length == product_list.length && 
+  if(landingpage && product_list && (landingpage.length == product_list.length && 
     landingpage.length == CardProduct_front.length && product_list.length == CardProduct_front.length))
   {
     for(var i=0; i<landingpage.length; i++)
