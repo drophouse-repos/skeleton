@@ -382,26 +382,7 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
         setError('Please enter a valid base64 image URL.');
       }
     };
-    const uploadToCloudinary = async (base64Image) => {
-      try {
-        const response = await axios.post(
-          `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/image/upload`,
-          {
-            file: base64Image,
-            upload_preset: process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET,
-          },
-          {
-            headers: { 'Content-Type': 'application/json' },
-          }
-        );
-        console.log(response.data); 
-        return response.data.secure_url;
-      } catch (error) {
-        console.error('Error uploading image to Cloudinary:', error.response ? error.response.data : error.message); // Log the error response data
-        setError(error.response ? error.response.data.error.message : error.message); // Set error message
-        return null;
-      }
-    };
+
   
     const enhanceImage = (url) => {
       const enhancedUrl = `${url.replace('/upload/', '/upload/e_gen_restore/')}`;

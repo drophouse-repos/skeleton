@@ -20,7 +20,7 @@ function GetBackendImage() {
   const imageNumber = 12;
   let imageList = [];
   for (let i = 1; i <= imageNumber; i++) {
-    imageList.push(`${process.env.REACT_APP_SERVER_NEW}/image/p${i}.png`);
+    imageList.push(`${process.env.REACT_APP_BACKBONE}/image/p${i}.png`);
   }
   return imageList;
 }
