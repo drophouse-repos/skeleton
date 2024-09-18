@@ -86,6 +86,7 @@ const AuthPage = () => {
 
   const sendMagicLink = async (email) => {
     try {
+      console.log(window.location.origin)
       const actionCodeSettings = {
         url: process.env.REACT_APP_FRONTEND + "/auth",
         handleCodeInApp: true,
