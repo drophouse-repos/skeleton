@@ -18,6 +18,7 @@ import {
 const libraries = ['places'];
 const apiKey = process.env.REACT_APP_GOOGLE_API;
 
+
 export default function UserPage() {
   const searchBoxRef = useRef(null);
   const [isNormalModalOpen, setIsNormalModalOpen] = useState(false);
