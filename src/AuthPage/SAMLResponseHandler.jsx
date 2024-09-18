@@ -19,7 +19,7 @@ const SAMLResponseHandler = () => {
         'eid' : en_eid,
         'email' : en_data
       }
-      axios.post(`${process.env.REACT_APP_SERVER_NEW}/saml/jwt`, payload)
+      axios.post(`${process.env.REACT_APP_BACKBONE}/saml/jwt`, payload)
       .then(response => {
         const data = response.data;
         if(data.token && data.token != null)

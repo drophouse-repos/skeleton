@@ -27,7 +27,7 @@ import { useContext } from 'react';
   export async function handleCheckout(obj_data) {
       try {
       const {apparel, color, size, email, sessionID} = obj_data;
-        const response = await fetch(process.env.REACT_APP_SERVER_NEW + '/create-checkout-session', {
+        const response = await fetch(process.env.REACT_APP_BACKBONE + '/create-checkout-session', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
