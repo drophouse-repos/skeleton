@@ -154,7 +154,6 @@ const AuthPage = () => {
     );
   }
 
-
   if (process.env.REACT_APP_AUTHTYPE_SAML === 'true') {
     return (
       <div className="bg-white w-[80%] max-w-[400px] h-[85vh] w-10/12 grid content-center">
