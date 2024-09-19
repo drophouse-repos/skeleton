@@ -163,7 +163,7 @@ useEffect(()=>{
             )}
 
           </div>
-
+ 
           <div className="mx-5 my-32">
             {/* <StepCards /> */}
             <video playsInline autoPlay muted loop width="100%" controls 
