@@ -43,6 +43,8 @@ const OrganisationDetails = ({ children }) => {
                     {
                         if(item.landingpage[i]['asset'] && !item.landingpage[i]['asset'].includes('data:image'))
                             item.landingpage[i]['asset'] = await generate_presigned_url(item.landingpage[i]['asset'], org_s3_bucket)
+                        if(item.landingpage[i]['asset_back'] && !item.landingpage[i]['asset_back'].includes('data:image'))
+                            item.landingpage[i]['asset_back'] = await generate_presigned_url(item.landingpage[i]['asset_back'], org_s3_bucket)
                     }
 
                     for(var i=0; i<item.products.length; i++)
@@ -70,7 +72,6 @@ const OrganisationDetails = ({ children }) => {
                             }
                         }
                     }
-   
                     setOrgId(item.org_id);
                     setName(item.name);
                     setMask(item.mask);
