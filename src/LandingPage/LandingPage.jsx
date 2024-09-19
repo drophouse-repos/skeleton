@@ -166,7 +166,7 @@ useEffect(()=>{
 
           <div className="mx-5 my-32">
             {/* <StepCards /> */}
-            <video autoPlay muted loop width="100%" controls 
+            <video playsInline autoPlay muted loop width="100%" controls 
             style={{
               borderRadius: '24px',
               boxShadow: '0px 4px 8px rgba(169, 200, 192, 0.5)'}}>
