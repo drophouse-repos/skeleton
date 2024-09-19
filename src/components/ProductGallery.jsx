@@ -670,33 +670,33 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
       <div className={`Save-btn-contaiiner ${!isZoomEnabled ? 'hidden' : ''}`}>
         <button  ref={toggleZoomBtnRef} onClick={toggleZoom} 
             style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
-            className="mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  w-[12rem]">
+            className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
             Save Design</button>
       </div>
-      <div className={`mt-6 justify-center w-full md:w-[30rem] mx-auto text-lg md:text-2xl md:whitespace-nowrap gap-4 grid-cols-2 md:grid-cols-2  grid ${!isZoomEnabled ? '' : 'hidden'}`}>
+      <div className={`${(window.innerWidth <= 544)? `px-5`: ``} mt-6 mb-6 justify-center w-full md:w-[30rem] mx-auto text-lg md:text-2xl md:whitespace-nowrap gap-4 grid-cols-2 md:grid-cols-2  grid ${!isZoomEnabled ? '' : 'hidden'}`}>
           <button ref={toggleZoomBtnRef} onClick={toggleZoom} 
             style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
-            className="mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  w-[12rem]">
+            className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
             Edit Design
           </button>
           {isActive ? (
               isLiked ? (
                 <button ref={addFavBtnRef} onClick={handleLike} 
                   style={{fontFamily : `${orgDetails.font}`, backgroundColor: `red`}}
-                  className="mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  w-[12rem]">
+                  className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
                   Unsave Design
                 </button>
               ) : (
                 <button ref={addFavBtnRef} onClick={handleLike} 
                   style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
-                  className="mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  w-[12rem]">
+                  className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
                   Save Design
                 </button>
               )
           ) : (
             <button ref={addFavBtnRef} 
               style={{fontFamily : `${orgDetails.font}`, backgroundColor: `lightgrey`}}
-              className="cursor-not-allowed mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  w-[12rem]">
+              className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
               Save Design
             </button>
           )}
