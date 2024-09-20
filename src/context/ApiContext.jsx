@@ -25,52 +25,7 @@ const OrganisationDetails = ({ children }) => {
                 const org_id = {
                     org_id: process.env.REACT_APP_ORGANISATION_ID
                 }
-                const org_s3_bucket = "drophouse-skeleton"
                 const item = await fetchOrganisation_by_id(org_id);
-                    if(item.mask && !item.mask.includes('data:image'))
-                        item.mask = await generate_presigned_url(item.mask, org_s3_bucket)
-                    
-                    if(item.logo && !item.logo.includes('data:image'))
-                        item.logo = await generate_presigned_url(item.logo, org_s3_bucket)
-                    
-                    if(item.greenmask && !item.greenmask.includes('data:image'))
-                        item.greenmask = await generate_presigned_url(item.greenmask, org_s3_bucket)
-                    
-                    if(item.favicon && !item.favicon.includes('data:image'))
-                        item.favicon = await generate_presigned_url(item.favicon, org_s3_bucket)
-
-                    for(var i=0; i<item.landingpage.length; i++)
-                    {
-                        if(item.landingpage[i]['asset'] && !item.landingpage[i]['asset'].includes('data:image'))
-                            item.landingpage[i]['asset'] = await generate_presigned_url(item.landingpage[i]['asset'], org_s3_bucket)
-                    }
-
-                    for(var i=0; i<item.products.length; i++)
-                    {
-                        if(item.products[i]['mask'] && !item.products[i]['mask'].includes('data:image')){
-                            // item.products[i]['mask'] = await generate_presigned_url(item.products[i]['mask'], org_s3_bucket)
-                            item.products[i]['mask'] = await generate_base64_url(item.products[i]['mask'], org_s3_bucket)
-                        }
-                    
-                        if(item.products[i]['defaultProduct'] && !item.products[i]['defaultProduct'].includes('data:image')){
-                            // item.products[i]['defaultProduct'] = await generate_presigned_url(item.products[i]['defaultProduct'], org_s3_bucket)
-                            item.products[i]['defaultProduct'] = await generate_base64_url(item.products[i]['defaultProduct'], org_s3_bucket)
-                        }
-
-                        for(var j in item.products[i]['colors'])
-                        {
-                            if(item.products[i]['colors'][j]['asset']['front'] && !item.products[i]['colors'][j]['asset']['front'].includes('data:image')){
-                                // item.products[i]['colors'][j]['asset']['front'] = await generate_presigned_url(item.products[i]['colors'][j]['asset']['front'], org_s3_bucket)
-                                item.products[i]['colors'][j]['asset']['front'] = await generate_base64_url(item.products[i]['colors'][j]['asset']['front'], org_s3_bucket)
-                            }
-
-                            if(item.products[i]['colors'][j]['asset']['back'] && !item.products[i]['colors'][j]['asset']['back'].includes('data:image')){
-                                // item.products[i]['colors'][j]['asset']['back'] = await generate_presigned_url(item.products[i]['colors'][j]['asset']['back'], org_s3_bucket)
-                                item.products[i]['colors'][j]['asset']['back'] = await generate_base64_url(item.products[i]['colors'][j]['asset']['back'], org_s3_bucket)
-                            }
-                        }
-                    }
-   
                     setOrgId(item.org_id);
                     setName(item.name);
                     setMask(item.mask);
