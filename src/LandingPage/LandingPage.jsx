@@ -164,7 +164,14 @@ useEffect(()=>{
           </div>
  
           <div className="mx-5 my-32">
-            <StepCards />
+            {/* <StepCards /> */}
+            <video playsInline autoPlay muted loop width="100%" controls 
+            style={{
+              borderRadius: '24px',
+              boxShadow: '0px 4px 8px rgba(169, 200, 192, 0.5)'}}>
+              <source src={videoFile} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
         </div>
 
