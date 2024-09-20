@@ -97,7 +97,7 @@
     height: 15px !important;
   }
   #landing-product-slider .slick-arrow {
-    display: none !important;
+    display: none !important; 
   }
 }
 .btn-mbl {
