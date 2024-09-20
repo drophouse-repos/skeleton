@@ -137,9 +137,13 @@ useEffect(()=>{
                     {name}
             <br />
               Drops
+<<<<<<< HEAD
             </div> */}
             <h1 className="text-black text-5xl text-center" style={{fontWeight: '800',fontFamily : `${orgDetails.font}`}}>One-of-a-kind,
             <br></br><span className="text-span-2" style={{color: `${orgDetails.theme_color}`}}>For Everyone</span> </h1>
+=======
+            </div>
+>>>>>>> 3957cd4 (redeploy)
 
             {!isOrderPlaced ?
               <ClassButton
