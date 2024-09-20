@@ -137,13 +137,9 @@ useEffect(()=>{
                     {name}
             <br />
               Drops
-<<<<<<< HEAD
             </div> */}
             <h1 className="text-black text-5xl text-center" style={{fontWeight: '800',fontFamily : `${orgDetails.font}`}}>One-of-a-kind,
             <br></br><span className="text-span-2" style={{color: `${orgDetails.theme_color}`}}>For Everyone</span> </h1>
-=======
-            </div>
->>>>>>> 3957cd4 (redeploy)
 
             {!isOrderPlaced ?
               <ClassButton
@@ -169,14 +165,7 @@ useEffect(()=>{
           </div>
  
           <div className="mx-5 my-32">
-            {/* <StepCards /> */}
-            <video playsInline autoPlay muted loop width="100%" controls 
-            style={{
-              borderRadius: '24px',
-              boxShadow: '0px 4px 8px rgba(169, 200, 192, 0.5)'}}>
-              <source src={videoFile} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            <StepCards />
           </div>
         </div>
 
