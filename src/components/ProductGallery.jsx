@@ -19,8 +19,7 @@ import { enhanceImageClarity } from '../utils/enhanceImageClarity';
 import { Orgcontext } from '../context/ApiContext';
 import ZoomIcon from '../assets/zoom.png';
 const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, currentIndex, setCurrentIndex, changeFromMug, isZoomEnabled, setIsZoomEnabled }, ref) => {
-  if(currentIndex == undefined || currentIndex == null)
-    setCurrentIndex(0)
+
   const { apparel, setApparel, color, setColor, prompt } = useContext(AppContext);
   const [slideIndex, setSlideIndex] = useState(0);
   // const [currentIndex, setCurrentIndex] = useState(mapColorToIndex(apparel, color));
@@ -521,7 +520,7 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
               draggable="false" src={isFront ? image.front : image.back} alt=""
               className={`object-contain mx-auto ${window.innerWidth <= 550 ? `` : `h-[32rem]`} md:h-72 lg:h-96 z-30`}
             />
-            <img draggable="false" src={isFront ? image.front : image.back} alt="" className={`object-contain mx-auto ${window.innerWidth <= 550 ? ``: `h-[32rem]`} md:h-72 lg:h-96 z-30`} />
+            {/* <img draggable="false" src={isFront ? image.front : image.back} alt="" className={`object-contain mx-auto ${window.innerWidth <= 550 ? ``: `h-[32rem]`} md:h-72 lg:h-96 z-30`} /> */}
             {currentIndex === index &&
             <div 
               className="absolute bottom-2 right-2 z-40 cursor-pointer" 
@@ -555,7 +554,7 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
                 className={`object-contain mx-auto ${window.innerWidth <= 550 ? `` : `h-[32rem]`} md:h-72 lg:h-96 z-30`}
               />
           </div>
-          <button onClick={closeModal} className="absolute top-2 right-2 text-white bg-red-600 px-3 py-1 rounded-xl" style={{top:'-20px',right:'-20px',position: 'absolute'}}>
+          <button onClick={closeModal} className="absolute top-2 right-2 text-white bg-red-600 px-3 py-1 rounded-xl" style={{top:'-20px',right: window.innerWidth <= 544 ? '0px' : '-20px',position: 'absolute'}}>
               X
           </button>
         </div>
@@ -607,7 +606,7 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
                 className={`object-contain mx-auto ${window.innerWidth <= 550 ? `` : `h-[32rem]`} md:h-72 lg:h-96 z-30`}
               />
           </div>
-          <button onClick={closeModal} className="absolute top-2 right-2 text-white bg-red-600 px-3 py-1 rounded-xl" style={{top:'-20px',right:'-20px',position: 'absolute'}}>
+          <button onClick={closeModal} className="absolute top-2 right-2 text-white bg-red-600 px-3 py-1 rounded-xl" style={{top:'-20px',right: window.innerWidth <= 544 ? '0px' : '-20px',position: 'absolute'}}>
               X
           </button>
         </div>

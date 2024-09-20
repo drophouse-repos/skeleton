@@ -108,6 +108,14 @@ const ProductPage = () => {
         setCurrentGalleryIndex(index?index:0);
       };
       fetchIndex();
+    } else if (productKeys.length === 1 && indexColor.map(v => v.toLowerCase()).indexOf(color.toLowerCase()) < 0) {
+      setColor(indexColor[0]);
+      console.log("Color changed according to the product data");
+      const fetchIndex = async () => {
+        const index = await getIndexByName(color);
+        setCurrentGalleryIndex(index?index:0);
+      };
+      fetchIndex();
     }
     else{
       const fetchIndex = async () => {
