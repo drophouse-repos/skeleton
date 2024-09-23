@@ -18,10 +18,8 @@ import axios from 'axios';
 import { enhanceImageClarity } from '../utils/enhanceImageClarity';
 import { Orgcontext } from '../context/ApiContext';
 import ZoomIcon from '../assets/zoom.png';
-<<<<<<< HEAD
+
 import ProductPopup from "./ProductPopup";
-=======
->>>>>>> baa0b66 (rebase)
 const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, currentIndex, setCurrentIndex, changeFromMug, isZoomEnabled, setIsZoomEnabled }, ref) => {
 
   const { apparel, setApparel, color, setColor, prompt } = useContext(AppContext);
