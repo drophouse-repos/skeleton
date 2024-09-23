@@ -18,6 +18,7 @@ import axios from 'axios';
 import { enhanceImageClarity } from '../utils/enhanceImageClarity';
 import { Orgcontext } from '../context/ApiContext';
 import ZoomIcon from '../assets/zoom.png';
+import ProductPopup from "./ProductPopup";
 const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, currentIndex, setCurrentIndex, changeFromMug, isZoomEnabled, setIsZoomEnabled }, ref) => {
 
   const { apparel, setApparel, color, setColor, prompt } = useContext(AppContext);
@@ -32,6 +33,9 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
   const [dimLeft, setDimLeft] = useState();
   const [dimHeight, setDimHeight] = useState();
   const [dimWidth, setDimWidth] = useState();
+  const [productPopupIsShown, setProductPopupIsShown] = useState(false);
+  const [productPopupInfo, setProductPopupInfo] = useState({});
+  const [productPopupTitle, setProductPopupTitle] = useState("");
   const [dimArray, setDimArray] = useState({
     Dim_top: 0,
     Dim_left: 0,
@@ -192,6 +196,9 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
   }, [generatedImage.photo]);
 
   const handleLike = () => {
+    const productPopupInfo = {
+      image: generatedImage.photo,
+    };
     setIsLiked(!isLiked);
     fetchPostLike(!isLiked, generatedImage.img_id, prompt)
       .then(succeeded => {
@@ -203,8 +210,12 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
             navigate('/error-page');
           }
         }
-        if(succeeded.success)
-          isLiked ? setFavNumber(prevKey => prevKey - 1) : setFavNumber(prevKey => prevKey + 1)
+        if(succeeded.success){
+        setProductPopupTitle("Design added to favourites");
+        setProductPopupInfo(productPopupInfo);
+        setProductPopupIsShown(true);
+        }
+          // isLiked ? setFavNumber(prevKey => prevKey - 1) : setFavNumber(prevKey => prevKey + 1)
       });
   };
 
@@ -484,6 +495,13 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
   console.log((productImageList[currentIndex] &&  productImageList[currentIndex]?.back && productImageList[currentIndex]?.back.startsWith('data:image/')))
   return (
     <div id="product-gallery" className={`sliderContainer overflow-hidden ${!isZoomEnabled ? '' : 'zoomer'}`} ref={ref}>
+      <ProductPopup
+        isShown={productPopupIsShown}
+        popupTitle={productPopupTitle}
+        productInfo={productPopupInfo}
+        setIsShown={setProductPopupIsShown}
+        isSaveDesign={true}
+      />
       <div className={`${isZoomEnabled ? 'hidden' : ''}`}>
       {/* for alumni modal */}
       {productImageList.length <= 2 ? (
@@ -664,22 +682,22 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
           {isActive ? (
               isLiked ? (
                 <button ref={addFavBtnRef} onClick={handleLike} 
-                  style={{fontFamily : `${orgDetails.font}`, backgroundColor: `red`}}
+                  style={{fontFamily : `${orgDetails.font}`, backgroundColor: `lightgrey`,pointerEvents:'none'}}
                   className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
-                  Unsave Design
+                  Design saved
                 </button>
               ) : (
                 <button ref={addFavBtnRef} onClick={handleLike} 
                   style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
                   className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
-                  Save Design
+                  Save for later
                 </button>
               )
           ) : (
             <button ref={addFavBtnRef} 
               style={{fontFamily : `${orgDetails.font}`, backgroundColor: `lightgrey`}}
               className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
-              Save Design
+              Save for later
             </button>
           )}
       </div>
