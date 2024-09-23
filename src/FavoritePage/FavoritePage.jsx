@@ -9,7 +9,7 @@ import {Loading} from '../components/LoadingComponent/Loading';
 import { Orgcontext } from '../context/ApiContext';
 
 const FavoritePage = () => {
-  const { orgDetails, greenMask, mask } = useContext(Orgcontext)
+  const { orgDetails } = useContext(Orgcontext)
   const [likedProducts, setLikedProducts] = useState([]);
   const { setGeneratedImage, setIsLiked, setEditedImage, setImageToCart} = useContext(ImageContext);
   const { setPrompt, setFavNumber } = useContext(AppContext);
@@ -62,15 +62,6 @@ const FavoritePage = () => {
       console.error("Failed to delete image", error);
     }
   };
-  const [visibleImageId, setVisibleImageId] = useState(null);
-  const handleMask = (img_id,e) => {
-    e.stopPropagation(); 
-    if(img_id === visibleImageId){
-      setVisibleImageId('')
-    }else{
-      setVisibleImageId(img_id);
-    }
-  };
 
   return (
     isLoading ? <Loading/> :
@@ -92,14 +83,6 @@ const FavoritePage = () => {
             onClick={() => handleImageClick(product.signed_url, product.prompt, product.img_id, product.bought)} 
             className={`cursor-pointer relative ${product.bought ? 'opacity-50' : ''}`}
           >
-           {visibleImageId === product.img_id && <img 
-              src={greenMask ? greenMask : mask} 
-              alt={product.prompt}
-              id={product.img_id}
-              loading="lazy"
-              style={{position: 'absolute'}}
-              className="w-full h-auto object-cover rounded-lg shadow-md" 
-            />}
             <img 
               src={product.signed_url} 
               alt={product.prompt} 
@@ -118,14 +101,6 @@ const FavoritePage = () => {
               style={{fontFamily : `${orgDetails.font}`}}
             >
               Delete
-            </button>
-
-            <button 
-              onClick={(e) => handleMask(product.img_id,e)}
-              className="absolute top-0 mt-2 mr-2 text-white bg-green-500 font-bold py-1 px-2 rounded"
-              style={{fontFamily : `${orgDetails.font}`}}
-            >
-              {visibleImageId === product.img_id ? 'Hide Mask': 'Show Mask'}
             </button>
           </div>
           <div className="mt-2">
