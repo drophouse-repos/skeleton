@@ -564,7 +564,7 @@ const ProductPage = () => {
         <div className={`justify-center  px-5 ${(process.env.REACT_APP_CART_ENABLED == 'true') ? (window.innerWidth <= 544) ? ``:`mt-[2rem]` : ``}`}>
           <div className={`grid ${apparel !== 'mug' && apparel !== 'cap' ? 'grid-cols-2' : 'grid-cols-1'} ${(window.innerWidth <= 544 ? `w-full` : `w-[70%]` )} mx-auto justify-items-center items-center`}>
       {apparelOptions.length === 1 ? (
-      <span className="text-gray-800 span-input">{apparelOptions[0].label}</span>
+      <span className="text-gray-800 span-input ant-select product-name-span">{apparelOptions[0].label}</span>
     ) : (
       <Select
         style={{ fontFamily: `${orgDetails.font}` }}
@@ -595,9 +595,10 @@ const ProductPage = () => {
               <span style={{fontFamily : `${orgDetails.font}`}} className="text-blue-600 font-bold hover:text-teal-600 mt-0 cursor-pointer" onClick={() => {navigate("/information/size");}}>Size Information & Chart</span>
             )}
           </div>
-          <div className={`text-center text-black font-normal font-karl ${(window.innerWidth <= 544) ? `my-[1rem]`: `my-[3rem]`} ${(process.env.REACT_APP_SHOWPRICE == 'true') ? `` : `hidden`}`}>
+          <div className={`text-center text-black font-normal font-karl ${(window.innerWidth <= 544) ? `my-[1rem]`: `my-[3rem]`} `}>
             <span className="text-3xl font-bold" style={{fontFamily : `${orgDetails.font}`}}>
-              ${getPriceNum(apparel)}
+              {/* ${getPriceNum(apparel)} */}
+              {(process.env.REACT_APP_SHOWPRICE == 'true') ? `$${getPriceNum(apparel)}` : ``}
             </span>
           </div>
           <div className={`justify-center w-full md:w-[30rem] mx-auto text-lg md:text-2xl md:whitespace-nowrap gap-4 grid-cols-2 md:grid-cols-2  ${(process.env.REACT_APP_CART_ENABLED == 'true') ? `grid` : `flex mt-4`}`}>
