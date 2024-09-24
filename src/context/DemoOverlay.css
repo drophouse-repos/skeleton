@@ -16,3 +16,12 @@
     height: 100px;
     transform: rotate(321deg);
 }
+@media only screen and (max-width: 600px) {
+    .demo-overlay {
+        font-size: 15px !important;
+        top: 19px !important;
+        height: 50px;
+        width: 200px;
+        left: -39px !important;
+    }
+}
