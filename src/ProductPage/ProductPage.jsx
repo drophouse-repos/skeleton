@@ -522,6 +522,7 @@ const ProductPage = () => {
         popupTitle={productPopupTitle}
         productInfo={productPopupInfo}
         setIsShown={setProductPopupIsShown}
+        isSaveDesign={false}
       />
       <div className="m-auto max-w-screen-lg">
         <div className="w-full px-5">

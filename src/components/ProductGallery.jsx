@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { enhanceImageClarity } from '../utils/enhanceImageClarity';
 import { Orgcontext } from '../context/ApiContext';
+import ProductPopup from "./ProductPopup";
 
 const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, currentIndex, setCurrentIndex, changeFromMug, isZoomEnabled, setIsZoomEnabled }, ref) => {
   if(currentIndex == undefined || currentIndex == null)
@@ -33,6 +34,9 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
   const [dimLeft, setDimLeft] = useState();
   const [dimHeight, setDimHeight] = useState();
   const [dimWidth, setDimWidth] = useState();
+  const [productPopupIsShown, setProductPopupIsShown] = useState(false);
+  const [productPopupInfo, setProductPopupInfo] = useState({});
+  const [productPopupTitle, setProductPopupTitle] = useState("");
   const [dimArray, setDimArray] = useState({
     Dim_top: 0,
     Dim_left: 0,
@@ -159,6 +163,9 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
   }, [generatedImage.photo]);
 
   const handleLike = () => {
+    const productPopupInfo = {
+      image: generatedImage.photo,
+    };
     setIsLiked(!isLiked);
     fetchPostLike(!isLiked, generatedImage.img_id, prompt)
       .then(succeeded => {
@@ -170,6 +177,12 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
             navigate('/error-page');
           }
         }
+        if(succeeded.success){
+        setProductPopupTitle("Design added to favourites");
+        setProductPopupInfo(productPopupInfo);
+        setProductPopupIsShown(true);
+        }
+          // isLiked ? setFavNumber(prevKey => prevKey - 1) : setFavNumber(prevKey => prevKey + 1)
       });
   };
 
@@ -426,6 +439,13 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
   console.log((productImageList[currentIndex] &&  productImageList[currentIndex]?.back && productImageList[currentIndex]?.back.startsWith('data:image/')))
   return (
     <div id="product-gallery" className={`sliderContainer overflow-hidden ${!isZoomEnabled ? '' : 'zoomer'}`} ref={ref}>
+       <ProductPopup
+        isShown={productPopupIsShown}
+        popupTitle={productPopupTitle}
+        productInfo={productPopupInfo}
+        setIsShown={setProductPopupIsShown}
+        isSaveDesign={true}
+      />
       <div className={`${isZoomEnabled ? 'hidden' : ''}`}>
       {/* for alumni modal */}
       {productImageList.length <= 2 ? (
@@ -498,19 +518,38 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
       <div className={`Save-btn-contaiiner ${!isZoomEnabled ? 'hidden' : ''}`}>
         <button  ref={toggleZoomBtnRef} onClick={toggleZoom} 
             style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
-            className="text-zinc-100 font-extrabold rounded-xl text-xl inline-block w-4/12 md:w-2/12 lg:w-2/12 save-btn">
+            className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
             Save Design</button>
       </div>
-      <div className={`grid grid-cols-12 mt-4 ${!isZoomEnabled ? '' : 'hidden'}`}>
-        <div className="col-span-12">
+      <div className={`${(window.innerWidth <= 544)? `px-5`: ``} mt-6 mb-6 justify-center w-full md:w-[30rem] mx-auto text-lg md:text-2xl md:whitespace-nowrap gap-4 grid-cols-2 md:grid-cols-2  grid ${!isZoomEnabled ? '' : 'hidden'}`}>
           <button ref={toggleZoomBtnRef} onClick={toggleZoom} 
             style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
-            className="text-zinc-100 font-extrabold py-2 px-4 rounded-xl text-xl inline-block w-4/12 md:w-2/12 lg:w-2/12">
+            className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
             Edit Design
           </button>
-        </div>
+          {isActive ? (
+              isLiked ? (
+                <button ref={addFavBtnRef} onClick={handleLike} 
+                  style={{fontFamily : `${orgDetails.font}`, backgroundColor: `lightgrey`,pointerEvents:'none'}}
+                  className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
+                  Design saved
+                </button>
+              ) : (
+                <button ref={addFavBtnRef} onClick={handleLike} 
+                  style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
+                  className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
+                  Save for later
+                </button>
+              )
+          ) : (
+            <button ref={addFavBtnRef} 
+              style={{fontFamily : `${orgDetails.font}`, backgroundColor: `lightgrey`}}
+              className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
+              Save for later
+            </button>
+          )}
       </div>
-        <div className="flex flex-row justify-end space-x-2 my-[1rem]">
+        {/* <div className="flex flex-row justify-end space-x-2 my-[1rem]">
           <div className="relative bottom-[50px] right-[5vw]">
             {isActive ? (
               isLiked ? (
@@ -530,7 +569,7 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
               <HeartOutlined className="scale-150 text-gray-400 cursor-not-allowed" ref={addFavBtnRef} />
             )}
           </div>
-        </div>
+        </div> */}
 
     </div>
   );
