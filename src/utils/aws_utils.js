@@ -35,7 +35,7 @@ export const generate_base64_url = async (img_id) => {
         if (response.status !== 200) throw new Error(data.message);
         return data.data_url ? data.data_url : null;
     } catch (err) {
-        console.log('error in generate_base64_url', err)
+        console.error('error in generate_base64_url', err)
         return null
     }
 }
@@ -45,7 +45,6 @@ export const validateImageUrl = async (url) => {
         const response = await axios.get(url, { responseType: 'arraybuffer' });
 
         const contentType = response.headers['content-type'];
-        console.log(contentType, url)
         if (contentType.startsWith('image/')) {
             return url;
         } else {
@@ -64,7 +63,7 @@ export const get_toggled_url = async (order_ids) => {
         if (response.status !== 200) throw new Error('Failed to fetch /get_toggled_url : img_url');
         return response.data;
     } catch (err) {
-        console.log(err, 'failed to fetch /get_toggled_url : img_url');
+        console.error(err, 'failed to fetch /get_toggled_url : img_url');
         return null;
     }
 }

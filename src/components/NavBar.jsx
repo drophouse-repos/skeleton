@@ -46,7 +46,7 @@ export default function NavBar() {
         .catch((error) => {
           setCartNumber(0);
           setFavNumber(0)
-          console.log(error)
+          console.error(error)
           setLoading(false)
         })
       }
@@ -58,7 +58,6 @@ export default function NavBar() {
   const { favicon } = useContext(Orgcontext)
 	useEffect(() => {
 		updateFavicon(favicon);
-    // console.log("favicon url : ", favicon)
 	  }, []);
   
 

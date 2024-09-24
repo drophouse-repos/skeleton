@@ -175,10 +175,8 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
     return colorNameToIndex[color];
   };
 
-  // console.log("colour name to index : ", getIndexByName("white"))
   
   const productListSlider = useMemo(() => productImageList, [productImageList]);
-  // console.log("product list : ", productImageList)
   let sliderRef = useRef(null);
   const toggleZoomBtnRef = useRef(null);
   const addFavBtnRef = useRef(null);
@@ -247,7 +245,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
     updateSlidesToShow();
   }, [productImageList]);
 
-  console.log("Slides to show : ",slideToShow, "current index : ",currentIndex)
+  // console.log("Slides to show : ",slideToShow, "current index : ",currentIndex)
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const settings = {
@@ -303,7 +301,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
   setWidth(Math.round(width));
   setHeight(Math.round(height));
 },[apparel,dimArray])
-console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,", height : ",tmp_height)
+// console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,", height : ",tmp_height)
 
   useImperativeHandle(ref, () => {
     return {
@@ -491,8 +489,7 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
     };
 
     const [zoomItemSrc, setZoomItemSrc] = useState(null);
-  // console.log("Current Index : ",currentIndex); 
-  console.log((productImageList[currentIndex] &&  productImageList[currentIndex]?.back && productImageList[currentIndex]?.back.startsWith('data:image/')))
+  // console.log((productImageList[currentIndex] &&  productImageList[currentIndex]?.back && productImageList[currentIndex]?.back.startsWith('data:image/')))
   return (
     <div id="product-gallery" className={`sliderContainer overflow-hidden ${!isZoomEnabled ? '' : 'zoomer'}`} ref={ref}>
       <ProductPopup
