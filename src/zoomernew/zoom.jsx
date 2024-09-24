@@ -79,7 +79,6 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
       setImageY(95);
     }
   }
-  // console.log("R_width : ",R_width)
   useEffect(() => {
     resetAllPositions();
   }, []);
@@ -212,7 +211,6 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
       }
       return `${width}px ${height }px`
     }
-    // console.log("zoomer dimension credentials :" , props.dimensions)
   
   // End
 
