@@ -19,7 +19,6 @@ import { enhanceImageClarity } from '../utils/enhanceImageClarity';
 import { Orgcontext } from '../context/ApiContext';
 import ProductPopup from "./ProductPopup";
 import ZoomIcon from '../assets/zoom.png';
-import ProductPopup from "./ProductPopup";
 const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, currentIndex, setCurrentIndex, changeFromMug, isZoomEnabled, setIsZoomEnabled }, ref) => {
 
   const { apparel, setApparel, color, setColor, prompt } = useContext(AppContext);
@@ -430,7 +429,6 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
       onChange(localColor);
     }
   }
-  const [currentSlide, setCurrentSlide] = useState(0);
   const [scale, setScale] = useState(1);
   const [translate, setTranslate] = useState({ x: 50, y: 50 });
   const handleMouseMove = (e) => {
