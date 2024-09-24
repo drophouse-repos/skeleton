@@ -539,6 +539,12 @@ const InformationPage = () => {
             I agree to the <a href="/Terms.pdf" target="_blank" style={{fontFamily : `${orgDetails.font}`}}>Terms and Conditions</a>
           </label>
         </div>
+        {process.env.REACT_APP_DEMO ? 
+        <><button className="continueBtn" disabled={true} style={{fontFamily : `${orgDetails.font}`, color: `white`,backgroundColor: 'lightgrey'}}>
+          ORDER
+        </button><br></br>
+        <p>You can't place order Please contact : <a href="https://www.drophouse.ai/contact.php" style={{color:'red'}} target='_blank'>drophouse.ai</a></p></>
+        : 
         <button className="continueBtn" type="submit" disabled={isLoading} style={{fontFamily : `${orgDetails.font}`, color: `${orgDetails.theme_color}`}}>
           {isLoading ? (
             <div className="snippet" data-title="dot-elastic">
@@ -550,6 +556,7 @@ const InformationPage = () => {
             `${(process.env.REACT_APP_STRIPE_CHECKOUT_ENABLED == 'true') ? `CHECKOUT` : `ORDER`}`
           )}
         </button>
+        }
       </form>
     </div>
   );

@@ -1,0 +1,18 @@
+.demo-overlay {
+    position: fixed;
+    top: 35px;
+    left: -95px;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(255, 0, 0);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    z-index: 9999;
+    width: 400px;
+    height: 100px;
+    transform: rotate(321deg);
+}
