@@ -46,11 +46,7 @@ export default function NavBar() {
         .catch((error) => {
           setCartNumber(0);
           setFavNumber(0)
-<<<<<<< HEAD
           console.error(error)
-=======
-          console.log(error)
->>>>>>> 1abf30e (favorite & zoom-in changes)
           setLoading(false)
         })
       }
