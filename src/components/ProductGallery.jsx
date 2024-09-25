@@ -19,7 +19,6 @@ import { enhanceImageClarity } from '../utils/enhanceImageClarity';
 import { Orgcontext } from '../context/ApiContext';
 import ProductPopup from "./ProductPopup";
 import ZoomIcon from '../assets/zoom.png';
-import ProductPopup from "./ProductPopup";
 
 const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, currentIndex, setCurrentIndex, changeFromMug, isZoomEnabled, setIsZoomEnabled }, ref) => {
 
