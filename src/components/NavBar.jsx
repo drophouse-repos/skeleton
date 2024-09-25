@@ -67,7 +67,6 @@ export default function NavBar() {
   const getLikedItemNumber = () => {
     return favNumber;
   };
-
   function MenuItem({ icon, text, href }) {
     return (
       <div

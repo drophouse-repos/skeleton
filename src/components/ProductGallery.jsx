@@ -19,6 +19,7 @@ import { enhanceImageClarity } from '../utils/enhanceImageClarity';
 import { Orgcontext } from '../context/ApiContext';
 import ZoomIcon from '../assets/zoom.png';
 import ProductPopup from "./ProductPopup";
+import ZoomIcon from '../assets/zoom.png';
 
 const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, currentIndex, setCurrentIndex, changeFromMug, isZoomEnabled, setIsZoomEnabled }, ref) => {
 
@@ -43,9 +44,6 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
     Dim_height: 0,
     Dim_width: 0
   });
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalImage, setModalImage] = useState('');
-  const [imgHeightZoom, setImgHeightZoom] = useState('80')
   useEffect(() => {
     const updateImageHeight = () => {
       const screenWidth = window.innerWidth;
@@ -69,14 +67,6 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
     };
   }, []);
 
-  const openModal = (image) => {
-    setModalImage(image);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
   const [zoomerImg, setZoomerImg] = useState();
   // console.log("favicon url : ",favicon)
   useEffect(() => {
@@ -186,6 +176,40 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
   const navigate = useNavigate();
   const [buttonText, setButtonText] = useState('Edit Design');
   // setdesignbtn = {text: 'Edit Design'};
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalImage, setModalImage] = useState('');
+  const [imgHeightZoom, setImgHeightZoom] = useState('80')
+  useEffect(() => {
+    const updateImageHeight = () => {
+      const screenWidth = window.innerWidth;
+
+      if (screenWidth <= 768) {
+        // Smaller screens (mobile)
+        setImgHeightZoom('50');
+      } else if (screenWidth <= 1024) {
+        // iPad Pro size
+        setImgHeightZoom('60');
+      } else {
+        // Laptop/Desktop
+        setImgHeightZoom('80');
+      }
+    };
+
+    updateImageHeight();
+    window.addEventListener('resize', updateImageHeight);
+    return () => {
+      window.removeEventListener('resize', updateImageHeight);
+    };
+  }, []);
+
+  const openModal = (image) => {
+    setModalImage(image);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   useEffect(()=> {
     sliderRef.current.slickGoTo(currentIndex);
   },[currentIndex]) 
@@ -213,6 +237,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
         setProductPopupTitle("Design added to favourites");
         setProductPopupInfo(productPopupInfo);
         setProductPopupIsShown(true);
+        isLiked ? setFavNumber(prevKey => prevKey - 1) : setFavNumber(prevKey => prevKey + 1)
         }
           // isLiked ? setFavNumber(prevKey => prevKey - 1) : setFavNumber(prevKey => prevKey + 1)
       });
@@ -247,7 +272,6 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
   }, [productImageList]);
 
   // console.log("Slides to show : ",slideToShow, "current index : ",currentIndex)
-  const [currentSlide, setCurrentSlide] = useState(0);
 
   const settings = {
     className: "center",
@@ -364,27 +388,6 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
       setBannerKey(prevKey => prevKey + 1);
     }
   }
-  const [scale, setScale] = useState(1);
-  const [translate, setTranslate] = useState({ x: 50, y: 50 });
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const xPercent = ((e.clientX - rect.left) / rect.width) * 100; // X position as percentage
-    const yPercent = ((e.clientY - rect.top) / rect.height) * 100; // Y position as percentage
-
-    // Limit the translate values to ensure smooth zoom and keep focus near the center
-    const x = Math.min(Math.max(xPercent, 10), 60); // Keep the x between 10 and 90 for smoother zoom
-    const y = Math.min(Math.max(yPercent, 10), 60); // Same for y, prevents image from moving too far
-
-    setTranslate({ x, y });
-  };
-  const handleMouseEnter = () => {
-    setScale(1.4);
-  };
-  const handleMouseLeave = () => {
-    setScale(1);
-    setTranslate({ x: 50, y: 50 });
-  };
-  
   const closeZoomerwindow = () => {
     // setToggleActivated(false);
     setButtonText(buttonText === 'Edit Design' ? 'Save Design' : 'Edit Design');
@@ -428,7 +431,27 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
       onChange(localColor);
     }
   }
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [scale, setScale] = useState(1);
+  const [translate, setTranslate] = useState({ x: 50, y: 50 });
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const xPercent = ((e.clientX - rect.left) / rect.width) * 100; // X position as percentage
+    const yPercent = ((e.clientY - rect.top) / rect.height) * 100; // Y position as percentage
 
+    // Limit the translate values to ensure smooth zoom and keep focus near the center
+    const x = Math.min(Math.max(xPercent, 10), 60); // Keep the x between 10 and 90 for smoother zoom
+    const y = Math.min(Math.max(yPercent, 10), 60); // Same for y, prevents image from moving too far
+
+    setTranslate({ x, y });
+  };
+  const handleMouseEnter = () => {
+    setScale(1.4);
+  };
+  const handleMouseLeave = () => {
+    setScale(1);
+    setTranslate({ x: 50, y: 50 });
+  };
     // upscale image with cloudinary
     const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
     const [error, setError] = useState(null);
@@ -589,6 +612,12 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
               style={{height:`${(window.innerWidth < 550) ? dimHeight : dimHeight - 3}%`,width: `${dimWidth}%`,top:`${(window.innerWidth < 550) ? dimTop : dimTop + 3}%`,left:`${dimLeft}%`}}
               />
               <img draggable="false" src={isFront ? image.front : image.back} alt="" className={`object-contain mx-auto ${window.innerWidth <= 550 ? ``: `h-[32rem]`} md:h-72 lg:h-96 z-30`} />
+              {currentIndex === index &&
+              <div 
+              className={`absolute bottom-2 right-2 z-40 cursor-pointer ${window.innerWidth <= 544 ? 'hidden' : ''}`}
+                onClick={() => openModal(isFront ? image.front : image.back)}>
+                <img src={ZoomIcon} alt="Zoom" className="w-6 h-6" />
+              </div>}
             {/* </div> */}
             {currentIndex === index &&
               <div 
@@ -671,33 +700,33 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
             className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
             Reset Changes</button>
         <button  ref={toggleZoomBtnRef} onClick={toggleZoom} 
-            style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
+            style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`, fontSize: window.innerWidth <= 544 ? '17px': ''}}
             className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
             Save Design</button>
       </div>
       <div className={`${(window.innerWidth <= 544)? `px-5`: ``} mt-6 mb-6 justify-center w-full md:w-[30rem] mx-auto text-lg md:text-2xl md:whitespace-nowrap gap-4 grid-cols-2 md:grid-cols-2  grid ${!isZoomEnabled ? '' : 'hidden'}`}>
           <button ref={toggleZoomBtnRef} onClick={toggleZoom} 
-            style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
+            style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`, fontSize: window.innerWidth <= 544 ? '17px': ''}}
             className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
             Edit Design
           </button>
           {isActive ? (
               isLiked ? (
                 <button ref={addFavBtnRef} onClick={handleLike} 
-                  style={{fontFamily : `${orgDetails.font}`, backgroundColor: `lightgrey`,pointerEvents:'none'}}
+                  style={{fontFamily : `${orgDetails.font}`, backgroundColor: `lightgrey`,pointerEvents:'none', fontSize: window.innerWidth <= 544 ? '17px': ''}}
                   className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
                   Design saved
                 </button>
               ) : (
                 <button ref={addFavBtnRef} onClick={handleLike} 
-                  style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
+                  style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`, fontSize: window.innerWidth <= 544 ? '17px': ''}}
                   className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
                   Save for later
                 </button>
               )
           ) : (
             <button ref={addFavBtnRef} 
-              style={{fontFamily : `${orgDetails.font}`, backgroundColor: `lightgrey`}}
+              style={{fontFamily : `${orgDetails.font}`, backgroundColor: `lightgrey`, fontSize: window.innerWidth <= 544 ? '17px': ''}}
               className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
               Save for later
             </button>
