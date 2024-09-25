@@ -20,7 +20,6 @@ import { Orgcontext } from '../context/ApiContext';
 import ProductPopup from "./ProductPopup";
 import ZoomIcon from '../assets/zoom.png';
 
-import ProductPopup from "./ProductPopup";
 const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, currentIndex, setCurrentIndex, changeFromMug, isZoomEnabled, setIsZoomEnabled }, ref) => {
 
   const { apparel, setApparel, color, setColor, prompt } = useContext(AppContext);
