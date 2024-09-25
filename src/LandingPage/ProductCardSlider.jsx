@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
-
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
-
 import ProductCard from "./ProductCard";
-
 import "./ProductCardSlider.css";
 
 export default function ProductCardSlider({ products, ImageChangeInterval }) {

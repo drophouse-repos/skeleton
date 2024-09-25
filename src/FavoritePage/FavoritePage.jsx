@@ -9,7 +9,7 @@ import {Loading} from '../components/LoadingComponent/Loading';
 import { Orgcontext } from '../context/ApiContext';
 
 const FavoritePage = () => {
-  const { orgDetails } = useContext(Orgcontext)
+  const { orgDetails, galleryPage } = useContext(Orgcontext)
   const [likedProducts, setLikedProducts] = useState([]);
   const { setGeneratedImage, setIsLiked, setEditedImage, setImageToCart} = useContext(ImageContext);
   const { setPrompt } = useContext(AppContext);
@@ -111,7 +111,7 @@ const FavoritePage = () => {
     <div className={`${likedProducts.length === 0? '' : 'hidden'} w-full col-span-6`}>
         <div className='text-lg md:text-2xl mb-2 mt-16' style={{fontFamily : `${orgDetails.font}`}}>Empty Favorite Product</div>
         <div className='text-lg md:text-2xl mb-10' style={{fontFamily : `${orgDetails.font}`}}>Please go to add your design.</div>
-        <button className='bg-sky-600 text-zinc-100 font-extrabold py-2 px-4 rounded-full w-[10rem] mb-10 text-lg' onClick={(e) =>  navigate('/product')} 
+        <button className='bg-sky-600 text-zinc-100 font-extrabold py-2 px-4 rounded-full w-[10rem] mb-10 text-lg' onClick={(e) =>  navigate(galleryPage === true ? "/product/gallery" : '/product')} 
         style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}>Design Now</button>
     </div>
   </div>

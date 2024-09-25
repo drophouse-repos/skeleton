@@ -19,7 +19,7 @@ function CartPage() {
     const [isLoading, setIsLoading] = useState(false);
     const {setShowMessageBanner, setMessageBannerText} = useContext(MessageBannerContext);
     const {priceMap, getPriceNum} = useContext(PricesContext);
-    const { orgDetails } = useContext(Orgcontext)
+    const { orgDetails, galleryPage, setGreenmask } = useContext(Orgcontext)
     const {
         setPrompt,
         setApparel,
@@ -55,6 +55,7 @@ function CartPage() {
                     color: item.color,
                     size: item.size,
                     quantity: 1,
+                    greenmask: item.greenmask,
                     price: item.price / 100,
                     selected: false,
                     thumbnail: item.thumbnail,
@@ -115,6 +116,7 @@ function CartPage() {
         setPrompt(product.prompt);
         setApparel(product.apparel);
         setSize(product.size);
+        setGreenmask(product.greenmask ? product.greenmask : '')
         setGeneratedImage({photo: imageBase64, prompt: product.prompt, img_id: product.img_id});
         setColor(product.color);
         setEditedImage(imageBase64);
@@ -166,7 +168,7 @@ function CartPage() {
                 <div className={`${cartItems.length === 0? '' : 'hidden'} w-full col-span-6`}>
                     <div className='text-2xl md:text-2xl mb-2 mt-16' style={{fontFamily : `${orgDetails.font}`}}>Shopping Cart is empty.</div>
                     <div className='text-2xl md:text-2xl mb-10' style={{fontFamily : `${orgDetails.font}`}}>Please go to add your design.</div>
-                    <button className='bg-sky-600 text-zinc-100 font-extrabold py-2 px-4 rounded-full w-[10rem] mb-10 text-lg' onClick={(e) =>  navigate('/product')} style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}>Design Now</button>
+                    <button className='bg-sky-600 text-zinc-100 font-extrabold py-2 px-4 rounded-full w-[10rem] mb-10 text-lg' onClick={(e) =>  navigate(galleryPage === true ? "/product/gallery" : '/product')} style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}>Design Now</button>
                 </div>
             </div>
         )
