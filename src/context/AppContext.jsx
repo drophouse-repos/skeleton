@@ -13,6 +13,7 @@ export const AppProvider = ({ children }) => {
   const [price, setPrice] = useState(loadState('price', 50, 'appState'));
   const [cartNumber, setCartNumber] = useState(loadState('cartItems', 0, 'appState'));
   const [aiSuggestions, setAiSuggestions] = useState(loadState('ai_suggestions', [], 'appState'));
+  const [favNumber, setFavNumber] = useState(loadState('favItems', 0, 'appState'));
   const [aiTaskId, setAiTaskId] = useState(loadState('aiTaskId', 0, 'appState'));
   const [dictionaryId, setDictionaryId] = useState(loadState('aiTaskId', '', 'appState'));
   const [isActive, setIsActive] = useState(false);
@@ -41,6 +42,7 @@ export const AppProvider = ({ children }) => {
               price, setPrice,
               aiSuggestions, setAiSuggestions,
               cartNumber, setCartNumber,
+              favNumber, setFavNumber,
               aiTaskId, setAiTaskId,
               dictionaryId, setDictionaryId,
               isActive, setIsActive,

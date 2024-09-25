@@ -18,11 +18,12 @@ import axios from 'axios';
 import { enhanceImageClarity } from '../utils/enhanceImageClarity';
 import { Orgcontext } from '../context/ApiContext';
 import ProductPopup from "./ProductPopup";
+import ZoomIcon from '../assets/zoom.png';
 
 const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, currentIndex, setCurrentIndex, changeFromMug, isZoomEnabled, setIsZoomEnabled }, ref) => {
   if(currentIndex == undefined || currentIndex == null)
     setCurrentIndex(0)
-  const { apparel, setApparel, color, setColor, prompt } = useContext(AppContext);
+  const { apparel, setApparel, color, setColor, prompt, setFavNumber } = useContext(AppContext);
   const [slideIndex, setSlideIndex] = useState(0);
   // const [currentIndex, setCurrentIndex] = useState(mapColorToIndex(apparel, color));
   const { generatedImage, isLiked, setIsLiked, editedImage, setEditedImage } = useContext(ImageContext);
@@ -154,6 +155,40 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
   const navigate = useNavigate();
   const [buttonText, setButtonText] = useState('Edit Design');
   // setdesignbtn = {text: 'Edit Design'};
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalImage, setModalImage] = useState('');
+  const [imgHeightZoom, setImgHeightZoom] = useState('80')
+  useEffect(() => {
+    const updateImageHeight = () => {
+      const screenWidth = window.innerWidth;
+
+      if (screenWidth <= 768) {
+        // Smaller screens (mobile)
+        setImgHeightZoom('50');
+      } else if (screenWidth <= 1024) {
+        // iPad Pro size
+        setImgHeightZoom('60');
+      } else {
+        // Laptop/Desktop
+        setImgHeightZoom('80');
+      }
+    };
+
+    updateImageHeight();
+    window.addEventListener('resize', updateImageHeight);
+    return () => {
+      window.removeEventListener('resize', updateImageHeight);
+    };
+  }, []);
+
+  const openModal = (image) => {
+    setModalImage(image);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   useEffect(()=> {
     sliderRef.current.slickGoTo(currentIndex);
   },[currentIndex]) 
@@ -181,6 +216,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
         setProductPopupTitle("Design added to favourites");
         setProductPopupInfo(productPopupInfo);
         setProductPopupIsShown(true);
+        isLiked ? setFavNumber(prevKey => prevKey - 1) : setFavNumber(prevKey => prevKey + 1)
         }
           // isLiked ? setFavNumber(prevKey => prevKey - 1) : setFavNumber(prevKey => prevKey + 1)
       });
@@ -373,7 +409,27 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
       onChange(localColor);
     }
   }
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [scale, setScale] = useState(1);
+  const [translate, setTranslate] = useState({ x: 50, y: 50 });
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const xPercent = ((e.clientX - rect.left) / rect.width) * 100; // X position as percentage
+    const yPercent = ((e.clientY - rect.top) / rect.height) * 100; // Y position as percentage
 
+    // Limit the translate values to ensure smooth zoom and keep focus near the center
+    const x = Math.min(Math.max(xPercent, 10), 60); // Keep the x between 10 and 90 for smoother zoom
+    const y = Math.min(Math.max(yPercent, 10), 60); // Same for y, prevents image from moving too far
+
+    setTranslate({ x, y });
+  };
+  const handleMouseEnter = () => {
+    setScale(1.4);
+  };
+  const handleMouseLeave = () => {
+    setScale(1);
+    setTranslate({ x: 50, y: 50 });
+  };
     // upscale image with cloudinary
     const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
     const [error, setError] = useState(null);
@@ -449,6 +505,7 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
       <div className={`${isZoomEnabled ? 'hidden' : ''}`}>
       {/* for alumni modal */}
       {productImageList.length <= 2 ? (
+        <>
         <Slider
         ref={sliderRef}
         className={`${isZoomEnabled ? 'hidden' : ''}`}
@@ -459,10 +516,46 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
             style={{height:`${(window.innerWidth < 550) ? dimHeight : dimHeight - 2 }%`,width: `${dimWidth}%`,top:`${(window.innerWidth < 550) ? dimTop : dimTop + 1}%`,left:`${dimLeft}%`}}
             />
             <img draggable="false" src={isFront ? image.front : image.back} alt="" className={`object-contain mx-auto ${window.innerWidth <= 550 ? ``: `h-[32rem]`} md:h-72 lg:h-96 z-30`} />
+            {currentIndex === index &&
+            <div 
+              className={`absolute bottom-2 right-2 z-40 cursor-pointer ${window.innerWidth <= 544 ? 'hidden' : ''}`}
+              onClick={() => openModal(isFront ? image.front : image.back)}>
+              <img src={ZoomIcon} alt="Zoom" className="w-6 h-6" />
+            </div>}
           </div>
         ))}         
       </Slider>
+      {isModalOpen && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center z-50">
+        <div className="relative" id="img-id-zoomer" style={{ position: "relative" }}>
+          <div class="img-container" 
+                onMouseEnter={handleMouseEnter}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+                style={{
+                  overflow: 'hidden',
+                  transform: `scale(${scale}) translate(${translate.x - 50}px, ${translate.y - 50}px)`,
+                  transition: 'transform 0.3s ease',
+                  position: 'relative',
+                  cursor: 'zoom-in',
+                }}
+                >
+              <img draggable="false"
+                className={`absolute z-[-1] ${apparel === 'hoodie' ? 'Hoodie' : ''} ${apparel === 'tshirt' ? 'Tshirt' : ''}`} src={editedImage} 
+                alt="" style={{height: `${dimHeight}%`,width: `${dimWidth}%`,top: `${dimTop}%`,left: `${dimLeft}%`}}
+              />
+              <img draggable="false" src={modalImage} alt="" style={{height:`${imgHeightZoom}vh`}}
+                className={`object-contain mx-auto ${window.innerWidth <= 550 ? `` : `h-[32rem]`} md:h-72 lg:h-96 z-30`}
+              />
+          </div>
+          <button onClick={closeModal} className="absolute top-2 right-2 text-white bg-red-600 px-3 py-1 rounded-xl" style={{top:'-20px',right: window.innerWidth <= 544 ? '0':'-20px',position: 'absolute'}}>
+              X
+          </button>
+        </div>
+      </div>)}
+      </>
       ) : (
+        <>
         <Slider
           ref={sliderRef}
           className={`${isZoomEnabled ? 'hidden' : ''}`}
@@ -474,10 +567,45 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
               style={{height:`${(window.innerWidth < 550) ? dimHeight : dimHeight - 3}%`,width: `${dimWidth}%`,top:`${(window.innerWidth < 550) ? dimTop : dimTop + 3}%`,left:`${dimLeft}%`}}
               />
               <img draggable="false" src={isFront ? image.front : image.back} alt="" className={`object-contain mx-auto ${window.innerWidth <= 550 ? ``: `h-[32rem]`} md:h-72 lg:h-96 z-30`} />
+              {currentIndex === index &&
+              <div 
+              className={`absolute bottom-2 right-2 z-40 cursor-pointer ${window.innerWidth <= 544 ? 'hidden' : ''}`}
+                onClick={() => openModal(isFront ? image.front : image.back)}>
+                <img src={ZoomIcon} alt="Zoom" className="w-6 h-6" />
+              </div>}
             {/* </div> */}
             </div>
           ))}         
         </Slider>
+        {isModalOpen && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center z-50">
+        <div className="relative" id="img-id-zoomer" style={{ position: "relative" }}>
+          <div class="img-container" 
+                onMouseEnter={handleMouseEnter}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+                style={{
+                  overflow: 'hidden',
+                  transform: `scale(${scale}) translate(${translate.x - 50}px, ${translate.y - 50}px)`,
+                  transition: 'transform 0.3s ease',
+                  position: 'relative',
+                  cursor: 'zoom-in',
+                }}
+                >
+              <img draggable="false"
+                className={`absolute z-[-1] ${apparel === 'hoodie' ? 'Hoodie' : ''} ${apparel === 'tshirt' ? 'Tshirt' : ''}`} src={editedImage} 
+                alt="" style={{height: `${dimHeight}%`,width: `${dimWidth}%`,top: `${dimTop}%`,left: `${dimLeft}%`}}
+              />
+              <img draggable="false" src={modalImage} alt="" style={{height:`${imgHeightZoom}vh`}}
+                className={`object-contain mx-auto ${window.innerWidth <= 550 ? `` : `h-[32rem]`} md:h-72 lg:h-96 z-30`}
+              />
+          </div>
+          <button onClick={closeModal} className="absolute top-2 right-2 text-white bg-red-600 px-3 py-1 rounded-xl" style={{top:'-20px',right: window.innerWidth <= 544 ? '0':'-20px',position: 'absolute'}}>
+              X
+          </button>
+        </div>
+      </div>)}
+        </>
       )}
       </div>
       <div className={`row ${isZoomEnabled ? 'hidden' : 'flex'} 
@@ -517,33 +645,33 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
       <ProductGalleryFooter apparel={apparel} currentIndex={currentIndex} onFooterClick={(newColorIndex) => setCurrentIndex(newColorIndex)} />
       <div className={`Save-btn-contaiiner ${!isZoomEnabled ? 'hidden' : ''}`}>
         <button  ref={toggleZoomBtnRef} onClick={toggleZoom} 
-            style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
+            style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`, fontSize: window.innerWidth <= 544 ? '17px': ''}}
             className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
             Save Design</button>
       </div>
       <div className={`${(window.innerWidth <= 544)? `px-5`: ``} mt-6 mb-6 justify-center w-full md:w-[30rem] mx-auto text-lg md:text-2xl md:whitespace-nowrap gap-4 grid-cols-2 md:grid-cols-2  grid ${!isZoomEnabled ? '' : 'hidden'}`}>
           <button ref={toggleZoomBtnRef} onClick={toggleZoom} 
-            style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
+            style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`, fontSize: window.innerWidth <= 544 ? '17px': ''}}
             className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
             Edit Design
           </button>
           {isActive ? (
               isLiked ? (
                 <button ref={addFavBtnRef} onClick={handleLike} 
-                  style={{fontFamily : `${orgDetails.font}`, backgroundColor: `lightgrey`,pointerEvents:'none'}}
+                  style={{fontFamily : `${orgDetails.font}`, backgroundColor: `lightgrey`,pointerEvents:'none', fontSize: window.innerWidth <= 544 ? '17px': ''}}
                   className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
                   Design saved
                 </button>
               ) : (
                 <button ref={addFavBtnRef} onClick={handleLike} 
-                  style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
+                  style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`, fontSize: window.innerWidth <= 544 ? '17px': ''}}
                   className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
                   Save for later
                 </button>
               )
           ) : (
             <button ref={addFavBtnRef} 
-              style={{fontFamily : `${orgDetails.font}`, backgroundColor: `lightgrey`}}
+              style={{fontFamily : `${orgDetails.font}`, backgroundColor: `lightgrey`, fontSize: window.innerWidth <= 544 ? '17px': ''}}
               className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
               Save for later
             </button>

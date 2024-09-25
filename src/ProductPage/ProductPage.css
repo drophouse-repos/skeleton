@@ -47,4 +47,9 @@ border: 1px solid #1677ff;
     width: 70%;
     font-family: inherit; 
   }
-  
+  @media only screen and (max-width: 600px) {
+  .slick-slider {
+    touch-action : auto !important;
+    -webkit-touch-callout: auto !important
+  }
+}
