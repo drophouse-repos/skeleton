@@ -22,7 +22,7 @@ import ZoomIcon from '../assets/zoom.png';
 
 const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, currentIndex, setCurrentIndex, changeFromMug, isZoomEnabled, setIsZoomEnabled }, ref) => {
 
-  const { apparel, setApparel, color, setColor, prompt } = useContext(AppContext);
+  const { apparel, setApparel, color, setColor, prompt, setFavNumber } = useContext(AppContext);
   const [slideIndex, setSlideIndex] = useState(0);
   // const [currentIndex, setCurrentIndex] = useState(mapColorToIndex(apparel, color));
   const { generatedImage, isLiked, setIsLiked, editedImage, setEditedImage } = useContext(ImageContext);
@@ -569,12 +569,13 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
         ))}         
       </Slider>
       {isModalOpen && (
-        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center z-50">
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center z-50" onClick={closeModal}>
         <div className="relative" id="img-id-zoomer" style={{ position: "relative" }}>
           <div class="img-container" 
                 onMouseEnter={handleMouseEnter}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
+                onClick={(e) => e.stopPropagation()}
                 style={{
                   overflow: 'hidden',
                   transform: `scale(${scale}) translate(${translate.x - 50}px, ${translate.y - 50}px)`,
@@ -627,12 +628,13 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
           ))}         
         </Slider>
         {isModalOpen && (
-        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center z-50">
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center z-50" onClick={closeModal}>
         <div className="relative" id="img-id-zoomer" style={{ position: "relative" }}>
           <div class="img-container" 
                 onMouseEnter={handleMouseEnter}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
+                onClick={(e) => e.stopPropagation()}
                 style={{
                   overflow: 'hidden',
                   transform: `scale(${scale}) translate(${translate.x - 50}px, ${translate.y - 50}px)`,
