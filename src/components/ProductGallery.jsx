@@ -497,12 +497,16 @@ console.log("x value : ", tmp_x, ", y value : ",tmp_y, ", width : ",tmp_width,",
       <ProductGalleryFooter apparel={apparel} currentIndex={currentIndex} onFooterClick={(newColorIndex) => setCurrentIndex(newColorIndex)} />
       <div className={`Save-btn-contaiiner ${!isZoomEnabled ? 'hidden' : ''}`}>
       <button  ref={toggleZoomBtnRef} onClick={() => editedImageRef.current.resetAllPositions()}
-            style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
-            className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
+            style={{fontFamily : `${orgDetails.font}`, 
+            backgroundColor: `${orgDetails.theme_color}`,
+            fontSize: window.innerWidth <= 544 ? '15px !important': ''}}
+            className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
             Reset Changes</button>
         <button  ref={toggleZoomBtnRef} onClick={toggleZoom} 
-            style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
-            className="text-zinc-100 font-extrabold rounded-xl text-xl inline-block w-4/12 md:w-2/12 lg:w-2/12 save-btn">
+            style={{fontFamily : `${orgDetails.font}`, 
+            backgroundColor: `${orgDetails.theme_color}`,
+            fontSize: window.innerWidth <= 544 ? '15px !important': ''}}
+            className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`} save-btn`}>
             Save Design</button>
       </div>
       <div className={`grid grid-cols-12 mt-4 ${!isZoomEnabled ? '' : 'hidden'}`}>
