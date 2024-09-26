@@ -22,7 +22,8 @@ import ZoomIcon from '../assets/zoom.png';
 
 const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, currentIndex, setCurrentIndex, changeFromMug, isZoomEnabled, setIsZoomEnabled }, ref) => {
 
-  const { apparel, setApparel, color, setColor, prompt, setFavNumber } = useContext(AppContext);
+  const { apparel, setApparel, color, setColor, prompt, setFavNumber,productPopupIsShown, setProductPopupIsShown,productPopupInfo, setProductPopupInfo,
+    productPopupTitle, setProductPopupTitle,isSaveDesign, setisSaveDesign } = useContext(AppContext);
   const [slideIndex, setSlideIndex] = useState(0);
   // const [currentIndex, setCurrentIndex] = useState(mapColorToIndex(apparel, color));
   const { generatedImage, isLiked, setIsLiked, editedImage, setEditedImage } = useContext(ImageContext);
@@ -34,9 +35,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
   const [dimLeft, setDimLeft] = useState();
   const [dimHeight, setDimHeight] = useState();
   const [dimWidth, setDimWidth] = useState();
-  const [productPopupIsShown, setProductPopupIsShown] = useState(false);
-  const [productPopupInfo, setProductPopupInfo] = useState({});
-  const [productPopupTitle, setProductPopupTitle] = useState("");
+  // const [productPopupIsShown, setProductPopupIsShown] = useState(false);
   const [dimArray, setDimArray] = useState({
     Dim_top: 0,
     Dim_left: 0,
@@ -219,6 +218,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
   const handleLike = () => {
     const productPopupInfo = {
       image: generatedImage.photo,
+      title: "Design added to favourites"
     };
     setIsLiked(!isLiked);
     fetchPostLike(!isLiked, generatedImage.img_id, prompt)
@@ -232,9 +232,15 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
           }
         }
         if(succeeded.success){
-        setProductPopupTitle("Design added to favourites");
-        setProductPopupInfo(productPopupInfo);
-        setProductPopupIsShown(true);
+        setProductPopupTitle("");
+        setProductPopupInfo({});
+        setProductPopupIsShown(false);
+        setisSaveDesign(true);
+        setTimeout(()=>{
+          setProductPopupTitle("Design added to favourites");
+          setProductPopupInfo(productPopupInfo);
+          setProductPopupIsShown(true);
+        })
         isLiked ? setFavNumber(prevKey => prevKey - 1) : setFavNumber(prevKey => prevKey + 1)
         }
           // isLiked ? setFavNumber(prevKey => prevKey - 1) : setFavNumber(prevKey => prevKey + 1)
@@ -519,7 +525,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
         popupTitle={productPopupTitle}
         productInfo={productPopupInfo}
         setIsShown={setProductPopupIsShown}
-        isSaveDesign={true}
+        isSaveDesign={isSaveDesign}
       />
       <div className={`${isZoomEnabled ? 'hidden' : ''}`}>
       {/* for alumni modal */}

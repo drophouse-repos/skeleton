@@ -18,6 +18,10 @@ export const AppProvider = ({ children }) => {
   const [dictionaryId, setDictionaryId] = useState(loadState('aiTaskId', '', 'appState'));
   const [isActive, setIsActive] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [productPopupIsShown, setProductPopupIsShown] = useState(false);
+  const [productPopupInfo, setProductPopupInfo] = useState({});
+  const [productPopupTitle, setProductPopupTitle] = useState("");
+  const [isSaveDesign, setisSaveDesign] = useState(false);
   useEffect(() => {
     setLoading(true);
     const state = { prompt, apparel, size, color, price, aiSuggestions };
@@ -46,7 +50,11 @@ export const AppProvider = ({ children }) => {
               aiTaskId, setAiTaskId,
               dictionaryId, setDictionaryId,
               isActive, setIsActive,
-              menuOpen, setMenuOpen
+              menuOpen, setMenuOpen,
+              productPopupIsShown, setProductPopupIsShown,
+              productPopupInfo, setProductPopupInfo,
+              productPopupTitle, setProductPopupTitle,
+              isSaveDesign, setisSaveDesign
             }}>
               {children}
             </AppContext.Provider>
