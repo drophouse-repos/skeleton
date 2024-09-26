@@ -88,7 +88,7 @@ opacity: 1;
 }
 
 /* Smooth transition on click for mobile devices */
-.flipped .image-container {
+.flipped.image-container {
   transform: rotateY(180deg); /* Smoothly rotates the container */
 }
 
