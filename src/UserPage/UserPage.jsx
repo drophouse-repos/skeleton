@@ -78,14 +78,13 @@ export default function UserPage() {
           }, {});
           setCountryMap(countryData)
       } catch {
-        console.log("error fetching country list")
+        console.error("error fetching country list")
       }
     }
     fetchCountryList();
   },[])
   const [stateList, setStateList] = useState([])
   const handleCountryChange = async (selectedoption,changestate) => {
-    // console.log(countryMap[selectedoption])
     if(changestate){
       handleModalInputChange('state',null)
     }
@@ -98,7 +97,7 @@ export default function UserPage() {
       }))
       setStateList(stateListData)
     } catch(err) {
-      console.log("error fetching state list : ",err);
+      console.error("error fetching state list : ",err);
     }
   }
   

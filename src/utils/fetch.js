@@ -334,7 +334,7 @@ export const fetchImageBase64 = async(signed_url) => {
 
         return await convertBase64Promise;
     }catch (err) {
-        console.log("Fetch Saved Signed Image Url Fail");
+        console.error("Fetch Saved Signed Image Url Fail");
     }
 }
 
@@ -359,9 +359,7 @@ export const fetchcountrylist = async() => {
             }
         });
         const response = await axiosInstancenew.get('/countries');
-        console.log("response for country api token fetch : ",response)
         const countryList = response.data;
-        console.log(countryList);
         return countryList;
     } catch (error) {
         console.error('Error fetching the country list:', error);
@@ -389,9 +387,7 @@ export const fetchstatelist = async(selectedoption) => {
             }
         });
         const response = await axiosInstancenew.get(`/states/${selectedoption}`);
-        console.log("response for country api token fetch : ",response)
         const stateList = response.data;
-        console.log(stateList);
         return stateList;
     } catch (error) {
         console.error('Error fetching the country list:', error);

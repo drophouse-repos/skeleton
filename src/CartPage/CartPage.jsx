@@ -44,7 +44,6 @@ function CartPage() {
         setIsLoading(true);
         fetchCartItems(navigate)
             .then(items => {
-                console.log('cart items:', items);
                 setIsLoading(false);
                 const transformedData = items.cart.map(item => ({
                     image: item.image,

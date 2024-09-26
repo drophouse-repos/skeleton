@@ -18,8 +18,6 @@ export default function ProductSection({prop}) {
     setProductImage(image)
     setProduct_count(name)
 },[])
-  console.log(product_disc)
-  console.log("product image ", productImage)
   function MerchandiseButton({ title, description, image, onClick }) {
     return (
       <div className="p-2 w-1/2 max-w-[45%] m-2 sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 rounded-[12px] shadow-[0_0px_10px_3px_rgba(0,0,0,0.3)] hover:shadow-[0_0px_5px_2px_rgba(0,0,0,0.4)]">
@@ -56,7 +54,6 @@ export default function ProductSection({prop}) {
         products.push(obj);
       }
     }
-    console.log("product : ",products)
 
     return (
       <div className={`flex flex-wrap justify-start -mx-2`}>

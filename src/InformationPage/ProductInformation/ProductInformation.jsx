@@ -35,7 +35,6 @@ function ProductInformation(){
             const hoodieClip = await getFirstAsset('hoodie');
             setTshirt(tshirtClip);
             setHoodie(hoodieClip);
-            // console.log(getFirstAsset('hoodie'))
             setHoodieAvail(hoodieClip); // Set hoodie availability based on hoodieClip existence
         };
     
