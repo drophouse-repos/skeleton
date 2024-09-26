@@ -24,9 +24,9 @@ const ProductPage = () => {
   const [productListLoad, setProductListLoad] = useState([]);
   const [productImageList, setProductImageList] = useState([]);
   const [tourOpen, setTourOpen] = useState(true);
-  const [productPopupIsShown, setProductPopupIsShown] = useState(false);
-  const [productPopupInfo, setProductPopupInfo] = useState({});
-  const [productPopupTitle, setProductPopupTitle] = useState("");
+  // const [productPopupIsShown, setProductPopupIsShown] = useState(false);
+  // const [productPopupInfo, setProductPopupInfo] = useState({});
+  // const [productPopupTitle, setProductPopupTitle] = useState("");
   const [currentColor, setCurrentColor] = useState("white");
   const [modalSelectionMade, setModalSelectionMade] = useState(false);
   const [changeFromMug, setChangeFromMug] = useState(1);
@@ -54,7 +54,15 @@ const ProductPage = () => {
     dictionaryId,
     setDictionaryId,
     isActive,
-    setIsActive
+    setIsActive,
+    productPopupIsShown, 
+    setProductPopupIsShown,
+    productPopupInfo, 
+    setProductPopupInfo,
+    productPopupTitle, 
+    setProductPopupTitle,
+    isSaveDesign, 
+    setisSaveDesign
   } = useContext(AppContext);
   const [localPrompt, setLocalPrompt] = useState(prompt);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -380,9 +388,15 @@ const ProductPage = () => {
           return;
         }
         setCartNumber(prev => prev + 1);
-        setProductPopupTitle("ADDED TO Cart");
-        setProductPopupInfo(productPopupInfo);
-        setProductPopupIsShown(true);
+        setProductPopupTitle("");
+        setProductPopupInfo({});
+        setProductPopupIsShown(false);
+        setisSaveDesign(false)
+        setTimeout(()=>{
+          setProductPopupTitle("ADDED TO Cart");
+          setProductPopupInfo(productPopupInfo);
+          setProductPopupIsShown(true);
+        })
         setImageToCart(true);
     }
   }
@@ -521,7 +535,7 @@ const ProductPage = () => {
         popupTitle={productPopupTitle}
         productInfo={productPopupInfo}
         setIsShown={setProductPopupIsShown}
-        isSaveDesign={false}
+        isSaveDesign={isSaveDesign}
       />
       <div className="m-auto max-w-screen-lg">
         <div className="w-full px-5">

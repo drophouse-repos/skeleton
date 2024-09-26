@@ -12,12 +12,16 @@ export const AppProvider = ({ children }) => {
   const [color, setColor] = useState(loadState('color', 'white','appState'));
   const [price, setPrice] = useState(loadState('price', 50, 'appState'));
   const [cartNumber, setCartNumber] = useState(loadState('cartItems', 0, 'appState'));
-  const [aiSuggestions, setAiSuggestions] = useState(loadState('ai_suggestions', [], 'appState'));
   const [favNumber, setFavNumber] = useState(loadState('favItems', 0, 'appState'));
+  const [aiSuggestions, setAiSuggestions] = useState(loadState('ai_suggestions', [], 'appState'));
   const [aiTaskId, setAiTaskId] = useState(loadState('aiTaskId', 0, 'appState'));
   const [dictionaryId, setDictionaryId] = useState(loadState('aiTaskId', '', 'appState'));
   const [isActive, setIsActive] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [productPopupIsShown, setProductPopupIsShown] = useState(false);
+  const [productPopupInfo, setProductPopupInfo] = useState({});
+  const [productPopupTitle, setProductPopupTitle] = useState("");
+  const [isSaveDesign, setisSaveDesign] = useState(false);
   useEffect(() => {
     setLoading(true);
     const state = { prompt, apparel, size, color, price, aiSuggestions };
@@ -46,7 +50,11 @@ export const AppProvider = ({ children }) => {
               aiTaskId, setAiTaskId,
               dictionaryId, setDictionaryId,
               isActive, setIsActive,
-              menuOpen, setMenuOpen
+              menuOpen, setMenuOpen,
+              productPopupIsShown, setProductPopupIsShown,
+              productPopupInfo, setProductPopupInfo,
+              productPopupTitle, setProductPopupTitle,
+              isSaveDesign, setisSaveDesign
             }}>
               {children}
             </AppContext.Provider>
