@@ -396,6 +396,15 @@ const InformationPage = () => {
     // Return the icon name from the map or a default icon
     return iconMap[field] || 'help'; // 'help' is a fallback icon
   };
+  const [DemoModal, setDemoModal] = useState(false);
+  const ShowDemoModal = (e) => {
+    e.preventDefault();
+    setDemoModal(!DemoModal);
+  }
+  const CloseShowDemoModal = (e) => {
+    e.preventDefault();
+    setDemoModal(!DemoModal);
+  }
   
   return (
     <div>
@@ -540,10 +549,27 @@ const InformationPage = () => {
           </label>
         </div>
         {process.env.REACT_APP_DEMO ? 
-        <><button className="continueBtn" disabled={true} style={{fontFamily : `${orgDetails.font}`, color: `white`,backgroundColor: 'lightgrey'}}>
+        <><button className="continueBtn" onClick={(e) => ShowDemoModal(e)} style={{fontFamily : `${orgDetails.font}`, color: `${orgDetails.theme_color}`}}>
           ORDER
         </button><br></br>
-        <p>You can't place order Please contact : <a href="https://www.drophouse.ai/contact.php" style={{color:'red'}} target='_blank'>drophouse.ai</a></p></>
+        {DemoModal && 
+        <>
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" style={{zIndex: `9999`}}>
+              <div className="bg-white p-4 rounded shadow-lg" style={{width: window.innerWidth <= 544 ? '90%' :'50%'}}>
+                  <h2 className="text-lg font-bold mb-4">This is a demo site for more details contact : <br></br>
+                  <span style={{color: `${orgDetails.theme_color}`}}> support@drophouse.art</span></h2>
+                  <div className="flex justify-end mt-4">
+                      <button
+                          className="bg-green-500 hover:bg-green-700 text-white py-1 px-3 rounded mr-2"
+                          onClick={(e) => CloseShowDemoModal(e)}
+                      >
+                          Ok
+                      </button>
+                  </div>
+              </div>
+          </div>
+        </>}
+        </>
         : 
         <button className="continueBtn" type="submit" disabled={isLoading} style={{fontFamily : `${orgDetails.font}`, color: `${orgDetails.theme_color}`}}>
           {isLoading ? (
