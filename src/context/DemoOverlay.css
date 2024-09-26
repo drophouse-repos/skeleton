@@ -19,9 +19,11 @@
 @media only screen and (max-width: 600px) {
     .demo-overlay {
         font-size: 15px !important;
-        top: 19px !important;
+        top: 0 !important;
         height: 50px;
-        width: 200px;
-        left: -39px !important;
+        width: 100vw;
+        left: 0 !important;
+        transform: none;
+        position: sticky;
     }
 }
