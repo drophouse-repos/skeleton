@@ -19,7 +19,7 @@ const ProductCard = ({ product }) => {
     const hasBackImage = product.backImage && product.backImage.trim() !== '';
   return (
     <div className="product-card">
-        <div className="image-container">
+        <div className="image-container" onClick={()=> handleclick(product.greenmask, product.type, '/product')}>
         {/* <img src={product.image} alt={product.name} className="product-images" /> */}
         <img
           src={product.frontImage}
@@ -42,7 +42,7 @@ const ProductCard = ({ product }) => {
               </div>
             ))}
             </div>
-            <div className='add-btn' onClick={()=> handleclick(product.greenmask, product.type, '/product')}>Select</div>
+            {/*<div className='add-btn' onClick={()=> handleclick(product.greenmask, product.type, '/product')}>Select</div>*/}
           </div>
         )}
       </div>

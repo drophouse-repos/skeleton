@@ -564,15 +564,16 @@ const ProductPage = () => {
             changeFromMug = {changeFromMug}
           />
         <div className={`justify-center  px-5 ${(process.env.REACT_APP_CART_ENABLED == 'true') ? (window.innerWidth <= 544) ? ``:`mt-[2rem]` : ``}`}>
-          <div className={`grid ${apparel !== 'mug' && apparel !== 'cap' ? 'grid-cols-2' : 'grid-cols-1'} ${(window.innerWidth <= 544 ? `w-full` : `w-[70%]` )} mx-auto justify-items-center items-center`}>
+          <div className={`grid ${apparel !== 'mug' && apparel !== 'cap' && galleryPage != true ? 'grid-cols-2' : 'grid-cols-1'} ${(window.innerWidth <= 544 ? `w-full` : `w-[70%]` )} mx-auto justify-items-center items-center`}>
     {galleryPage === true ? 
-        <button
-          style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
-          className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl ${(window.innerWidth <= 544) ? `w-[8rem]` :`w-[12rem]`}`}
-          onClick={() => {navigate("/product/gallery")}}
-        >
-          Change Product
-        </button>
+        // <button
+        //   style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
+        //   className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl ${(window.innerWidth <= 544) ? `w-[8rem]` :`w-[12rem]`}`}
+        //   onClick={() => {navigate("/product/gallery")}}
+        // >
+        //   Change Product
+        // </button>
+        <div></div>
     : 
       (apparelOptions.length === 1) ? 
         <span className="text-gray-800 span-input">{apparelOptions[0].label}</span>

@@ -36,7 +36,8 @@ const OrganisationDetails = ({ children }) => {
                 const item = await fetchOrganisation_by_id(org_id);
                     setGalleryPage((item && item.greenmask && item.greenmask != null && item.greenmask != '') ? false : true)
                     let _greenmask = (item && item.greenmask && item.greenmask != null && item.greenmask != '') ? item.greenmask : ''
-                    _greenmask = loadState('greenmask', _greenmask, 'localmask')
+                    if(galleryPage === true)
+                        _greenmask = loadState('greenmask', _greenmask, 'localmask')
                     setGreenmask(_greenmask);
                     
                     setOrgId(item.org_id);
