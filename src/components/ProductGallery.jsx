@@ -648,6 +648,12 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
         ref={editedImageRef} />
       <ProductGalleryFooter apparel={apparel} currentIndex={currentIndex} onFooterClick={(newColorIndex) => setCurrentIndex(newColorIndex)} />
       <div className={`Save-btn-contaiiner ${!isZoomEnabled ? 'hidden' : ''}`}>
+      <button  ref={toggleZoomBtnRef} onClick={() => editedImageRef.current.resetAllPositions()}
+            style={{fontFamily : `${orgDetails.font}`, 
+            backgroundColor: `${orgDetails.theme_color}`,
+            fontSize: window.innerWidth <= 544 ? '15px !important': ''}}
+            className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
+            Reset Changes</button>
         <button  ref={toggleZoomBtnRef} onClick={toggleZoom} 
             style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`, fontSize: window.innerWidth <= 544 ? '17px': ''}}
             className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
