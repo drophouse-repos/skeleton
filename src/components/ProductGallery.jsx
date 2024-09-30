@@ -514,16 +514,9 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
     };
 
     const [zoomItemSrc, setZoomItemSrc] = useState(null);
-<<<<<<< HEAD
-  // console.log((productImageList[currentIndex] &&  productImageList[currentIndex]?.back && productImageList[currentIndex]?.back.startsWith('data:image/')))
-  return (
-    <div id="product-gallery" className={`sliderContainer overflow-hidden ${!isZoomEnabled ? '' : 'zoomer'}`} ref={ref}>
-      <ProductPopup
-=======
   return (
     <div id="product-gallery" className={`sliderContainer overflow-hidden ${!isZoomEnabled ? '' : 'zoomer'}`} ref={ref}>
        <ProductPopup
->>>>>>> a7515f81d10becb7cd5ceb798aa43c47f690e52f
         isShown={productPopupIsShown}
         popupTitle={productPopupTitle}
         productInfo={productPopupInfo}
@@ -562,21 +555,10 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
                 left: `${dimLeft}%`,
               }}
             />
-<<<<<<< HEAD
-            <img
-              draggable="false" src={isFront ? image.front : image.back} alt=""
-              className={`object-contain mx-auto ${window.innerWidth <= 550 ? `` : `h-[32rem]`} md:h-72 lg:h-96 z-30`}
-            />
-            {/* <img draggable="false" src={isFront ? image.front : image.back} alt="" className={`object-contain mx-auto ${window.innerWidth <= 550 ? ``: `h-[32rem]`} md:h-72 lg:h-96 z-30`} /> */}
-            {currentIndex === index &&
-            <div 
-              className="absolute bottom-2 right-2 z-40 cursor-pointer" 
-=======
             <img draggable="false" src={isFront ? image.front : image.back} alt="" className={`object-contain mx-auto ${window.innerWidth <= 550 ? ``: `h-[32rem]`} md:h-72 lg:h-96 z-30`} />
             {currentIndex === index &&
             <div 
               className={`absolute bottom-2 right-2 z-40 cursor-pointer ${window.innerWidth <= 544 ? 'hidden' : ''}`}
->>>>>>> a7515f81d10becb7cd5ceb798aa43c47f690e52f
               onClick={() => openModal(isFront ? image.front : image.back)}>
               <img src={ZoomIcon} alt="Zoom" className="w-6 h-6" />
             </div>}
@@ -585,20 +567,13 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
         ))}         
       </Slider>
       {isModalOpen && (
-<<<<<<< HEAD
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center z-50" onClick={closeModal}>
-=======
-        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center z-50">
->>>>>>> a7515f81d10becb7cd5ceb798aa43c47f690e52f
         <div className="relative" id="img-id-zoomer" style={{ position: "relative" }}>
           <div class="img-container" 
                 onMouseEnter={handleMouseEnter}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
-<<<<<<< HEAD
                 onClick={(e) => e.stopPropagation()}
-=======
->>>>>>> a7515f81d10becb7cd5ceb798aa43c47f690e52f
                 style={{
                   overflow: 'hidden',
                   transform: `scale(${scale}) translate(${translate.x - 50}px, ${translate.y - 50}px)`,
@@ -615,11 +590,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
                 className={`object-contain mx-auto ${window.innerWidth <= 550 ? `` : `h-[32rem]`} md:h-72 lg:h-96 z-30`}
               />
           </div>
-<<<<<<< HEAD
           <button onClick={closeModal} className="absolute top-2 right-2 text-white bg-red-600 px-3 py-1 rounded-xl" style={{top:'-20px',right: window.innerWidth <= 544 ? '0px' : '-20px',position: 'absolute'}}>
-=======
-          <button onClick={closeModal} className="absolute top-2 right-2 text-white bg-red-600 px-3 py-1 rounded-xl" style={{top:'-20px',right: window.innerWidth <= 544 ? '0':'-20px',position: 'absolute'}}>
->>>>>>> a7515f81d10becb7cd5ceb798aa43c47f690e52f
               X
           </button>
         </div>
@@ -655,20 +626,13 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
           ))}         
         </Slider>
         {isModalOpen && (
-<<<<<<< HEAD
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center z-50" onClick={closeModal}>
-=======
-        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center z-50">
->>>>>>> a7515f81d10becb7cd5ceb798aa43c47f690e52f
         <div className="relative" id="img-id-zoomer" style={{ position: "relative" }}>
           <div class="img-container" 
                 onMouseEnter={handleMouseEnter}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
-<<<<<<< HEAD
                 onClick={(e) => e.stopPropagation()}
-=======
->>>>>>> a7515f81d10becb7cd5ceb798aa43c47f690e52f
                 style={{
                   overflow: 'hidden',
                   transform: `scale(${scale}) translate(${translate.x - 50}px, ${translate.y - 50}px)`,
@@ -685,11 +649,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
                 className={`object-contain mx-auto ${window.innerWidth <= 550 ? `` : `h-[32rem]`} md:h-72 lg:h-96 z-30`}
               />
           </div>
-<<<<<<< HEAD
           <button onClick={closeModal} className="absolute top-2 right-2 text-white bg-red-600 px-3 py-1 rounded-xl" style={{top:'-20px',right: window.innerWidth <= 544 ? '0px' : '-20px',position: 'absolute'}}>
-=======
-          <button onClick={closeModal} className="absolute top-2 right-2 text-white bg-red-600 px-3 py-1 rounded-xl" style={{top:'-20px',right: window.innerWidth <= 544 ? '0':'-20px',position: 'absolute'}}>
->>>>>>> a7515f81d10becb7cd5ceb798aa43c47f690e52f
               X
           </button>
         </div>
@@ -740,15 +700,10 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
             className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
             Reset Changes</button>
         <button  ref={toggleZoomBtnRef} onClick={toggleZoom} 
-<<<<<<< HEAD
             style={{fontFamily : `${orgDetails.font}`, 
             backgroundColor: `${orgDetails.theme_color}`,
             fontSize: window.innerWidth <= 544 ? '15px !important': ''}}
             className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`} save-btn`}>
-=======
-            style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`, fontSize: window.innerWidth <= 544 ? '17px': ''}}
-            className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
->>>>>>> a7515f81d10becb7cd5ceb798aa43c47f690e52f
             Save Design</button>
       </div>
       <div className={`${(window.innerWidth <= 544)? `px-5`: ``} mt-6 mb-6 justify-center w-full md:w-[30rem] mx-auto text-lg md:text-2xl md:whitespace-nowrap gap-4 grid-cols-2 md:grid-cols-2  grid ${!isZoomEnabled ? '' : 'hidden'}`}>
@@ -779,36 +734,6 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
             </button>
           )}
       </div>
-<<<<<<< HEAD
-        {/*<div className="flex flex-row justify-end space-x-2 my-[1rem]">
-=======
-        {/* <div className="flex flex-row justify-end space-x-2 my-[1rem]">
->>>>>>> a7515f81d10becb7cd5ceb798aa43c47f690e52f
-          <div className="relative bottom-[50px] right-[5vw]">
-            {isActive ? (
-              isLiked ? (
-                <HeartFilled
-                  className="scale-150 text-red-500 cursor-pointer"
-                  onClick={handleLike}
-                  ref={addFavBtnRef}
-                />
-              ) : (
-                <HeartOutlined
-                  className="scale-150 cursor-pointer"
-                  onClick={handleLike}
-                  ref={addFavBtnRef}
-                />
-              )
-            ) : (
-              <HeartOutlined className="scale-150 text-gray-400 cursor-not-allowed" ref={addFavBtnRef} />
-            )}
-          </div>
-<<<<<<< HEAD
-        </div>*/}
-=======
-        </div> */}
-
->>>>>>> a7515f81d10becb7cd5ceb798aa43c47f690e52f
     </div>
   );
 });
