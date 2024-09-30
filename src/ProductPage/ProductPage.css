@@ -47,6 +47,12 @@ border: 1px solid #1677ff;
     width: 70%;
     font-family: inherit; 
   }
+  @media only screen and (max-width: 600px) {
+  .slick-slider {
+    touch-action : auto !important;
+    -webkit-touch-callout: auto !important
+  }
+}
 .product-name-span {
     border: 1px solid #9e9e9e !important;
     height: 100%;

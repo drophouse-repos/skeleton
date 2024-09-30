@@ -105,7 +105,15 @@ export const fetchCartNumber = async () => {
         return 0
     }
 };
-
+export const fetchCartAndFavNumber = async () => {
+    try {
+        const response = await axiosInstance.get('/get_cart_and_fav_number');
+        if (response.status !== 200) throw new Error('Failed to get cart number');
+            return response.data;
+    } catch (err) {
+        return 0
+    }
+};
 export const fetchMoveToAnotherCart = async (item, navigate) => {
     try {
         const response = await axiosInstance.post('/move_to_another_cart', item);

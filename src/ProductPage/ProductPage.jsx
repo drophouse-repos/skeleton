@@ -24,9 +24,9 @@ const ProductPage = () => {
   const [productListLoad, setProductListLoad] = useState([]);
   const [productImageList, setProductImageList] = useState([]);
   const [tourOpen, setTourOpen] = useState(true);
-  const [productPopupIsShown, setProductPopupIsShown] = useState(false);
-  const [productPopupInfo, setProductPopupInfo] = useState({});
-  const [productPopupTitle, setProductPopupTitle] = useState("");
+  // const [productPopupIsShown, setProductPopupIsShown] = useState(false);
+  // const [productPopupInfo, setProductPopupInfo] = useState({});
+  // const [productPopupTitle, setProductPopupTitle] = useState("");
   const [currentColor, setCurrentColor] = useState("white");
   const [modalSelectionMade, setModalSelectionMade] = useState(false);
   const [changeFromMug, setChangeFromMug] = useState(1);
@@ -54,7 +54,15 @@ const ProductPage = () => {
     dictionaryId,
     setDictionaryId,
     isActive,
-    setIsActive
+    setIsActive,
+    productPopupIsShown, 
+    setProductPopupIsShown,
+    productPopupInfo, 
+    setProductPopupInfo,
+    productPopupTitle, 
+    setProductPopupTitle,
+    isSaveDesign, 
+    setisSaveDesign
   } = useContext(AppContext);
   const [localPrompt, setLocalPrompt] = useState(prompt);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -380,9 +388,15 @@ const ProductPage = () => {
           return;
         }
         setCartNumber(prev => prev + 1);
-        setProductPopupTitle("ADDED TO Cart");
-        setProductPopupInfo(productPopupInfo);
-        setProductPopupIsShown(true);
+        setProductPopupTitle("");
+        setProductPopupInfo({});
+        setProductPopupIsShown(false);
+        setisSaveDesign(false)
+        setTimeout(()=>{
+          setProductPopupTitle("ADDED TO Cart");
+          setProductPopupInfo(productPopupInfo);
+          setProductPopupIsShown(true);
+        })
         setImageToCart(true);
     }
   }
@@ -521,6 +535,7 @@ const ProductPage = () => {
         popupTitle={productPopupTitle}
         productInfo={productPopupInfo}
         setIsShown={setProductPopupIsShown}
+        isSaveDesign={isSaveDesign}
       />
       <div className="m-auto max-w-screen-lg">
         <div className="w-full px-5">
@@ -602,7 +617,7 @@ const ProductPage = () => {
           </div>
           <div className={`justify-center w-full md:w-[30rem] mx-auto text-lg md:text-2xl md:whitespace-nowrap gap-4 grid-cols-2 md:grid-cols-2  ${(process.env.REACT_APP_CART_ENABLED == 'true') ? `grid` : `flex mt-4`}`}>
             <button
-              style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
+              style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`, fontSize: window.innerWidth <= 544 ? '17px': ''}}
               className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(process.env.REACT_APP_CART_ENABLED == 'true') ? (window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]` : `hidden`}`}
               onClick={handleAddToCart} ref={addToCartBtn}
             >
@@ -610,7 +625,7 @@ const ProductPage = () => {
             </button>
             {isImageToCart ? disableCartBtn() : enableCartBtn()}
             <button
-               style={{fontFamily : `${orgDetails.font}`, backgroundColor: orgDetails.theme_color}}
+              style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`, fontSize: window.innerWidth <= 544 ? '17px': ''}}
               className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl ${(process.env.REACT_APP_CART_ENABLED == 'true') && (window.innerWidth <= 544) ? `w-[8rem]` :`w-[12rem]`}`}
               onClick={handleBuy}
             >
