@@ -135,6 +135,7 @@
 .Save-btn-contaiiner {
   height: 60px;
   width: 100vw;
+  padding: 9px;
   position: fixed;
   bottom: 0;
   display: flex;
