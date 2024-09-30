@@ -15,7 +15,7 @@ export const getUserToken = async () => {
   }
   return null; 
 };
-// Request interceptor to attach the token to requests
+
 if (process.env.REACT_APP_AUTHTYPE_SAML === 'true') {
   axiosInstance.interceptors.request.use(
     async (config) => {
