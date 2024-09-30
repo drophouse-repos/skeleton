@@ -31,6 +31,7 @@ import Loader from './components/loader'
 import LoadingPage from './components/newloader';
 import OrganisationDetails from './context/ApiContext';
 import ProductSection from './ProductSection/ProductSection';
+import DemoOverlay from './context/DemoContext';
 
 const PrivateRoute = ({ children }) => {
 	const { user, loading } = useUser();
@@ -53,6 +54,8 @@ useEffect(() => {
 		{loading ? (
 			<LoadingPage />
 		  ) : (
+			<>
+			{process.env.REACT_APP_DEMO && <DemoOverlay />}
 			<OrganisationDetails>
 		<AppProvider>
 			<ImageProvider>
@@ -92,6 +95,7 @@ useEffect(() => {
 			</ImageProvider>
 		</AppProvider>
 		</OrganisationDetails>
+		</>
 		  )}
 		</div>
 	  );

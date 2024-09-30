@@ -24,9 +24,9 @@ const ProductPage = () => {
   const [productListLoad, setProductListLoad] = useState([]);
   const [productImageList, setProductImageList] = useState([]);
   const [tourOpen, setTourOpen] = useState(true);
-  const [productPopupIsShown, setProductPopupIsShown] = useState(false);
-  const [productPopupInfo, setProductPopupInfo] = useState({});
-  const [productPopupTitle, setProductPopupTitle] = useState("");
+  // const [productPopupIsShown, setProductPopupIsShown] = useState(false);
+  // const [productPopupInfo, setProductPopupInfo] = useState({});
+  // const [productPopupTitle, setProductPopupTitle] = useState("");
   const [currentColor, setCurrentColor] = useState("white");
   const [modalSelectionMade, setModalSelectionMade] = useState(false);
   const [changeFromMug, setChangeFromMug] = useState(1);
@@ -54,7 +54,15 @@ const ProductPage = () => {
     dictionaryId,
     setDictionaryId,
     isActive,
-    setIsActive
+    setIsActive,
+    productPopupIsShown, 
+    setProductPopupIsShown,
+    productPopupInfo, 
+    setProductPopupInfo,
+    productPopupTitle, 
+    setProductPopupTitle,
+    isSaveDesign, 
+    setisSaveDesign
   } = useContext(AppContext);
   const [localPrompt, setLocalPrompt] = useState(prompt);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -102,7 +110,6 @@ const ProductPage = () => {
     const productKeys = Object.keys(productList);
     if (productKeys.length === 1 && indexColor.map(v => v.toLowerCase()).indexOf(color.toLowerCase()) >= 0) {
       setColor(indexColor[indexColor.map(v => v.toLowerCase()).indexOf(color.toLowerCase())]);
-      console.log("Color changed according to the product data");
       const fetchIndex = async () => {
         const index = await getIndexByName(color);
         setCurrentGalleryIndex(index?index:0);
@@ -382,9 +389,15 @@ const ProductPage = () => {
           return;
         }
         setCartNumber(prev => prev + 1);
-        setProductPopupTitle("ADDED TO Cart");
-        setProductPopupInfo(productPopupInfo);
-        setProductPopupIsShown(true);
+        setProductPopupTitle("");
+        setProductPopupInfo({});
+        setProductPopupIsShown(false);
+        setisSaveDesign(false)
+        setTimeout(()=>{
+          setProductPopupTitle("ADDED TO Cart");
+          setProductPopupInfo(productPopupInfo);
+          setProductPopupIsShown(true);
+        })
         setImageToCart(true);
     }
   }
@@ -524,6 +537,7 @@ const ProductPage = () => {
         popupTitle={productPopupTitle}
         productInfo={productPopupInfo}
         setIsShown={setProductPopupIsShown}
+        isSaveDesign={isSaveDesign}
       />
       <div className="m-auto max-w-screen-lg">
         <div className="w-full px-5">
@@ -565,6 +579,7 @@ const ProductPage = () => {
           />
         <div className={`justify-center  px-5 ${(process.env.REACT_APP_CART_ENABLED == 'true') ? (window.innerWidth <= 544) ? ``:`mt-[2rem]` : ``}`}>
           <div className={`grid ${apparel !== 'mug' && apparel !== 'cap' ? 'grid-cols-2' : 'grid-cols-1'} ${(window.innerWidth <= 544 ? `w-full` : `w-[70%]` )} mx-auto justify-items-center items-center`}>
+
     {galleryPage === true ? 
         <button
           style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
@@ -575,7 +590,7 @@ const ProductPage = () => {
         </button>
     : 
       (apparelOptions.length === 1) ? 
-        <span className="text-gray-800 span-input">{apparelOptions[0].label}</span>
+        <span className="text-gray-800 span-input ant-select product-name-span">{apparelOptions[0].label}</span>
        : 
         <Select
           style={{ fontFamily: `${orgDetails.font}` }}
@@ -585,7 +600,6 @@ const ProductPage = () => {
           options={apparelOptions}
         />
     }
-
             {apparel !== 'mug' && apparel !== 'cap' && (
               <Select
                 style={{fontFamily : `${orgDetails.font}`}}
@@ -606,14 +620,15 @@ const ProductPage = () => {
               <span style={{fontFamily : `${orgDetails.font}`}} className="text-blue-600 font-bold hover:text-teal-600 mt-0 cursor-pointer" onClick={() => {navigate("/information/size");}}>Size Information & Chart</span>
             )}
           </div>
-          <div className={`text-center text-black font-normal font-karl ${(window.innerWidth <= 544) ? `my-[1rem]`: `my-[3rem]`} ${(process.env.REACT_APP_SHOWPRICE == 'true') ? `` : `hidden`}`}>
+          <div className={`text-center text-black font-normal font-karl ${(window.innerWidth <= 544) ? `my-[1rem]`: `my-[3rem]`} `}>
             <span className="text-3xl font-bold" style={{fontFamily : `${orgDetails.font}`}}>
-              ${getPriceNum(apparel)}
+              {/* ${getPriceNum(apparel)} */}
+              {(process.env.REACT_APP_SHOWPRICE == 'true') ? `$${getPriceNum(apparel)}` : ``}
             </span>
           </div>
           <div className={`justify-center w-full md:w-[30rem] mx-auto text-lg md:text-2xl md:whitespace-nowrap gap-4 grid-cols-2 md:grid-cols-2  ${(process.env.REACT_APP_CART_ENABLED == 'true') ? `grid` : `flex mt-4`}`}>
             <button
-              style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
+              style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`, fontSize: window.innerWidth <= 544 ? '17px': ''}}
               className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(process.env.REACT_APP_CART_ENABLED == 'true') ? (window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]` : `hidden`}`}
               onClick={handleAddToCart} ref={addToCartBtn}
             >
@@ -621,7 +636,7 @@ const ProductPage = () => {
             </button>
             {isImageToCart ? disableCartBtn() : enableCartBtn()}
             <button
-              style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
+              style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`, fontSize: window.innerWidth <= 544 ? '17px': ''}}
               className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl ${(process.env.REACT_APP_CART_ENABLED == 'true') && (window.innerWidth <= 544) ? `w-[8rem]` :`w-[12rem]`}`}
               onClick={handleBuy}
             >

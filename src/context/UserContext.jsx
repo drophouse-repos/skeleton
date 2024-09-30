@@ -52,7 +52,6 @@ export const UserProvider = ({ children }) => {
 
     const handleSignOut = async () => {
         try {
-        console.log('signing out')
           await signOut(auth);
         } catch (error) {
           console.error('Error signing out:', error);

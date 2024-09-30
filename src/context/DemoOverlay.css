@@ -1,0 +1,29 @@
+.demo-overlay {
+    align-items: center;
+    background-color: red;
+    bottom: 0;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    font-size: 15px;
+    height: 50px;
+    justify-content: center;
+    left: -135px;
+    position: fixed;
+    right: 0;
+    top: 25px;
+    transform: rotate(321deg);
+    width: 400px;
+    z-index: 51;
+}
+@media only screen and (max-width: 1024px) {
+    .demo-overlay {
+        font-size: 15px !important;
+        top: 0 !important;
+        height: 50px;
+        width: 100vw;
+        left: 0 !important;
+        transform: none;
+        position: sticky;
+    }
+}

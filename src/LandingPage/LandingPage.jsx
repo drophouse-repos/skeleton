@@ -70,7 +70,6 @@ const LandingPage = () => {
     const name = landingpage.map(item => capitalizeFirstLetter(item.SampleProduct_Name));
     setProduct_list(name);
 }, [landingpage]);
-console.log("landingpage",landingpage)
 const [CardProduct_front, setCardProduct_front] = useState();
 const [CardProduct_back, setCardProduct_back] = useState();
 useEffect(()=>{

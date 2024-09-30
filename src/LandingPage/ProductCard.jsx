@@ -9,8 +9,6 @@ function getRandomInt(max) {
 
 export default function ProductCard({ product, changeInterval, type }) {
     const { orgDetails, galleryPage }= useContext(Orgcontext)
-    console.log("product name or type : ",product.type)
-
     const [RandomImageUpdateCount, setRandomImageUpdateCount] = useState(0);
     const [SequentialImageUpdateCount, setSequentialImageUpdateCount] = useState(0);
 

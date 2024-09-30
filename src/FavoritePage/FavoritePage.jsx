@@ -12,7 +12,7 @@ const FavoritePage = () => {
   const { orgDetails, galleryPage } = useContext(Orgcontext)
   const [likedProducts, setLikedProducts] = useState([]);
   const { setGeneratedImage, setIsLiked, setEditedImage, setImageToCart} = useContext(ImageContext);
-  const { setPrompt } = useContext(AppContext);
+  const { setPrompt, setFavNumber } = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(false);
   const [cartData, setCartData] = useState(false);
   const navigate = useNavigate();
@@ -57,6 +57,7 @@ const FavoritePage = () => {
     try {
       setLikedProducts(likedProducts.filter(product => product.img_id !== img_id));
       await fetchPostLike(false, img_id, prompt);
+      setFavNumber(prevKey => prevKey - 1)
     } catch (error) {
       console.error("Failed to delete image", error);
     }

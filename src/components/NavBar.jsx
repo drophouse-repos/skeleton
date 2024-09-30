@@ -18,7 +18,7 @@ import { useUser } from "../context/UserContext";
 import Loader from '../components/loader'
 import ProductSection from "./ProductSection";
 import { AppContext } from "../context/AppContext";
-import { fetchCartNumber } from "../utils/fetch";
+import { fetchCartAndFavNumber } from "../utils/fetch";
 import NavBarModal from "./NavBarModal";
 import { Orgcontext } from "../context/ApiContext";
 import { updateFavicon } from '../utils';
@@ -30,40 +30,41 @@ export default function NavBar() {
   const { user, handleSignOut } = useUser();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const { cartNumber, setCartNumber,menuOpen, setMenuOpen } = useContext(AppContext);
+  const { favNumber, setFavNumber,cartNumber, setCartNumber,menuOpen, setMenuOpen } = useContext(AppContext);
   const onMenuClose = () => {
     setMenuOpen(false);
   };
 
   useEffect(() => {
-    const syncCart = () => {
+    const syncCartAndFav = () => {
       if (user?.isLoggedIn) {
-        fetchCartNumber().then((data) => {
+        fetchCartAndFavNumber().then((data) => {
           setCartNumber(data.cart_number);
           setLoading(false);
         })
         .catch((error) => {
           setCartNumber(0);
-          console.log(error)
+          console.error(error)
           setLoading(false)
         })
       }
     };
     setLoading(true)
-    syncCart();
+    syncCartAndFav();
   }, [user]);
 
   const { favicon } = useContext(Orgcontext)
 	useEffect(() => {
 		updateFavicon(favicon);
-    // console.log("favicon url : ", favicon)
 	  }, []);
   
 
   const getCartItemNumber = () => {
     return cartNumber;
   };
-
+  const getLikedItemNumber = () => {
+    return favNumber;
+  };
   function MenuItem({ icon, text, href }) {
     return (
       <div
@@ -133,13 +134,21 @@ export default function NavBar() {
         </div>
         <div className="basis-1/3 space-x-4 px-2 md:space-x-8 text-end">
           <div className="flex flex-row justify-end items-center space-x-2 md:space-x-5">
-            {user.isLoggedIn && <HeartOutlined
+          {user.isLoggedIn && 
+              <div className={`${(window.innerWidth >= 544) ? ``: `hidden`} inline md:space-x-2 whitespace-nowrap}`}>
+              <HeartOutlined
               className={
                 `${(window.innerWidth >= 544) ? ``: `hidden`} md:scale-125 lg:scale-150 text-black`}
               onClick={() => {
                 navigate("/fav");
               }}
-            />
+            /><div
+            className={
+              "inline md:scale-125 lg:scale-150 justify-self-center content-center items-center text-black" }
+          >
+            {getLikedItemNumber()}
+          </div>
+        </div>
             }
             {user.isLoggedIn &&
               <div className={`${(window.innerWidth >= 544) ? ``: `hidden`} inline md:space-x-2 whitespace-nowrap ${(process.env.REACT_APP_CART_ENABLED == 'true') ? `` : `hidden`}`}>
