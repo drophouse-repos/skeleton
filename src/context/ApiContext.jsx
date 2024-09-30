@@ -12,7 +12,7 @@ const OrganisationDetails = ({ children }) => {
     const [orgId, setOrgId] = useState('');
     const [name, setName] = useState('');
     const [mask, setMask] = useState('');
-    const [greenmask, setGreenmask] = useState('');
+    const [greenmask, setGreenmask] = useState(loadState('greenmask', '', 'localmask'));
     const [logo, setLogo] = useState('');
     const [themeColor, setThemeColor] = useState('');
     const [font, setFont] = useState('');
@@ -23,7 +23,14 @@ const OrganisationDetails = ({ children }) => {
     const [galleryPage, setGalleryPage] = useState(true);
 
     useEffect(() => {
+        if(!galleryPage){
+            setGreenmask('')
+        }
+    }, [galleryPage]);
+
+    useEffect(() => {
         const state = { greenmask };
+        console.log('updateing storage', state)
         sessionStorage.setItem('localmask', JSON.stringify(state));
     }, [greenmask]);
 
@@ -34,12 +41,12 @@ const OrganisationDetails = ({ children }) => {
                     org_id: process.env.REACT_APP_ORGANISATION_ID
                 }
                 const item = await fetchOrganisation_by_id(org_id);
-                    setGalleryPage((item && item.greenmask && item.greenmask != null && item.greenmask != '') ? false : true)
-                    let _greenmask = (item && item.greenmask && item.greenmask != null && item.greenmask != '') ? item.greenmask : ''
-                    if(galleryPage === true)
-                        _greenmask = loadState('greenmask', _greenmask, 'localmask')
+                    let _galleryPage = (item && item.greenmask && item.greenmask != null && item.greenmask != '') ? false : true
+                    setGalleryPage(_galleryPage)
+                    let _greenmask = _galleryPage ? '' : item.greenmask
+                    if(_galleryPage) _greenmask = loadState('greenmask', _greenmask, 'localmask')
+
                     setGreenmask(_greenmask);
-                    
                     setOrgId(item.org_id);
                     setName(item.name);
                     setMask(item.mask);
