@@ -610,7 +610,7 @@ const ProductPage = () => {
             </button>
             {isImageToCart ? disableCartBtn() : enableCartBtn()}
             <button
-              style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
+               style={{fontFamily : `${orgDetails.font}`, backgroundColor: orgDetails.theme_color}}
               className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl ${(process.env.REACT_APP_CART_ENABLED == 'true') && (window.innerWidth <= 544) ? `w-[8rem]` :`w-[12rem]`}`}
               onClick={handleBuy}
             >
