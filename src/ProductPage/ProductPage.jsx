@@ -20,7 +20,7 @@ import { OrderContext } from '../context/OrderContext';
 import { Orgcontext } from "../context/ApiContext";
 
 const ProductPage = () => {
-  const { product, orgDetails } = useContext(Orgcontext);
+  const { product, orgDetails, galleryPage, greenmask } = useContext(Orgcontext);
   const [productListLoad, setProductListLoad] = useState([]);
   const [productImageList, setProductImageList] = useState([]);
   const [tourOpen, setTourOpen] = useState(true);
@@ -397,6 +397,7 @@ const ProductPage = () => {
           color: color,
           img_id: generatedImage.img_id,
           prompt: prompt,
+          greenmask: greenmask,
           timestamp: new Date().toISOString(),
           thumbnail: thumbnail,
           toggled: toggled ? toggled : false,
@@ -446,6 +447,7 @@ const ProductPage = () => {
                   apparel: apparel,
                   size: size,
                   color: color,
+                  greenmask: greenmask,
                   img_id: generatedImage.img_id,
                   prompt: prompt,
                   timestamp: new Date().toISOString(),
@@ -601,7 +603,8 @@ const ProductPage = () => {
           />
         <div className={`justify-center  px-5 ${(process.env.REACT_APP_CART_ENABLED == 'true') ? (window.innerWidth <= 544) ? ``:`mt-[2rem]` : ``}`}>
           <div className={`grid ${apparel !== 'mug' && apparel !== 'cap' ? 'grid-cols-2' : 'grid-cols-1'} ${(window.innerWidth <= 544 ? `w-full` : `w-[70%]` )} mx-auto justify-items-center items-center`}>
-      {apparelOptions.length === 1 ? (
+    
+    {apparelOptions.length === 1 ? (
       <span className="text-gray-800 span-input ant-select product-name-span">{apparelOptions[0].label}</span>
     ) : (
       <Select
@@ -613,6 +616,26 @@ const ProductPage = () => {
       />
     )}
 
+    {galleryPage === true ? 
+        <button
+          style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
+          className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl ${(window.innerWidth <= 544) ? `w-[8rem]` :`w-[12rem]`}`}
+          onClick={() => {navigate("/product/gallery")}}
+        >
+          Change Product
+        </button>
+    : 
+      (apparelOptions.length === 1) ? 
+        <span className="text-gray-800 span-input ant-select product-name-span">{apparelOptions[0].label}</span>
+       : 
+        <Select
+          style={{ fontFamily: `${orgDetails.font}` }}
+          className={`${(window.innerWidth <= 544 ? 'w-[9rem]' : 'w-[15rem]')} border-none outline-none`}
+          onChange={handleApparelChange}
+          value={apparel}
+          options={apparelOptions}
+        />
+    }
             {apparel !== 'mug' && apparel !== 'cap' && (
               <Select
                 style={{fontFamily : `${orgDetails.font}`}}
