@@ -7,6 +7,7 @@ const auth = getAuth(app);
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_BACKBONE, 
 });
+
 export const getUserToken = async () => {
   const user = auth.currentUser;
   if (user) {
