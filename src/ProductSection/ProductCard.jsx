@@ -7,6 +7,7 @@ import { useContext } from 'react';
 import './ProductCard.css'; // We'll style the card later
 
 const ProductCard = ({ product }) => {
+  console.log(product)
   const { greenmask, setGreenmask } = useContext(Orgcontext)
   const { apparel, setApparel, setColor } = useContext(AppContext);
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const ProductCard = ({ product }) => {
             className="product-images back"
           />
         )}
-        {product.size && product.size.length > 0 && (
+        {product.size && product.size.length > 0 && product.type && product.type != 'mug' && product.type != 'cap' && (
           <div className="product-sizes">
             <div className='size-box-parent'>
             {product.size.map((size, index) => (
