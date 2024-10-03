@@ -1,0 +1,9 @@
+li.selected {
+    color: black;
+}
+li:hover {
+    color: tomato;
+}
+/* li.selected:hover {
+    color: black;
+} */

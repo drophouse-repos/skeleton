@@ -496,7 +496,6 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
     };
 
     const [zoomItemSrc, setZoomItemSrc] = useState(null);
-  // console.log((productImageList[currentIndex] &&  productImageList[currentIndex]?.back && productImageList[currentIndex]?.back.startsWith('data:image/')))
   return (
     <div id="product-gallery" className={`sliderContainer overflow-hidden ${!isZoomEnabled ? '' : 'zoomer'}`} ref={ref}>
        <ProductPopup

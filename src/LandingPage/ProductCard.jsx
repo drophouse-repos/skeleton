@@ -1,8 +1,5 @@
 import React, { useContext, useState } from "react";
-
-
 import GoToProductButton from "./GoToProductButton";
-
 import "./ProductCard.css";
 import { Orgcontext } from "../context/ApiContext";
 
@@ -11,8 +8,7 @@ function getRandomInt(max) {
 }
 
 export default function ProductCard({ product, changeInterval, type }) {
-    const { orgDetails }= useContext(Orgcontext)
-
+    const { orgDetails, galleryPage }= useContext(Orgcontext)
     const [RandomImageUpdateCount, setRandomImageUpdateCount] = useState(0);
     const [SequentialImageUpdateCount, setSequentialImageUpdateCount] = useState(0);
 
@@ -60,7 +56,7 @@ export default function ProductCard({ product, changeInterval, type }) {
                         </h2>
 
                         <div className="flex justify-left items-center place-self-center  pb-0 pt-2 w-full">
-                            <GoToProductButton text="Design Now" link={"/product"} className={`rounded-t-none  buy-btn-slider text-white w-full rounded-[5px] px-16 py-2.5`} type={product.type} color={product.color} />
+                            <GoToProductButton text="Design Now" link={galleryPage === true ? "/product/gallery" : "/product"} className={`rounded-t-none  buy-btn-slider text-white w-full rounded-[5px] px-16 py-2.5`} type={product.type} color={product.color} />
                         </div>
                     </div>
                 </div>

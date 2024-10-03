@@ -3,6 +3,7 @@ import Loader from '../components/loader';
 import { fetchOrganisationlist, fetchOrganisation_by_id } from '../utils/fetch';
 import LoadingPage from '../components/newloader';
 import { generate_presigned_url, generate_base64_url } from '../utils/aws_utils';
+import { loadState } from '../utils';
 
 export const Orgcontext = createContext();
 
@@ -11,6 +12,7 @@ const OrganisationDetails = ({ children }) => {
     const [orgId, setOrgId] = useState('');
     const [name, setName] = useState('');
     const [mask, setMask] = useState('');
+    const [greenmask, setGreenmask] = useState(loadState('greenmask', '', 'localmask'));
     const [logo, setLogo] = useState('');
     const [themeColor, setThemeColor] = useState('');
     const [font, setFont] = useState('');
@@ -18,6 +20,19 @@ const OrganisationDetails = ({ children }) => {
     const [product, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [landingpage, setLandingPage] = useState([]);
+    const [galleryPage, setGalleryPage] = useState(true);
+
+    useEffect(() => {
+        if(!galleryPage){
+            setGreenmask('')
+        }
+    }, [galleryPage]);
+
+    useEffect(() => {
+        const state = { greenmask };
+        console.log('updateing storage', state)
+        sessionStorage.setItem('localmask', JSON.stringify(state));
+    }, [greenmask]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -26,6 +41,12 @@ const OrganisationDetails = ({ children }) => {
                     org_id: process.env.REACT_APP_ORGANISATION_ID
                 }
                 const item = await fetchOrganisation_by_id(org_id);
+                    let _galleryPage = (item && item.greenmask && item.greenmask != null && item.greenmask != '') ? false : true
+                    setGalleryPage(_galleryPage)
+                    let _greenmask = _galleryPage ? '' : item.greenmask
+                    if(_galleryPage) _greenmask = loadState('greenmask', _greenmask, 'localmask')
+
+                    setGreenmask(_greenmask);
                     setOrgId(item.org_id);
                     setName(item.name);
                     setMask(item.mask);
@@ -48,6 +69,7 @@ const OrganisationDetails = ({ children }) => {
                         Product_Sizes: product.sizes,
                         Product_Clip: product.clip,
                         Product_Mask: product.mask,
+                        Product_Greenmask: product.greenmask,
                         Product_Colors: product.colors,
                         Product_DefaultProduct: product.defaultProduct,
                         Product_Dimensions_Top: product.dimensions.top,
@@ -79,7 +101,9 @@ const OrganisationDetails = ({ children }) => {
                 <LoadingPage />
             ) : (
                 <Orgcontext.Provider value={{ 
-                    orgDetails, orgId, name, mask, logo, themeColor, font, favicon, product, landingpage
+                    orgDetails, orgId, name, mask, logo, themeColor, 
+                    font, favicon, product, landingpage, 
+                    galleryPage, greenmask, setGreenmask
                 }}>
                     {children}
                 </Orgcontext.Provider>
