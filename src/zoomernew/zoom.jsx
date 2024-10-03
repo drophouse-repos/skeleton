@@ -56,6 +56,7 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
       setInitOffset(33);
       setImageX(63);
       // setImageWidth(65);
+      
       setImageY(63);
     } else {
       setContainerWidth(270);
