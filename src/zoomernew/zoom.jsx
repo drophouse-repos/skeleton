@@ -69,6 +69,7 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
       setImageY(95);
     }
   }
+  
   useEffect(() => {
     resetAllPositions();
   }, []);
