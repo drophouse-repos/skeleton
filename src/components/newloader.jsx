@@ -14,6 +14,7 @@ const LoadingPage = () => {
 
   const [currentPrompt, setCurrentPrompt] = useState(0);
   const [fadeState, setFadeState] = useState("fade-in");
+
   useEffect(() => {
     const interval = setInterval(() => {
       setFadeState("fade-out");
@@ -29,9 +30,14 @@ const LoadingPage = () => {
   return (
     <div className="loading-container">
       <img src={logo} alt="Logo" className="loading-logo" />
-      <h1 className="design-ideas" style={{fontSize: '30px',fontFamily:'ARSENAL',marginBottom:'145px'}}>Design Ideas</h1>
-      <div className={`loading-prompt ${fadeState}`} style={{fontFamily: `ARSENAL`,maxWidth:'80vw',position:'absolute'}}>{prompts[currentPrompt]}</div>
-      <BouncingDotsLoader />
+      <h1 className="design-ideas">Design Ideas</h1>
+      <div className={`loading-prompt ${fadeState}`}>
+        {prompts[currentPrompt]}
+      </div>
+      {/* Loading dots directly below the prompt */}
+      <div className="loading-dots-container">
+        <BouncingDotsLoader />
+      </div>
     </div>
   );
 };

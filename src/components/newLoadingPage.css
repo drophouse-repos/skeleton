@@ -1,60 +1,32 @@
 .loading-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: center; /* Centers the content vertically */
   align-items: center;
   height: 100vh;
-  /* background-color: #bfffcc; */
   background-color: #A9C8C0;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .loading-logo {
-  width: 350px;
-  margin-bottom: 20px;
-  top: 10%;
-  position: absolute;
+  width: 250px;
+  margin-bottom: 20px; /* Space between logo and title */
+}
+
+.design-ideas {
+  font-size: 28px;
+  font-family: 'ARSENAL';
+  margin-bottom: 20px; /* Space between title and prompt */
 }
 
 .loading-prompt {
-  font-size: 24px;
-  margin-bottom: 20px;
+  font-size: 20px;
   color: #333;
-}
-
-.loading-spinner {
-  width: 50px;
-  height: 50px;
-  border: 5px solid #f3f3f3; /* Light grey */
-  border-top: 5px solid #36D7B7; /* Blue-green */
-  border-radius: 50%;
-  animation: spin 1.5s linear infinite;
-}
-
-/* Colorful loader */
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-    border-top-color: #36D7B7; /* Blue-green */
-  }
-  25% {
-    border-top-color: #f39c12; /* Orange */
-  }
-  50% {
-    border-top-color: #e74c3c; /* Red */
-  }
-  75% {
-    border-top-color: #9b59b6; /* Purple */
-  }
-  100% {
-    transform: rotate(360deg);
-    border-top-color: #36D7B7; /* Blue-green */
-  }
-}
-
-.loading-prompt {
-  color: #555;
-  opacity: 0;
+  max-width: 80vw;
+  text-align: center;
   transition: opacity 0.8s ease-in-out;
+  margin-bottom: 20px; /* Space between prompt and loading dots */
 }
 
 .loading-prompt.fade-in {
@@ -63,4 +35,23 @@
 
 .loading-prompt.fade-out {
   opacity: 0;
+}
+
+/* Loading dots container directly below the prompt */
+.loading-dots-container {
+  margin-top: 20px; /* Adds space between prompt and dots */
+}
+
+@media (max-width: 768px) {
+  .loading-logo {
+    width: 200px;
+  }
+
+  .design-ideas {
+    font-size: 24px;
+  }
+
+  .loading-prompt {
+    font-size: 18px;
+  }
 }
