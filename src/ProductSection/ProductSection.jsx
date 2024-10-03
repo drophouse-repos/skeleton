@@ -56,7 +56,7 @@ const ProductSection = () => {
 
   return (
     <div className='grid grid-cols-7 gap-4'>
-    <div className='col-span-1 mt-24 text-left pl-10' style={{position: 'fixed'}}>
+    <div className='col-span-1 mt-24 text-left ml-2' style={{position: 'fixed'}}>
       <h2 className='text-left mb-10'><strong>Filters +</strong></h2>
       <ul className='text-left'>
           <li

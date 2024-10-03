@@ -26,14 +26,14 @@ const ProductCard = ({ product }) => {
           src={product.frontImage}
           alt={`${product.name} front`}
           className={`product-images ${hasBackImage ? 'front' : 'no-back'}`}
-          style={{height: '500px'}}
+          style={{width: '325px', height:'375px'}}
         />
         {hasBackImage && (
           <img
             src={product.backImage}
             alt={`${product.name} back`}
             className="product-images back"
-            style={{height: '500px'}}
+            style={{width: '325px', height:'375px'}}
           />
         )}
         {product.size && product.size.length > 0 && product.type && product.type != 'mug' && product.type != 'cap' && (
