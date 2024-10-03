@@ -8,8 +8,8 @@ const LoadingPage = () => {
     "A scenic mountain landscape featuring a sleek F1 car racing through the winding roads",
     "An artistic computer circuit pattern designed in Rose-Hulman red color",
     "Create a futuristic tree house suspended among the branches",
-    "Towering snow-capped mountains with rugged peaks, surrounded by a serene landscape of alpine trees and a winding river below against a colorful sunset sky",
-    "An elegant old vintage music score on off white paper, delicately handwritten with intricate vines and pink flowers"
+    "Towering snow-capped mountains with rugged peaks and a colorful sunset sky",
+    "An elegant old vintage music score handwritten with intricate vines and pink flowers"
   ];
 
   const [currentPrompt, setCurrentPrompt] = useState(0);
