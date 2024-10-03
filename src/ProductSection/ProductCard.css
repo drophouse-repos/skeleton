@@ -6,7 +6,7 @@
     text-align: center;
     /* background-color: #fff; */
     /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
-    transition: transform 0.2s;
+    transition: transform 0.1s;
   }
   
   .product-card:hover {
@@ -47,7 +47,7 @@
     position: relative;
     width: 100%;
     overflow: hidden;
-    background: linear-gradient(to right, #b8b7b7, #d0d0cf);
+/*    background: linear-gradient(to right, #b8b7b7, #d0d0cf);*/
 }
 
 .product-images {

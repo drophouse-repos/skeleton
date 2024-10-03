@@ -55,44 +55,49 @@ const ProductSection = () => {
   };
 
   return (
-    <div className='grid grid-cols-7 gap-4'>
-    <div className='col-span-1 mt-24 text-left ml-2' style={{position: 'fixed'}}>
-      <h2 className='text-left mb-10'><strong>Filters +</strong></h2>
-      <ul className='text-left'>
+    <div>
+      <div className="col-span-1 mt-24 text-left ml-2">
+        <h2 className="text-left mb-4">
+          <strong>Filters</strong>
+        </h2>
+
+        {/* Flex container for responsive buttons */}
+        <ul className="flex flex-wrap gap-2 overflow-x-auto">
           <li
             onClick={() => handleFilter('All')}
-            className={`font-bold text-left text-gray-500 cursor-pointer ${
-              selectedType === 'All' ? 'selected' : ''
+            className={`px-4 py-2 rounded-lg text-sm font-bold text-gray-500 cursor-pointer transition-colors duration-300 ${
+              selectedType === 'All' ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-300'
             }`}
           >
             All
           </li>
+
           {Array.from(new Set(orgDetails.Products.map(product => product.Product_Name)))
-            .sort() 
+            .sort()
             .map(productName => (
               <li
                 key={productName}
                 onClick={() => handleFilter(productName)}
-                className={`font-bold text-left text-gray-500 cursor-pointer ${
-                  selectedType === productName ? 'selected' : ''
+                className={`px-4 py-2 rounded-lg text-sm font-bold text-gray-500 cursor-pointer transition-colors duration-300 ${
+                  selectedType === productName ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-300'
                 }`}
               >
-                 {productName.charAt(0).toUpperCase() + productName.slice(1)}
+                {productName.charAt(0).toUpperCase() + productName.slice(1)}
               </li>
             ))}
-      </ul>
-
-    </div>
-    <div className="col-start-2 col-span-6 product-card-catelog">
-      {/* <h1>Product Showcase</h1> */}
-      {ProductsList.length > 0 ? <ProductList products={ProductsList} /> : 
-      <>
-        <div className='product' style={{width: '84.5vw'}}>
-        <h2>No Products Available</h2> 
+        </ul>
+      </div>
+      <div className='grid grid-cols-8 gap-4'>
+        <div className="col-start-1 col-span-8 product-card-catelog">
+          {ProductsList.length > 0 ? <ProductList products={ProductsList} /> : 
+          <>
+            <div className='product' style={{width: '84.5vw'}}>
+            <h2>No Products Available</h2> 
+            </div>
+          </>}
+          
         </div>
-      </>}
-      
-    </div>
+      </div>
     </div>
   );
 };
