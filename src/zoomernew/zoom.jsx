@@ -44,7 +44,10 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
 
   function resetAllPositions() {
     if (window.innerWidth < 544) {
+      //mobile devices
       setContainerWidth(180);
+      setImageHeight('59%');
+      setImageWidth('59%');
       setContainerWidth_rend(180);
       setRWidth_rend(300);
       setContainerWidth_rend(310);
