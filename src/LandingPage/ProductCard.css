@@ -35,7 +35,73 @@ opacity: 0;
 transform: translateX(100%) skewX(-25deg);
 opacity: 1;
 }
-.image-container-main {
+/* Core image container with 3D transform */
+.image-container {
+  transform-style: preserve-3d;
+  transition: transform 0.8s ease-in-out;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  width: 100%;
+  min-width: 100%;
+}
+
+/* Front image (visible initially) */
+.landing-random-image {
+  opacity: 1;
+  display: block;
+  width: 90%;
+  height: auto;
+  transform: rotateY(0deg);
+  backface-visibility: hidden;
+  transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+}
+
+/* Back image (hidden initially) */
+.back-img {
+  position: absolute;
+  width: 90%;
+  height: auto;
+  display: block;
+  opacity: 0;
+  transform: rotateY(180deg); /* Rotated to the back */
+  backface-visibility: hidden;
+  object-fit: cover;
+  transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+}
+
+/* Smooth transition on hover for non-mobile devices */
+@media (min-width: 769px) {
+  .image-container-main:hover .image-container {
+      transform: rotateY(180deg); /* Rotates the container */
+  }
+
+  .image-container-main:hover .back-img {
+      opacity: 1; /* Show back image */
+  }
+
+  .image-container:hover .landing-random-image {
+      opacity: 0; /* Hide front image */
+  }
+}
+
+/* Smooth transition on click for mobile devices */
+.flipped.image-container {
+  transform: rotateY(180deg); /* Smoothly rotates the container */
+}
+
+.flipped .back-img {
+  opacity: 1;
+}
+
+.flipped .landing-random-image {
+  opacity: 0;
+}
+
+
+/* .image-container-main {
 perspective: 1000px;
 }
 .image-container {
@@ -87,4 +153,4 @@ opacity: 1;
 
 .image-container:hover .landing-random-image {
 opacity: 0;
-}
+} */

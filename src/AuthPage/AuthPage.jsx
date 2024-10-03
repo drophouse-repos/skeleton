@@ -40,7 +40,7 @@ const AuthPage = () => {
 
   useEffect(() => {
     if(user.isLoggedIn && process.env.REACT_APP_AUTHTYPE_SAML === 'true')
-      navigate('/product')
+      navigate('/product/gallery')
   }, [user])
 
   useEffect(() => {
@@ -60,7 +60,7 @@ const AuthPage = () => {
           postAuthData({email, firstName, lastName, phoneNumber, navigate})
             .then(() => {
                 setAuthError('');
-                navigate('/product');
+                navigate('/product/gallery');
             })
             .catch(error => {
                 console.error("Log in failed", error);
@@ -216,5 +216,6 @@ const AuthPage = () => {
     </div>
   );
 };
+
 
 export default AuthPage;

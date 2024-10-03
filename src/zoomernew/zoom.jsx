@@ -30,8 +30,8 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
   const [imageHeight, setImageHeight] = useState("59%");
   const [R_width, setRWidth] = useState(320);
   const [R_width_rend, setRWidth_rend] = useState(320);
-  const [container_width, setConatinerWidth] = useState(128);
-  const [container_width_rend, setConatinerWidth_rend] = useState(128);
+  const [container_width, setContainerWidth] = useState(128);
+  const [container_width_rend, setContainerWidth_rend] = useState(128);
   const [out_container_width, setOutContainerWidth] = useState(512);
   const [initOffset, setInitOffset] = useState(25);
   const { apparel } = useContext(AppContext);
@@ -44,36 +44,26 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
 
   function resetAllPositions() {
     if (window.innerWidth < 544) {
-      // setConatinerWidth(64);
-      // setRWidth(128);
-      // setOutContainerWidth(256);
-      // setInitOffset(50);
-      // setImageX(32);
-      // setImageY(32);
-      // setConatinerWidth(((window.innerWidth / 100) * 60) / 2);
-      setConatinerWidth(180);
-      setConatinerWidth_rend(180);
+      //mobile devices
+      setContainerWidth(180);
+      setImageHeight('59%');
+      setImageWidth('59%');
+      setContainerWidth_rend(180);
       setRWidth_rend(300);
-      setConatinerWidth_rend(310);
-      // setConatinerWidth((window.innerWidth/100)*100);
-      // setRWidth((window.innerWidth / 100) * 75);
+      setContainerWidth_rend(310);
       setRWidth(85);
       setOutContainerWidth(310);
-      // setOutContainerWidth((window.innerWidth/100)*100)
-      // setInitOffset(window.innerWidth / 100 + 27);
       setInitOffset(33);
       setImageX(63);
       // setImageWidth(65);
       setImageY(63);
     } else {
-      setConatinerWidth(270);
-      // setRWidth(128);
-      // setRWidth(props.dimensions.Dim_width/100*450)
+      setContainerWidth(270);
       setImageHeight('59%');
       setImageWidth('59%');
       setRWidth_rend(450);
       setOutContainerWidth(512);
-      setConatinerWidth_rend(512);
+      setContainerWidth_rend(512);
       setInitOffset(23);
       setImageX(95);
       setImageY(95);

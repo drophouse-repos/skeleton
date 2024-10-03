@@ -5,8 +5,10 @@ import {
   } from 'firebase/auth';
 const auth = getAuth(app);
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_BACKBONE, // Your API base URL
+  baseURL: process.env.REACT_APP_BACKBONE, 
 });
+
+
 export const getUserToken = async () => {
   const user = auth.currentUser;
   if (user) {

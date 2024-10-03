@@ -1,6 +1,7 @@
+// src/components/ProductList.jsx
 import React from 'react';
 import ProductCard from './ProductCard';
-import './ProductList.css'; // We'll style the grid later
+import './ProductList.css';
 
 const ProductList = ({ products }) => {
   return (

@@ -30,7 +30,7 @@ export default function NavBar() {
   const { user, handleSignOut } = useUser();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const { favNumber, setFavNumber,cartNumber, setCartNumber,menuOpen, setMenuOpen } = useContext(AppContext);
+  const { favNumber, setFavNumber, cartNumber, setCartNumber,menuOpen, setMenuOpen } = useContext(AppContext);
   const onMenuClose = () => {
     setMenuOpen(false);
   };
@@ -40,10 +40,12 @@ export default function NavBar() {
       if (user?.isLoggedIn) {
         fetchCartAndFavNumber().then((data) => {
           setCartNumber(data.cart_number);
+          setFavNumber(data.liked_number)
           setLoading(false);
         })
         .catch((error) => {
           setCartNumber(0);
+          setFavNumber(0)
           console.error(error)
           setLoading(false)
         })
@@ -134,7 +136,7 @@ export default function NavBar() {
         </div>
         <div className="basis-1/3 space-x-4 px-2 md:space-x-8 text-end">
           <div className="flex flex-row justify-end items-center space-x-2 md:space-x-5">
-          {user.isLoggedIn && 
+            {user.isLoggedIn && 
               <div className={`${(window.innerWidth >= 544) ? ``: `hidden`} inline md:space-x-2 whitespace-nowrap}`}>
               <HeartOutlined
               className={
@@ -142,13 +144,14 @@ export default function NavBar() {
               onClick={() => {
                 navigate("/fav");
               }}
-            /><div
-            className={
-              "inline md:scale-125 lg:scale-150 justify-self-center content-center items-center text-black" }
-          >
-            {getLikedItemNumber()}
-          </div>
-        </div>
+            />
+              <div
+                  className={
+                    "inline md:scale-125 lg:scale-150 justify-self-center content-center items-center text-black" }
+                >
+                  {getLikedItemNumber()}
+                </div>
+              </div>
             }
             {user.isLoggedIn &&
               <div className={`${(window.innerWidth >= 544) ? ``: `hidden`} inline md:space-x-2 whitespace-nowrap ${(process.env.REACT_APP_CART_ENABLED == 'true') ? `` : `hidden`}`}>

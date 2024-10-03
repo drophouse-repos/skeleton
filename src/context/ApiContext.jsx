@@ -20,6 +20,7 @@ const OrganisationDetails = ({ children }) => {
     const [product, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [landingpage, setLandingPage] = useState([]);
+    const [greenMask, setGreenMask] = useState('');
     const [galleryPage, setGalleryPage] = useState(true);
 
     useEffect(() => {
@@ -48,6 +49,7 @@ const OrganisationDetails = ({ children }) => {
 
                     setGreenmask(_greenmask);
                     setOrgId(item.org_id);
+                    setGreenMask(item.greenmask);
                     setName(item.name);
                     setMask(item.mask);
                     setLogo(item.logo);

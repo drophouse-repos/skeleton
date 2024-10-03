@@ -21,29 +21,47 @@ import ProductPopup from "./ProductPopup";
 import ZoomIcon from '../assets/zoom.png';
 
 const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, currentIndex, setCurrentIndex, changeFromMug, isZoomEnabled, setIsZoomEnabled }, ref) => {
-
   const { apparel, setApparel, color, setColor, prompt, setFavNumber,productPopupIsShown, setProductPopupIsShown,productPopupInfo, setProductPopupInfo,
     productPopupTitle, setProductPopupTitle,isSaveDesign, setisSaveDesign } = useContext(AppContext);
   const [slideIndex, setSlideIndex] = useState(0);
   // const [currentIndex, setCurrentIndex] = useState(mapColorToIndex(apparel, color));
   const { generatedImage, isLiked, setIsLiked, editedImage, setEditedImage } = useContext(ImageContext);
   const editedImageRef = useRef(null);
-  const { product, orgDetails, favicon } = useContext(Orgcontext);
+  const { product, orgDetails, favicon, greenmask } = useContext(Orgcontext);
   const [productListLoad, setProductListLoad] = useState([]);
   const [productImageList, setProductImageList] = useState([]);
   const [dimTop, setDimTop] = useState();
   const [dimLeft, setDimLeft] = useState();
   const [dimHeight, setDimHeight] = useState();
   const [dimWidth, setDimWidth] = useState();
-  // const [productPopupIsShown, setProductPopupIsShown] = useState(false);
-  // const [productPopupInfo, setProductPopupInfo] = useState({});
-  // const [productPopupTitle, setProductPopupTitle] = useState("");
   const [dimArray, setDimArray] = useState({
     Dim_top: 0,
     Dim_left: 0,
     Dim_height: 0,
     Dim_width: 0
   });
+  useEffect(() => {
+    const updateImageHeight = () => {
+      const screenWidth = window.innerWidth;
+
+      if (screenWidth <= 768) {
+        // Smaller screens (mobile)
+        setImgHeightZoom('50');
+      } else if (screenWidth <= 1024) {
+        // iPad Pro size
+        setImgHeightZoom('60');
+      } else {
+        // Laptop/Desktop
+        setImgHeightZoom('80');
+      }
+    };
+
+    updateImageHeight();
+    window.addEventListener('resize', updateImageHeight);
+    return () => {
+      window.removeEventListener('resize', updateImageHeight);
+    };
+  }, []);
   const [zoomerImg, setZoomerImg] = useState();
   // console.log("favicon url : ",favicon)
   useEffect(() => {
@@ -79,7 +97,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
 
   useEffect(() => {
     if (productListLoad.length > 0 && apparel) {
-      const productList = Object.values(productListLoad).filter(item => item.Product_Name === apparel);
+      const productList = Object.values(productListLoad).filter(item => (item.Product_Name === apparel && (greenmask != '' && item.Product_Greenmask === greenmask)));
   
       if (productList.length > 0) {
         const productListColour = productList[0]?.Product_Colors || [];
@@ -100,6 +118,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
           Dim_width: Product_Dimensions_Width
         });
         setProductImageList(productImage);
+        if(currentIndex === undefined) setCurrentIndex(0)
         setZoomerImg(productList[0].Product_Mask);
       } else {
         console.warn("No matching product found for the given apparel:", apparel);
@@ -255,7 +274,6 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
     updateSlidesToShow();
   }, [productImageList]);
 
-  // console.log("Slides to show : ",slideToShow, "current index : ",currentIndex)
   const settings = {
     className: "center",
     centerMode: true,
@@ -371,6 +389,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
       setBannerKey(prevKey => prevKey + 1);
     }
   }
+  
   const closeZoomerwindow = () => {
     // setToggleActivated(false);
     setButtonText(buttonText === 'Edit Design' ? 'Save Design' : 'Edit Design');
@@ -414,7 +433,6 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
       onChange(localColor);
     }
   }
-  const [currentSlide, setCurrentSlide] = useState(0);
   const [scale, setScale] = useState(1);
   const [translate, setTranslate] = useState({ x: 50, y: 50 });
   const handleMouseMove = (e) => {
@@ -514,9 +532,28 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
         className={`${isZoomEnabled ? 'hidden' : ''}`}
         {...settings_std}>
         {productListSlider.map((image, index) => (         
-          <div key={index} className={`relative grid justify-items-center items-center ${window.innerWidth <= 550 ? ``: `h-[32rem]`} md:h-72 lg:h-96 w-10-single-prod`}>
-            <img id={index} draggable="false" className={`absolute z-[-1] ${apparel === 'hoodie' ? 'Hoodie' : ''} ${apparel === 'tshirt' ? 'Tshirt' : ''} `} src={editedImage} alt="" 
-            style={{height:`${(window.innerWidth < 550) ? dimHeight : dimHeight - 2 }%`,width: `${dimWidth}%`,top:`${(window.innerWidth < 550) ? dimTop : dimTop + 1}%`,left:`${dimLeft}%`}}
+          // <div key={index} className={`relative grid justify-items-center items-center ${window.innerWidth <= 550 ? ``: `h-[32rem]`} md:h-72 lg:h-96 w-10-single-prod`}>
+          //   <img id={index} draggable="false" className={`absolute z-[-1] ${apparel === 'hoodie' ? 'Hoodie' : ''} ${apparel === 'tshirt' ? 'Tshirt' : ''} `} src={editedImage} alt="" 
+          //   style={{height:`${(window.innerWidth < 550) ? dimHeight : dimHeight - 2 }%`,width: `${dimWidth}%`,top:`${(window.innerWidth < 550) ? dimTop : dimTop + 1}%`,left:`${dimLeft}%`}}
+          //   />
+          //   <img draggable="false" src={isFront ? image.front : image.back} alt="" className={`object-contain mx-auto ${window.innerWidth <= 550 ? ``: `h-[32rem]`} md:h-72 lg:h-96 z-30`} />
+          // </div>
+          <div
+            key={index}
+            className={`relative grid justify-items-center items-center ${window.innerWidth <= 550 ? `` : `h-[32rem]`} md:h-72 lg:h-96 w-10-single-prod`}
+          >
+            <img
+              id={index} draggable="false"
+              className={`absolute z-[-1] ${apparel === 'hoodie' ? 'Hoodie' : ''} ${
+                apparel === 'tshirt' ? 'Tshirt' : ''
+              }`}
+              src={editedImage} alt=""
+              style={{
+                height: `${window.innerWidth < 550 ? dimHeight : dimHeight - 2}%`,
+                width: `${dimWidth}%`,
+                top: `${window.innerWidth < 550 ? dimTop : dimTop + 1}%`,
+                left: `${dimLeft}%`,
+              }}
             />
             <img draggable="false" src={isFront ? image.front : image.back} alt="" className={`object-contain mx-auto ${window.innerWidth <= 550 ? ``: `h-[32rem]`} md:h-72 lg:h-96 z-30`} />
             {currentIndex === index &&
@@ -526,15 +563,17 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
               <img src={ZoomIcon} alt="Zoom" className="w-6 h-6" />
             </div>}
           </div>
+
         ))}         
       </Slider>
       {isModalOpen && (
-        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center z-50">
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center z-50" onClick={closeModal}>
         <div className="relative" id="img-id-zoomer" style={{ position: "relative" }}>
           <div class="img-container" 
                 onMouseEnter={handleMouseEnter}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
+                onClick={(e) => e.stopPropagation()}
                 style={{
                   overflow: 'hidden',
                   transform: `scale(${scale}) translate(${translate.x - 50}px, ${translate.y - 50}px)`,
@@ -551,7 +590,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
                 className={`object-contain mx-auto ${window.innerWidth <= 550 ? `` : `h-[32rem]`} md:h-72 lg:h-96 z-30`}
               />
           </div>
-          <button onClick={closeModal} className="absolute top-2 right-2 text-white bg-red-600 px-3 py-1 rounded-xl" style={{top:'-20px',right: window.innerWidth <= 544 ? '0':'-20px',position: 'absolute'}}>
+          <button onClick={closeModal} className="absolute top-2 right-2 text-white bg-red-600 px-3 py-1 rounded-xl" style={{top:'-20px',right: window.innerWidth <= 544 ? '0px' : '-20px',position: 'absolute'}}>
               X
           </button>
         </div>
@@ -577,16 +616,23 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
                 <img src={ZoomIcon} alt="Zoom" className="w-6 h-6" />
               </div>}
             {/* </div> */}
+            {currentIndex === index &&
+              <div 
+                className="absolute bottom-2 right-2 z-40 cursor-pointer" 
+                onClick={() => openModal(isFront ? image.front : image.back)}>
+                <img src={ZoomIcon} alt="Zoom" className="w-6 h-6" />
+              </div>}
             </div>
           ))}         
         </Slider>
         {isModalOpen && (
-        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center z-50">
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center z-50" onClick={closeModal}>
         <div className="relative" id="img-id-zoomer" style={{ position: "relative" }}>
           <div class="img-container" 
                 onMouseEnter={handleMouseEnter}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
+                onClick={(e) => e.stopPropagation()}
                 style={{
                   overflow: 'hidden',
                   transform: `scale(${scale}) translate(${translate.x - 50}px, ${translate.y - 50}px)`,
@@ -603,7 +649,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
                 className={`object-contain mx-auto ${window.innerWidth <= 550 ? `` : `h-[32rem]`} md:h-72 lg:h-96 z-30`}
               />
           </div>
-          <button onClick={closeModal} className="absolute top-2 right-2 text-white bg-red-600 px-3 py-1 rounded-xl" style={{top:'-20px',right: window.innerWidth <= 544 ? '0':'-20px',position: 'absolute'}}>
+          <button onClick={closeModal} className="absolute top-2 right-2 text-white bg-red-600 px-3 py-1 rounded-xl" style={{top:'-20px',right: window.innerWidth <= 544 ? '0px' : '-20px',position: 'absolute'}}>
               X
           </button>
         </div>
@@ -654,8 +700,10 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
             className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
             Reset Changes</button>
         <button  ref={toggleZoomBtnRef} onClick={toggleZoom} 
-            style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`, fontSize: window.innerWidth <= 544 ? '17px': ''}}
-            className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
+            style={{fontFamily : `${orgDetails.font}`, 
+            backgroundColor: `${orgDetails.theme_color}`,
+            fontSize: window.innerWidth <= 544 ? '15px !important': ''}}
+            className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`} save-btn`}>
             Save Design</button>
       </div>
       <div className={`${(window.innerWidth <= 544)? `px-5`: ``} mt-6 mb-6 justify-center w-full md:w-[30rem] mx-auto text-lg md:text-2xl md:whitespace-nowrap gap-4 grid-cols-2 md:grid-cols-2  grid ${!isZoomEnabled ? '' : 'hidden'}`}>
@@ -686,28 +734,6 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
             </button>
           )}
       </div>
-        {/* <div className="flex flex-row justify-end space-x-2 my-[1rem]">
-          <div className="relative bottom-[50px] right-[5vw]">
-            {isActive ? (
-              isLiked ? (
-                <HeartFilled
-                  className="scale-150 text-red-500 cursor-pointer"
-                  onClick={handleLike}
-                  ref={addFavBtnRef}
-                />
-              ) : (
-                <HeartOutlined
-                  className="scale-150 cursor-pointer"
-                  onClick={handleLike}
-                  ref={addFavBtnRef}
-                />
-              )
-            ) : (
-              <HeartOutlined className="scale-150 text-gray-400 cursor-not-allowed" ref={addFavBtnRef} />
-            )}
-          </div>
-        </div> */}
-
     </div>
   );
 });

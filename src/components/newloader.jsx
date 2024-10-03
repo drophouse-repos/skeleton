@@ -8,12 +8,13 @@ const LoadingPage = () => {
     "A scenic mountain landscape featuring a sleek F1 car racing through the winding roads",
     "An artistic computer circuit pattern designed in Rose-Hulman red color",
     "Create a futuristic tree house suspended among the branches",
-    "Towering snow-capped mountains with rugged peaks, surrounded by a serene landscape of alpine trees and a winding river below against a colorful sunset sky",
-    "An elegant old vintage music score on off white paper, delicately handwritten with intricate vines and pink flowers"
+    "Towering snow-capped mountains with rugged peaks and a colorful sunset sky",
+    "An elegant old vintage music score handwritten with intricate vines and pink flowers"
   ];
 
   const [currentPrompt, setCurrentPrompt] = useState(0);
   const [fadeState, setFadeState] = useState("fade-in");
+
   useEffect(() => {
     const interval = setInterval(() => {
       setFadeState("fade-out");
@@ -29,9 +30,14 @@ const LoadingPage = () => {
   return (
     <div className="loading-container">
       <img src={logo} alt="Logo" className="loading-logo" />
-      <h1 className="design-ideas" style={{fontSize: '30px',fontFamily:'ARSENAL',marginBottom:'145px'}}>Design Ideas</h1>
-      <div className={`loading-prompt ${fadeState}`} style={{fontFamily: `ARSENAL`,maxWidth:'80vw',position:'absolute'}}>{prompts[currentPrompt]}</div>
-      <BouncingDotsLoader />
+      <h1 className="design-ideas">Design Ideas</h1>
+      <div className={`loading-prompt ${fadeState}`}>
+        {prompts[currentPrompt]}
+      </div>
+      {/* Loading dots directly below the prompt */}
+      <div className="loading-dots-container">
+        <BouncingDotsLoader />
+      </div>
     </div>
   );
 };
