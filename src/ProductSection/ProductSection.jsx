@@ -32,7 +32,6 @@ const ProductSection = () => {
     var obj = {
       name: product.Product_Description,
       greenmask: product.Product_Greenmask,
-      description: product.Product_Description,
       type: product.Product_Name,
       price: getPriceNum(product.Product_Name),
       color: product.Product_Default_Color,
@@ -42,6 +41,7 @@ const ProductSection = () => {
     }
     products.push(obj)
   }
+  console.log(products) 
   const [ProductsList, setProductsList] = useState(products);
   const [selectedType, setSelectedType] = useState('All');
   const handleFilter = (apparel) => {
@@ -53,18 +53,35 @@ const ProductSection = () => {
       setProductsList(filteredProducts);
     }
   };
+
   return (
     <div className='grid grid-cols-7 gap-4'>
     <div className='col-span-1 mt-24 text-left pl-10' style={{position: 'fixed'}}>
       <h2 className='text-left mb-10'><strong>Filters +</strong></h2>
       <ul className='text-left'>
-      <li onClick={() => handleFilter('All')} className={`font-bold text-left text-gray-500 cursor-pointer ${selectedType === 'All' ? 'selected' : ''}`}>All</li>
-        {orgDetails.Products.map((product) => (
-          <>
-            <li key={product.Product_Description} onClick={() => handleFilter(product.Product_Name)} className={`font-bold text-left text-gray-500 cursor-pointer ${selectedType === product.Product_Name ? 'selected' : ''}`}>{product.Product_Description}</li>
-          </>
-        ))}
+          <li
+            onClick={() => handleFilter('All')}
+            className={`font-bold text-left text-gray-500 cursor-pointer ${
+              selectedType === 'All' ? 'selected' : ''
+            }`}
+          >
+            All
+          </li>
+          {Array.from(new Set(orgDetails.Products.map(product => product.Product_Name)))
+            .sort() 
+            .map(productName => (
+              <li
+                key={productName}
+                onClick={() => handleFilter(productName)}
+                className={`font-bold text-left text-gray-500 cursor-pointer ${
+                  selectedType === productName ? 'selected' : ''
+                }`}
+              >
+                 {productName.charAt(0).toUpperCase() + productName.slice(1)}
+              </li>
+            ))}
       </ul>
+
     </div>
     <div className="col-start-2 col-span-6 product-card-catelog">
       {/* <h1>Product Showcase</h1> */}
