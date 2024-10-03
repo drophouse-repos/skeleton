@@ -21,14 +21,13 @@ import ProductPopup from "./ProductPopup";
 import ZoomIcon from '../assets/zoom.png';
 
 const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, currentIndex, setCurrentIndex, changeFromMug, isZoomEnabled, setIsZoomEnabled }, ref) => {
-
   const { apparel, setApparel, color, setColor, prompt, setFavNumber,productPopupIsShown, setProductPopupIsShown,productPopupInfo, setProductPopupInfo,
     productPopupTitle, setProductPopupTitle,isSaveDesign, setisSaveDesign } = useContext(AppContext);
   const [slideIndex, setSlideIndex] = useState(0);
   // const [currentIndex, setCurrentIndex] = useState(mapColorToIndex(apparel, color));
   const { generatedImage, isLiked, setIsLiked, editedImage, setEditedImage } = useContext(ImageContext);
   const editedImageRef = useRef(null);
-  const { product, orgDetails, favicon } = useContext(Orgcontext);
+  const { product, orgDetails, favicon, greenmask } = useContext(Orgcontext);
   const [productListLoad, setProductListLoad] = useState([]);
   const [productImageList, setProductImageList] = useState([]);
   const [dimTop, setDimTop] = useState();
@@ -98,7 +97,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
 
   useEffect(() => {
     if (productListLoad.length > 0 && apparel) {
-      const productList = Object.values(productListLoad).filter(item => item.Product_Name === apparel);
+      const productList = Object.values(productListLoad).filter(item => (item.Product_Name === apparel && (greenmask != '' && item.Product_Greenmask === greenmask)));
   
       if (productList.length > 0) {
         const productListColour = productList[0]?.Product_Colors || [];
@@ -119,6 +118,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
           Dim_width: Product_Dimensions_Width
         });
         setProductImageList(productImage);
+        if(currentIndex === undefined) setCurrentIndex(0)
         setZoomerImg(productList[0].Product_Mask);
       } else {
         console.warn("No matching product found for the given apparel:", apparel);
