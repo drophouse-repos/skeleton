@@ -136,6 +136,7 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
     return `${imageX * ratio - R_width * 0.5 + 13.7}px ${imageY * ratio - R_width * 0.5 + 13.7}px`
   }
 
+  
   function calculate_R_BackgroundSize(R_width, container_width) {
     let width = 0;
     let height = 0;
