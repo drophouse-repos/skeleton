@@ -43,6 +43,7 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
   },[props.dimensions.Dim_width,props])
 
   function resetAllPositions() {
+    console.log('Positions are reseted')
     if (window.innerWidth < 544) {
       //mobile devices
       setContainerWidth(180);
@@ -56,6 +57,7 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
       setInitOffset(33);
       setImageX(63);
       // setImageWidth(65);
+      
       setImageY(63);
     } else {
       setContainerWidth(270);
@@ -117,99 +119,68 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
     return pattern.test(input);
   }
 
-  function calculate_R_BackgroundPosition(R_width, container_width) {
+  function calculate_R_BackgroundPosition(R_width, container_width, isMobile = false) {
+    // console.log(isMobile ? 'calculating mobile' : 'calculating');
     let ratio = R_width / container_width;
-    return `${imageX * ratio - R_width * 0.5 + 20.7}px ${imageY * ratio - R_width * 0.5 + 20.7}px`
+    let offset = isMobile ? 13.7 : 20.7;
+    
+    return `${(imageX * ratio) - (R_width * 0.5) + offset}px ${(imageY * ratio) - (R_width * 0.5) + offset}px`;
   }
-
-  function calculate_R_BackgroundPosition_mbl(R_width, container_width) {
-    let ratio = R_width / container_width;
-    return `${imageX * ratio - R_width * 0.5 + 13.7}px ${imageY * ratio - R_width * 0.5 + 13.7}px`
-  }
-
-
-  function calculate_R_BackgroundSize(R_width, container_width) {
+  function calculate_R_BackgroundSize(R_width, container_width, isMobile = false) {
     let width = 0;
     let height = 0;
-    if (isPercentage(imageWidth)) {
-      width = R_width;
-      height = R_width;
-    } else {
-      let ratio = R_width / container_width;
-      width = parseInt(imageWidth) * ratio;
-      height = parseInt(imageHeight) * ratio;
-    }
-    return `${width}px ${height}px`
-  }
+    let offset = isMobile ? 42.5 : 0;
 
-  function calculate_R_BackgroundSize_mbl(R_width, container_width) {
-    let width = 0;
-    let height = 0;
     if (isPercentage(imageWidth)) {
-      width = R_width  + 42.5;
-      height = R_width  + 42.5;
+        width = R_width + offset;
+        height = R_width + offset;
     } else {
-      let ratio = R_width / container_width;
-      width = parseInt(imageWidth) * ratio ;
-      height = parseInt(imageHeight) * ratio ;
+        let ratio = R_width / container_width;
+        width = parseInt(imageWidth) * ratio;
+        height = parseInt(imageHeight) * ratio;
     }
-    return `${width}px ${height}px`
-  }
 
+    return `${width}px ${height}px`;
+  }
   const [alignment, setAlignment] = useState("Edit");
 
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
   };
 
-  // for rendering HD image
-  function calculate_R_BackgroundPosition_rend(R_width_rend, container_width_rend) {
-      let ratio = R_width_rend / container_width_rend;
-      let newimageX = imageX * 1.8;
-      let newimageY = imageY * 1.8;
-      return `${newimageX * ratio - R_width_rend * 0.38 +25}px ${newimageY * ratio - R_width_rend * 0.38 + 25}px`
+  function calculate_R_BackgroundPosition_rend(R_width_rend, container_width_rend, isMobile = false) {
+    let ratio = R_width_rend / container_width_rend;
+    let newimageX = imageX * 1.8;
+    let newimageY = imageY * 1.8;
+    
+    if (isMobile) {
+        return `${newimageX * ratio - R_width_rend + 190}px ${newimageY * ratio - R_width_rend + 190}px`;
+    } else {
+        return `${newimageX * ratio - R_width_rend * 0.38 + 25}px ${newimageY * ratio - R_width_rend * 0.38 + 25}px`;
     }
-  
-    function calculate_R_BackgroundPosition_mbl_rend(R_width_rend, container_width_rend) {
-      let ratio = R_width_rend / container_width_rend;
-      let newimageX = imageX * 1.8;
-      let newimageY = imageY * 1.8;
-      return `${newimageX * ratio - R_width_rend +190}px ${newimageY * ratio - R_width_rend + 190}px`
-    }
-  
-    function calculate_R_BackgroundSize_rend(R_width_rend, container_width_rend) {
-      let width = 0;
-      let height = 0;
-      if (isPercentage(imageWidth)) {
-        width = R_width_rend;
-        height = R_width_rend;
-      } else {
-        let ratio = R_width_rend / container_width_rend;
-        let newimageWidth = imageWidth * 2;
-        let newimageHeight = imageHeight * 2;
-        width = parseInt(imageWidth) * ratio * 1.9;
-        height = parseInt(imageHeight) * ratio  * 1.9;
-      }
-      return `${width}px ${height}px`
-    }
-  
-    function calculate_R_BackgroundSize_mbl_rend(R_width_rend, container_width_rend) {
-      let width = 0;
-      let height = 0;
-      if (isPercentage(imageWidth)) {
-        width = R_width_rend;
-        height = R_width_rend;
-      } else {
-        let ratio = R_width_rend / container_width_rend;
-        width = parseInt(imageWidth) * ratio * 1.666;
-        height = parseInt(imageHeight) * ratio * 1.666;
-      }
-      return `${width}px ${height }px`
-    }
-  
-  // End
+  }
 
-  
+  function calculate_R_BackgroundSize_rend(R_width_rend, container_width_rend, isMobile = false) {
+    let width = 0;
+    let height = 0;
+    let ratio = R_width_rend / container_width_rend;
+
+    if (isPercentage(imageWidth)) {
+        width = R_width_rend;
+        height = R_width_rend;
+    } else {
+        if (isMobile) {
+            width = parseInt(imageWidth) * ratio * 1.666;
+            height = parseInt(imageHeight) * ratio * 1.666;
+        } else {
+            width = parseInt(imageWidth) * ratio * 1.9;
+            height = parseInt(imageHeight) * ratio * 1.9;
+        }
+    }
+    
+    return `${width}px ${height}px`;
+  }
+
   return (
     <div
       id="zoomer-new"
@@ -241,8 +212,8 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
           width: `${props.dimensions.Dim_width}%`,
           height: `${props.dimensions.Dim_height}%`,
           backgroundImage: `url(${backgroundImage})`,
-          backgroundPosition: `${!(window.innerWidth < 544) ? calculate_R_BackgroundPosition(R_width,container_width) : calculate_R_BackgroundPosition_mbl(R_width,container_width)}`,
-          backgroundSize: `${!(window.innerWidth < 544)? calculate_R_BackgroundSize(R_width,container_width) : calculate_R_BackgroundSize_mbl(R_width / 2,container_width / 2)}`,
+          backgroundPosition: `${!(window.innerWidth < 544) ? calculate_R_BackgroundPosition(R_width,container_width) : calculate_R_BackgroundPosition(R_width,container_width,true)}`,
+          backgroundSize: `${!(window.innerWidth < 544)? calculate_R_BackgroundSize(R_width,container_width) : calculate_R_BackgroundSize(R_width / 2,container_width / 2,true)}`,
           position: `absolute`,
           top: `${props.dimensions.Dim_top}%`,
         left: `${props.dimensions.Dim_left}%`
@@ -256,7 +227,7 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
           alt="R image"
         /> */}
       </canvas>
-      <div className={`${props.TshirtImageSrc ? props.TshirtImageSrc.split('/').pop().split('_')[0]: `` }-preview preview-new-zoomer relative bg-no-repeat bg-contain bg-center  z-40`}
+      <div className={`${props.TshirtImageSrc ? props.TshirtImageSrc.split('/').pop().split('_')[0]: `` }-preview preview-new-zoomer relative bg-no-repeat bg-contain bg-center z-40`}
           style={{
             backgroundImage: `url(${props.TshirtImageSrc})`,
             top: `0`,
@@ -283,14 +254,14 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
           border: `3px dotted red`,
           pointerEvents: `none`
         }}
-        ><div class="control-point point-ne"></div><div class="control-point point-nw"></div><div class="control-point point-se"></div><div class="control-point point-sw"></div>
+        ><div className="control-point point-ne"></div><div className="control-point point-nw"></div><div className="control-point point-se"></div><div class="control-point point-sw"></div>
       </div>
       {/* dotted lines on zoomer */}
       {/* <canvas className={`canvas-R ${(window.innerWidth < 544) ? `hidden` : ``}`} style={{ */}
       <canvas className={`canvas-R`} style={{
         backgroundImage: `url(${backgroundImage})`,
-        backgroundPosition: `${!(window.innerWidth < 544) ? calculate_R_BackgroundPosition_rend(R_width_rend,container_width_rend) : calculate_R_BackgroundPosition_mbl_rend(R_width_rend,container_width_rend)}`,
-        backgroundSize: `${!(window.innerWidth < 544)? calculate_R_BackgroundSize_rend(R_width_rend,container_width_rend) : calculate_R_BackgroundSize_mbl_rend(R_width_rend,container_width_rend)}`,
+        backgroundPosition: `${!(window.innerWidth < 544) ? calculate_R_BackgroundPosition_rend(R_width_rend,container_width_rend) : calculate_R_BackgroundPosition_rend(R_width_rend,container_width_rend,true)}`,
+        backgroundSize: `${!(window.innerWidth < 544)? calculate_R_BackgroundSize_rend(R_width_rend,container_width_rend) : calculate_R_BackgroundSize_rend(R_width_rend,container_width_rend,true)}`,
         opacity: `1`,
         height: `${(window.innerWidth < 544) ? `300px`: `450px`}`,
         width: `${(window.innerWidth < 544) ? `300px`: `450px`}`,

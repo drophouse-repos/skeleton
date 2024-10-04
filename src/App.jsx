@@ -32,6 +32,8 @@ import LoadingPage from './components/newloader';
 import OrganisationDetails from './context/ApiContext';
 import ProductSection from './ProductSection/ProductSection';
 import DemoOverlay from './context/DemoContext';
+import ScrollToTop from './components/ScrollToTop';
+
 
 const PrivateRoute = ({ children }) => {
 	const { user, loading } = useUser();
@@ -68,6 +70,7 @@ useEffect(() => {
 						<SpeedInsights/>
 		<div className='flexcenter relative'>
 			<NavBar/>
+			<ScrollToTop/>
 			<Routes>
 			<Route path="/" element={<LandingPage/>} />
 			<Route path="/product" element={<PrivateRoute><ProductPage/></PrivateRoute>} />

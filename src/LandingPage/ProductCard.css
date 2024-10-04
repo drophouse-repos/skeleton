@@ -1,156 +1,65 @@
-.landing-random-image {
-  display: block;
-  width: auto;
-  height: 100%;
-  animation: image-switch 1s linear;
+/* Product Card Styles */
+
+
+.product-card {
+  flex: 1 1 calc(33.333% - 16px); /* Adjust for three columns with spacing */
+  margin: 8px;
+  box-sizing: border-box;
 }
 
-@keyframes image-switch {
-  0% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-.buy-btn-slider {
-position: relative;
-overflow: hidden;
-}
-
-.buy-btn-slider::before {
-content: "";
-position: absolute;
-top: 0;
-left: -100%;
-width: 200%;
-height: 100%;
-background: linear-gradient(120deg, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 70%);
-transition: transform 0.7s ease;
-transform: skewX(-25deg);
-opacity: 0;
-}
-
-.buy-btn-slider:hover::before {
-transform: translateX(100%) skewX(-25deg);
-opacity: 1;
-}
-/* Core image container with 3D transform */
-.image-container {
-  transform-style: preserve-3d;
-  transition: transform 0.8s ease-in-out;
-  position: relative;
+.product-card__container {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  height: auto;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 100%;
+}
+
+.product-card__image-wrapper {
   width: 100%;
-  min-width: 100%;
+  aspect-ratio: 1 / 1; /* Ensures a square container */
+  overflow: hidden;
+  cursor: pointer;
 }
 
-/* Front image (visible initially) */
-.landing-random-image {
-  opacity: 1;
-  display: block;
-  width: 90%;
-  height: auto;
-  transform: rotateY(0deg);
-  backface-visibility: hidden;
-  transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+.product-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
-/* Back image (hidden initially) */
-.back-img {
-  position: absolute;
-  width: 90%;
-  height: auto;
-  display: block;
-  opacity: 0;
-  transform: rotateY(180deg); /* Rotated to the back */
-  backface-visibility: hidden;
-  object-fit: cover;
-  transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+.product-card__details {
+  padding: 16px;
+  text-align: center;
 }
 
-/* Smooth transition on hover for non-mobile devices */
-@media (min-width: 769px) {
-  .image-container-main:hover .image-container {
-      transform: rotateY(180deg); /* Rotates the container */
-  }
-
-  .image-container-main:hover .back-img {
-      opacity: 1; /* Show back image */
-  }
-
-  .image-container:hover .landing-random-image {
-      opacity: 0; /* Hide front image */
-  }
+.product-card__name {
+  font-size: 1.2em;
+  color: #666;
+  margin: 0;
 }
 
-/* Smooth transition on click for mobile devices */
-.flipped.image-container {
-  transform: rotateY(180deg); /* Smoothly rotates the container */
+.product-card__price {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #000;
+  margin: 0;
 }
 
-.flipped .back-img {
-  opacity: 1;
+.product-card__button-container {
+  margin-top: 16px;
 }
 
-.flipped .landing-random-image {
-  opacity: 0;
+.product-card__button {
+  width: 100%;
+  padding: 12px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
 }
 
-
-/* .image-container-main {
-perspective: 1000px;
+.product-card__button:hover {
+  background-color: #333;
 }
-.image-container {
-transform-style: preserve-3d;
-transition: transform 0.8s ease-in-out;
-position: relative;
-display: flex;
-align-items: center;
-justify-content: center;
-height: auto;
-width: 100%;
-min-width: 100%;
-}
-
-.back-img {
-position: absolute;
-width: 90%;
-height: auto;
-display: block;
-backface-visibility: hidden;
-object-fit: cover;
-}
-
-.landing-random-image {
-opacity: 1;
-display: block;
-width: 90%;
-height: auto;
-transform: rotateY(0deg);
-}
-
-.back-img {
-opacity: 0;
-transform: rotateY(180deg);
-
-}
-
-.landing-random-image,
-.back-img {
-transition: opacity 0.8s ease-in-out;
-}
-
-.image-container-main:hover .image-container{
-transform: rotateY(180deg);
-}
-.image-container-main:hover .back-img {
-opacity: 1;
-}
-
-.image-container:hover .landing-random-image {
-opacity: 0;
-} */

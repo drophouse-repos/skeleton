@@ -634,19 +634,16 @@ const ProductPage = () => {
     }
             {apparel !== 'mug' && apparel !== 'cap' && (
               <Select
-                style={{fontFamily : `${orgDetails.font}`}}
-                className={`${(window.innerWidth <= 544 ? `w-[8rem]` : `w-[15rem]` )} border-none outline-none`}
-                value={size || undefined}
-                placeholder={'Select Size'}
+                style={{ fontFamily: orgDetails.font }}
+                className="w-[60%] sm:w-[15rem] border-none outline-none"
+                value={size === '' ? undefined : size}
+                placeholder="Select Size"
                 onChange={handleSizeChange}
                 options={sizes}
-                defaultValue={{ value: '', label: 'Select Size' }}
                 onFocus={handlechangeblanksize}
-                render={(value) => {
-                  return value === '' ? 'Select Size' : value;
-                }}
               />
             )}
+
             <span></span>
             {apparel !== 'mug' && apparel !== 'cap' && (
               <span style={{fontFamily : `${orgDetails.font}`}} className="text-blue-600 font-bold hover:text-teal-600 mt-0 cursor-pointer" onClick={() => {navigate("/information/size");}}>Size Information & Chart</span>
