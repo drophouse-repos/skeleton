@@ -97,7 +97,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
 
   useEffect(() => {
     if (productListLoad.length > 0 && apparel) {
-      const productList = Object.values(productListLoad).filter(item => (item.Product_Name === apparel && (greenmask != '' && item.Product_Greenmask === greenmask)));
+      const productList = Object.values(productListLoad).filter(item => (item.Product_Name === apparel && (greenmask == '' || (greenmask != '' && item.Product_Greenmask === greenmask))));
   
       if (productList.length > 0) {
         const productListColour = productList[0]?.Product_Colors || [];
