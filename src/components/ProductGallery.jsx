@@ -569,7 +569,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
       {isModalOpen && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center z-50" onClick={closeModal}>
         <div className="relative" id="img-id-zoomer" style={{ position: "relative" }}>
-          <div class="img-container" 
+          <div className="img-container" 
                 onMouseEnter={handleMouseEnter}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
@@ -628,7 +628,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
         {isModalOpen && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center z-50" onClick={closeModal}>
         <div className="relative" id="img-id-zoomer" style={{ position: "relative" }}>
-          <div class="img-container" 
+          <div className="img-container" 
                 onMouseEnter={handleMouseEnter}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
@@ -707,7 +707,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
             Save Design</button>
       </div>
       <div className={`${(window.innerWidth <= 544)? `px-5`: ``} mt-6 mb-6 justify-center w-full md:w-[30rem] mx-auto text-lg md:text-2xl md:whitespace-nowrap gap-4 grid-cols-2 md:grid-cols-2  grid ${!isZoomEnabled ? '' : 'hidden'}`}>
-          <button ref={toggleZoomBtnRef} onClick={toggleZoom} 
+          <button ref={toggleZoomBtnRef} onClick={() => {toggleZoom();setTimeout(()=>{editedImageRef.current.resetAllPositions();}, 500);}} 
             style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`, fontSize: window.innerWidth <= 544 ? '17px': ''}}
             className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
             Edit Design
