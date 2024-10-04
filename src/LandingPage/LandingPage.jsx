@@ -130,13 +130,6 @@ useEffect(()=>{
 
             <RShowcase imageList={GetBackendImage()} changeInterval={3000} RMask={orgDetails.mask}/>
             <div className="h-4"></div>
-            {/* <div style={{fontFamily : `${orgDetails.font}`}} className="text-black text-5xl text-center">
-              Personalized 
-              <br />
-                    {name}
-            <br />
-              Drops
-            </div> */}
             <h1 className="text-black text-5xl text-center" style={{fontWeight: '800',fontFamily : `${orgDetails.font}`}}>One-of-a-kind,
             <br></br><span className="text-span-2" style={{color: `${orgDetails.theme_color}`}}>For Everyone</span> </h1>
 
