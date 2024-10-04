@@ -71,6 +71,7 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
       setImageY(95);
     }
   }
+  
   useEffect(() => {
     resetAllPositions();
   }, []);
@@ -341,5 +342,4 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
     </div>
   );
 });
-
 export default ZoomItem;
