@@ -1,75 +1,25 @@
-#landing-product-slider .slick-track {
+/* src/components/ProductCardSlider.css */
+
+.product-card-slider .slick-slide {
+  padding: 0 10px;
+}
+
+.product-card-slider .slick-slide > div {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.product-card-slider .slick-track {
   display: flex !important;
-  height: auto !important;
 }
 
-#landing-product-slider .slick-slide {
-  height: auto !important;
+.product-card-slider .slick-list {
+  margin: 0 -10px;
 }
 
-#landing-product-slider .slick-slide > div {
-  height: 100% !important;
+.product-card-slider .slick-dots {
+  bottom: -30px;
 }
 
-#landing-product-slider .slick-dots {
-  top: -10px;
-  right: 1%;
-  width: auto;
-}
-
-#landing-product-slider .slick-dots > .slick-active > div {
-  background-color: rgb(150, 150, 150);
-}
-
-#landing-product-slider .slick-next {
-  right: 5rem;
-  z-index: 1;
-  font-size: x-large;
-}
-
-#landing-product-slider .slick-prev {
-  left: 1rem;
-  z-index: 1;
-}
-
-#landing-product-slider .slick-arrow {
-  font-size: x-large;
-  display: block;
-  opacity: 0;
-  top:40%
-}
-
-#landing-product-slider .slick-arrow:hover {
-  font-size: x-large;
-  display: block;
-  opacity: 1;
-}
-
-#landing-product-slider .slick-prev:before,
-#landing-product-slider .slick-next:before {
-  display: none;
-}
-
-#landing-product-slider .slick-next {
-  content: "";
-  color: rgb(100, 100, 100);
-  font-size: 5rem;
-}
-
-#landing-product-slider .slick-next:hover {
-  content: "";
-  color: rgb(150, 150, 150);
-  font-size: 5rem;
-}
-
-#landing-product-slider .slick-prev {
-  content: "";
-  color: rgb(100, 100, 100);
-  font-size: 5rem;
-}
-
-#landing-product-slider .slick-prev:hover {
-  content: "";
-  color: rgb(150, 150, 150);
-  font-size: 5rem;
-}
+/* Adjust arrows and dots as needed */

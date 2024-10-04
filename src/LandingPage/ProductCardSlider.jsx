@@ -32,7 +32,7 @@ export default function ProductCardSlider({ products, ImageChangeInterval }) {
     );
   }
 
-  function Paging(i, aaa){
+  function Paging(){
     return (
       <div className="bg-gray-300 w-4 h-2"></div>
     );
@@ -63,14 +63,14 @@ export default function ProductCardSlider({ products, ImageChangeInterval }) {
       };
 
     return (
-        <Slider {...settings}>
-        {products.map((product, index) => (
-          <ProductCard
-            key={index}
-            product={product}
-            changeInterval={ImageChangeInterval}
-          />
-        ))}
-      </Slider>
+      <Slider {...settings} id="landing-product-slider" className="product-card-slider">
+      {products.map((product, index) => (
+        <ProductCard
+          key={index}
+          product={product}
+          changeInterval={ImageChangeInterval}
+        />
+      ))}
+    </Slider>
     );
 };
