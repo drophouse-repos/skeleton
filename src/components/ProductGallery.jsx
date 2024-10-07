@@ -12,7 +12,7 @@ import html2canvas from 'html2canvas';
 import "./ProductGallery.css"
 import { MessageBannerContext } from "../context/MessageBannerContext";
 import { HeartOutlined, HeartFilled, EditFilled } from "@ant-design/icons";
-import { fetchIsLiked, fetchPostLike } from "../utils/fetch";
+import { fetchIsLiked, fetchPostLike, fetchImageBase64 } from "../utils/fetch";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { enhanceImageClarity } from '../utils/enhanceImageClarity';
@@ -351,7 +351,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
         sliderRef.current.slickGoTo(index);
       },
       async getSelectedPreviewImage(apparel, color, patternSrc){
-          const images = productImageList[currentIndex]?.front;
+          let images = productImageList[currentIndex]?.front;
           let index = getIndexByName(color);
           if(index == -1){
             index = 0;
@@ -361,6 +361,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
           clothImg.crossOrigin = 'anonymous';
           patternImg.crossOrigin = 'anonymous';
         
+          images = images.startsWith('data:image') ? images : await fetchImageBase64(images)
           clothImg.src = images;
           patternImg.src = patternSrc;
           const outputCanvas = document.createElement('canvas');
