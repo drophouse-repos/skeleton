@@ -23,7 +23,7 @@ import NavBarModal from "./NavBarModal";
 import { Orgcontext } from "../context/ApiContext";
 import { updateFavicon } from '../utils';
 export default function NavBar() {
-  const { orgDetails } = useContext(Orgcontext)
+  const { orgDetails,env } = useContext(Orgcontext)
   const [navbarHide, setNavbarHide] = useState(false);
   const [isInLandingPage, setIsInLandingPage] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
@@ -70,7 +70,7 @@ export default function NavBar() {
   function MenuItem({ icon, text, href }) {
     return (
       <div
-        className={`ml-4 flex flex-row justify-start space-x-2 text-lg font-light nav-link ${(process.env.REACT_APP_CART_ENABLED == 'true') ? `` : `${!(href=='/cart') ? `` : `hidden`}`}`}
+        className={`ml-4 flex flex-row justify-start space-x-2 text-lg font-light nav-link ${(env?.CART_ENABLED === true) ? `` : `${!(href=='/cart') ? `` : `hidden`}`}`}
         onClick={() => {
           if (href) {
             setMenuOpen(false);
@@ -154,7 +154,7 @@ export default function NavBar() {
               </div>
             }
             {user.isLoggedIn &&
-              <div className={`${(window.innerWidth >= 544) ? ``: `hidden`} inline md:space-x-2 whitespace-nowrap ${(process.env.REACT_APP_CART_ENABLED == 'true') ? `` : `hidden`}`}>
+              <div className={`${(window.innerWidth >= 544) ? ``: `hidden`} inline md:space-x-2 whitespace-nowrap ${(env?.CART_ENABLED === true) ? `` : `hidden`}`}>
                 <ShoppingCartOutlined
                   className={
                     `md:scale-125 lg:scale-150 text-black`}

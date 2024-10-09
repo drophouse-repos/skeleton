@@ -9,7 +9,6 @@ import ProductCardSlider from "./ProductCardSlider";
 import RShowcase from "./RShowcase";
 import { PricesContext } from '../context/PricesContext';
 import { OrderContext } from '../context/OrderContext';
-import { fetchOrderHistory } from "../utils/fetch";
 import { MessageBannerContext } from "../context/MessageBannerContext";
 import MessageBanner from "../components/MessageBanner";
 import { Orgcontext } from '../context/ApiContext';
@@ -59,7 +58,7 @@ const LandingPage = () => {
     useEffect(()=> {
       setShowMessageBanner(false)
     },[])
-  const { name, orgDetails, product, landingpage, galleryPage } = useContext(Orgcontext);
+  const { name, orgDetails, product, landingpage, galleryPage,env } = useContext(Orgcontext);
   const [product_list, setProduct_list] = useState([])
   
   useEffect(() => {
@@ -170,7 +169,7 @@ useEffect(()=>{
 
         <div className="w-full h-10" />
 
-        <div id="landing-product-slider" className={`w-[96vw] ${(process.env.REACT_APP_SAMPLE_PRODUCT_SLIDER == 'true') ? `` : `hidden`}`}>{/*w-screen*/}
+        <div id="landing-product-slider" className={`w-[96vw] ${(env?.SAMPLE_PRODUCT_SLIDER === true) ? `` : `hidden`}`}>{/*w-screen*/}
           <ProductCardSlider products={products} changeInterval={ImageChangeInterval} />
         </div>
 
