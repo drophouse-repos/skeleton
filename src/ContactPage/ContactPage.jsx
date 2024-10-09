@@ -40,6 +40,7 @@ export default function ContactPage(){
             "name": name,
             "message": message
         }
+        
         fetchSendEmail(request, navigate)
         .then(succeeded => {
             if (!succeeded.success) {
