@@ -114,7 +114,7 @@ useEffect(()=>{
     >
     {showMessageBanner && <MessageBanner message={messageBannerText} keyTrigger={bannerKey} />}
       <div className="flex flex-col items-center w-screen">
-        <div className="grid justify-center place-items-start grid-cols-1 md:grid-cols-2">
+        <div className="grid justify-center place-items-start grid-cols-1 md:grid-cols-2 mt-[5vh]">
           <div
             style={{
               position: "relative",

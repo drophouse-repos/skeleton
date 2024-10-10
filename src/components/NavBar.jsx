@@ -110,7 +110,7 @@ export default function NavBar() {
   });
 
   return (
-    <div className={`w-full z-[50] fixed ${navbarHide ? "hidden" : ""}`}>
+    <div className={`w-full z-[50] h-[5vh] fixed ${navbarHide ? "hidden" : ""}`}>
       <div
         className={`flex flex-row p-2 ${(window.innerWidth >= 544) ? `h-[2rem]`: `h-[3rem]`} md:h-[3rem] items-center justify-center bg-gray-200`}
       >
@@ -234,7 +234,7 @@ export default function NavBar() {
             text={"Account & Orders"}
             href="/user"
           />
-          <MenuItem icon={<HeartIcon />} text={"Favorites"} href="/fav" />
+          <MenuItem icon={<HeartIcon />} text={"Saved for Later"} href="/fav" />
           <MenuItem
             icon={<ShopCartIcon />}
             text={"Shopping Cart"}
