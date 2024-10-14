@@ -27,6 +27,7 @@ export const UserProvider = ({ children }) => {
             }
             setLoading(false);
         }
+        
         else
         {
             const unsubscribe = onAuthStateChanged(auth, (user) => {
