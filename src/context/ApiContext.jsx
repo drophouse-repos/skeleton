@@ -22,6 +22,7 @@ const OrganisationDetails = ({ children }) => {
     const [landingpage, setLandingPage] = useState([]);
     const [greenMask, setGreenMask] = useState('');
     const [galleryPage, setGalleryPage] = useState(true);
+    const [env, setEnv] = useState({})
 
     useEffect(() => {
         if(!galleryPage){
@@ -31,7 +32,6 @@ const OrganisationDetails = ({ children }) => {
 
     useEffect(() => {
         const state = { greenmask };
-        console.log('updateing storage', state)
         sessionStorage.setItem('localmask', JSON.stringify(state));
     }, [greenmask]);
 
@@ -42,6 +42,8 @@ const OrganisationDetails = ({ children }) => {
                     org_id: process.env.REACT_APP_ORGANISATION_ID
                 }
                 const item = await fetchOrganisation_by_id(org_id);
+                    if(item.secrets) setEnv(item.secrets); 
+                    else return;
                     let _galleryPage = (item && item.greenmask && item.greenmask != null && item.greenmask != '') ? false : true
                     setGalleryPage(_galleryPage)
                     let _greenmask = _galleryPage ? '' : item.greenmask
@@ -104,7 +106,7 @@ const OrganisationDetails = ({ children }) => {
             ) : (
                 <Orgcontext.Provider value={{ 
                     orgDetails, orgId, name, mask, logo, themeColor, 
-                    font, favicon, product, landingpage, 
+                    font, favicon, product, landingpage, env, 
                     galleryPage, greenmask, setGreenmask
                 }}>
                     {children}

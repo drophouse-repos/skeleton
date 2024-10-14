@@ -175,6 +175,11 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState('');
   const [imgHeightZoom, setImgHeightZoom] = useState('80')
+  
+  useEffect(() => {
+    isModalOpen ? document.body.style.overflow = 'hidden' : document.body.style.overflow = 'auto'
+  }, [isModalOpen])
+  
   useEffect(() => {
     const updateImageHeight = () => {
       const screenWidth = window.innerWidth;
@@ -659,7 +664,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
       )}
       </div>
       <div className={`row ${isZoomEnabled ? 'hidden' : 'flex'} 
-      ${(productImageList[currentIndex] && productImageList[currentIndex]?.back && productImageList[currentIndex]?.back.startsWith('data:image/')) ? ``: `hidden`}
+      ${(productImageList[currentIndex] && productImageList[currentIndex]?.back) ? ``: `hidden`}
       `} style={{justifyContent: 'center'}}>
         <div className="row flex" style={{width: 'fit-content', justifyContent: 'center' , marginRight: '5px'}}>
             <div

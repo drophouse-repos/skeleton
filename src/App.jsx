@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import InformationPage from './InformationPage/InformationPage';
 import Legal from './components/Legal'
@@ -29,11 +29,10 @@ import { SpeedInsights } from "@vercel/speed-insights/react"
 import ContactPage from './ContactPage/ContactPage';
 import Loader from './components/loader'
 import LoadingPage from './components/newloader';
-import OrganisationDetails from './context/ApiContext';
+import OrganisationDetails, { Orgcontext } from './context/ApiContext';
 import ProductSection from './ProductSection/ProductSection';
 import DemoOverlay from './context/DemoContext';
 import ScrollToTop from './components/ScrollToTop';
-
 
 const PrivateRoute = ({ children }) => {
 	const { user, loading } = useUser();
@@ -41,9 +40,9 @@ const PrivateRoute = ({ children }) => {
   	return user.isLoggedIn ? children : <Navigate to="/auth" replace />;
 };
 
-
 const App = () => {
 	const [loading, setLoading] = useState(true);
+  const { env } = useContext(Orgcontext) || { env: {} };
 
 useEffect(() => {
   const timeout = setTimeout(() => {
@@ -66,7 +65,7 @@ useEffect(() => {
 						<PricesProvider>
 						<OrderProvider>
 						<Analytics/>
-						{process.env.REACT_APP_AUTHTYPE_SAML == 'true' && <SAMLResponseHandler/>}
+						{env?.AUTHTYPE_SAML === true && <SAMLResponseHandler/>}
 						<SpeedInsights/>
 		<div className='flexcenter relative'>
 			<NavBar/>

@@ -5,7 +5,7 @@ import { Orgcontext } from "../context/ApiContext";
 
 export default function ProductSection({prop}) {
 
-  const { name, orgDetails, product } = useContext(Orgcontext);
+  const { name, orgDetails, product,env } = useContext(Orgcontext);
   const [productImage, setProductImage] = useState([])
   const [product_disc, setProduct_disc] = useState([])
   const [product_count, setProduct_count] = useState([])
@@ -75,7 +75,7 @@ export default function ProductSection({prop}) {
   }
 
   return (
-    <div className={`rounded-[12px]  ${process.env.REACT_APP_SIDEBAR_PRODUCT_IMAGES_ENABLED === 'true' ? `` : `hidden`}`}>
+    <div className={`rounded-[12px]  ${env?.SIDEBAR_PRODUCT_IMAGES_ENABLED === true ? `` : `hidden`}`}>
       <div className="flex flex-row justify-start text-xl text-gray-bold mb-2">
         Products
       </div>

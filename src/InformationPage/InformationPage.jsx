@@ -106,7 +106,7 @@ const InformationPage = () => {
   
 
 
-  const { orgDetails } = useContext(Orgcontext)
+  const { orgDetails, env } = useContext(Orgcontext)
 
   const {
     showMessageBanner,
@@ -270,7 +270,7 @@ const InformationPage = () => {
     productInfo["org_name"] = orgDetails.name;
     if(productInfo['shipping_info'] && productInfo['shipping_info']['firstName'] && productInfo['shipping_info']['email'] && productInfo['shipping_info']['lastName'] && productInfo['shipping_info']['phone'] && productInfo['shipping_info']['postalZipcode'] && productInfo['shipping_info']['stateProvince'] && productInfo['shipping_info']['streetAddress'] && productInfo['shipping_info']['city'])
     {
-    if(process.env.REACT_APP_STRIPE_CHECKOUT_ENABLED === "false")
+    if(env?.STRIPE_CHECKOUT_ENABLED === false)
     {
       if(!isConfirmOrder)
       {
@@ -307,7 +307,7 @@ const InformationPage = () => {
       return;
     }
     try {
-      if(process.env.REACT_APP_STRIPE_CHECKOUT_ENABLED === 'false'){
+      if(env?.STRIPE_CHECKOUT_ENABLED === false){
         createStudentCheckout(productInfo, navigate)
         .then((data)=>{
           setMessageBannerText(data.message);
@@ -573,7 +573,7 @@ const InformationPage = () => {
           </div>
         </div>
           ) : (
-            `${(process.env.REACT_APP_STRIPE_CHECKOUT_ENABLED == 'true') ? `CHECKOUT` : `ORDER`}`
+            `${(env?.STRIPE_CHECKOUT_ENABLED === true) ? `CHECKOUT` : `ORDER`}`
           )}
         </button>
 }

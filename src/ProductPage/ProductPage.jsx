@@ -21,7 +21,7 @@ import { Orgcontext } from "../context/ApiContext";
 import { LeftCircleOutlined} from "@ant-design/icons";
 
 const ProductPage = () => {
-  const { product, orgDetails, galleryPage, greenmask } = useContext(Orgcontext);
+  const { product, orgDetails, galleryPage, greenmask,env } = useContext(Orgcontext);
   const [productListLoad, setProductListLoad] = useState([]);
   const [productImageList, setProductImageList] = useState([]);
   const [tourOpen, setTourOpen] = useState(true);
@@ -207,9 +207,18 @@ const ProductPage = () => {
   const selectedProduct = productListLoad.find(item => item.Product_Name === apparel);
 
   const [sizes, setSizes] = useState([]);
+  function sortSizes(sizes) {
+    const sizeOrder = ['2XS', 'XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL'];
+
+    return sizes.sort((a, b) => {
+      return sizeOrder.indexOf(a) - sizeOrder.indexOf(b);
+    });
+  }
   useEffect(() => {
     if (selectedProduct?.Product_Sizes) {
-      setSizes([{ value: '', label: '' }, ...selectedProduct.Product_Sizes.map(size => ({
+      const product_size = [...selectedProduct.Product_Sizes];
+      let test = sortSizes(product_size)
+      setSizes([{ value: '', label: '' }, ...product_size.map(size => ({
         value: size,
         label: size,
       }))]);
@@ -608,8 +617,8 @@ const ProductPage = () => {
             setCurrentIndex = {setCurrentGalleryIndex}
             changeFromMug = {changeFromMug}
           />
-        <div className={`justify-center  px-5 ${(process.env.REACT_APP_CART_ENABLED == 'true') ? (window.innerWidth <= 544) ? ``:`mt-[2rem]` : ``}`}>
-          <div className={`grid ${(apparel === 'mug' || apparel === 'cap' || galleryPage === true) ? 'grid-cols-1' : 'grid-cols-2'} ${(window.innerWidth <= 544 ? `w-full` : `w-[70%]` )} mx-auto justify-items-center items-center`}>
+        <div className={`justify-center  px-5 ${(env?.CART_ENABLED === true) ? (window.innerWidth <= 544) ? ``:`mt-[2rem]` : ``}`}>
+          <div className={`grid ${(apparel === 'mug' || apparel === 'cap' || galleryPage === true || apparelOptions.length === 1) ? 'grid-cols-1' : 'grid-cols-2'} ${(window.innerWidth <= 544 ? `w-full` : `w-[70%]` )} mx-auto justify-items-center items-center`}>
     
     {galleryPage === true ? 
         // <button
@@ -622,7 +631,8 @@ const ProductPage = () => {
         <div></div>
     : 
       (apparelOptions.length === 1) ? 
-        <span className="text-gray-800 span-input ant-select product-name-span">{apparelOptions[0].label}</span>
+        // <span className="text-gray-800 span-input ant-select product-name-span">{apparelOptions[0].label}</span>
+        <></>
        : 
         <Select
           style={{ fontFamily: `${orgDetails.font}` }}
@@ -652,13 +662,13 @@ const ProductPage = () => {
           <div className={`text-center text-black font-normal font-karl ${(window.innerWidth <= 544) ? `my-[1rem]`: `my-[3rem]`} `}>
             <span className="text-3xl font-bold" style={{fontFamily : `${orgDetails.font}`}}>
               {/* ${getPriceNum(apparel)} */}
-              {(process.env.REACT_APP_SHOWPRICE == 'true') ? `$${getPriceNum(apparel)}` : ``}
+              {(env?.SHOWPRICE === true) ? `$${getPriceNum(apparel)}` : ``}
             </span>
           </div>
-          <div className={`justify-center w-full md:w-[30rem] mx-auto text-lg md:text-2xl md:whitespace-nowrap gap-4 grid-cols-2 md:grid-cols-2  ${(process.env.REACT_APP_CART_ENABLED == 'true') ? `grid` : `flex mt-4`}`}>
+          <div className={`justify-center w-full md:w-[30rem] mx-auto text-lg md:text-2xl md:whitespace-nowrap gap-4 grid-cols-2 md:grid-cols-2  ${(env?.CART_ENABLED === true) ? `grid` : `flex mt-4`}`}>
             <button
               style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`, fontSize: window.innerWidth <= 544 ? '17px': ''}}
-              className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(process.env.REACT_APP_CART_ENABLED == 'true') ? (window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]` : `hidden`}`}
+              className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(env?.CART_ENABLED === true) ? (window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]` : `hidden`}`}
               onClick={handleAddToCart} ref={addToCartBtn}
             >
               Add to Cart
@@ -666,7 +676,7 @@ const ProductPage = () => {
             {isImageToCart ? disableCartBtn() : enableCartBtn()}
             <button
               style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`, fontSize: window.innerWidth <= 544 ? '17px': ''}}
-              className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl ${(process.env.REACT_APP_CART_ENABLED == 'true') && (window.innerWidth <= 544) ? `w-[8rem]` :`w-[12rem]`}`}
+              className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl ${(env?.CART_ENABLED === true) && (window.innerWidth <= 544) ? `w-[8rem]` :`w-[12rem]`}`}
               onClick={handleBuy}
             >
               Buy
