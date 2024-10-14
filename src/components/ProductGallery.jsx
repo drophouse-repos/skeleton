@@ -98,7 +98,6 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
   useEffect(() => {
     if (productListLoad.length > 0 && apparel) {
       const productList = Object.values(productListLoad).filter(item => (item.Product_Name === apparel && (greenmask == '' || (greenmask != '' && item.Product_Greenmask === greenmask))));
-  
       if (productList.length > 0) {
         const productListColour = productList[0]?.Product_Colors || [];
         const productImage = Object.values(productListColour).map(item => item.asset);
@@ -663,10 +662,10 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
         </>
       )}
       </div>
-      <div className={`row ${isZoomEnabled ? 'hidden' : 'flex'} 
+      <div className={`row mb-[3%] ${isZoomEnabled ? 'hidden' : 'flex'} 
       ${(productImageList[currentIndex] && productImageList[currentIndex]?.back) ? ``: `hidden`}
       `} style={{justifyContent: 'center'}}>
-        <div className="row flex" style={{width: 'fit-content', justifyContent: 'center' , marginRight: '5px'}}>
+        <div className="row flex" style={{fontFamily: `${orgDetails.font}`,width: 'fit-content', justifyContent: 'center' , marginRight: '5px'}}>
             <div
               className={`z-40 thumbnail ${isFront ? 'thumbnail-selected' : ''}`}
               onClick={() => handleThumbnailClick('front')}
@@ -675,6 +674,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
                 src={productImageList[currentIndex]?.front}
                 alt={`Thumbnail Front`}
               />
+              {productListLoad[currentIndex]?.Product_Position == 'front' ? 'Front': 'Back'}
             </div>
         </div>
         <div className="row flex" style={{width: 'fit-content',  justifyContent: 'center' }}>
@@ -686,6 +686,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
                 src={productImageList[currentIndex]?.back}
                 alt={`Thumbnail Back`}
               />
+              {productListLoad[currentIndex]?.Product_Position == 'front' ? 'Back': 'Front'}
             </div>
         </div>
       </div>

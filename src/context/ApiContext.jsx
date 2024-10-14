@@ -74,6 +74,7 @@ const OrganisationDetails = ({ children }) => {
                         Product_Clip: product.clip,
                         Product_Mask: product.mask,
                         Product_Greenmask: product.greenmask,
+                        Product_Position: product.position ? product.position : 'front',
                         Product_Colors: product.colors,
                         Product_DefaultProduct: product.defaultProduct,
                         Product_Dimensions_Top: product.dimensions.top,
