@@ -36,7 +36,7 @@ import ScrollToTop from './components/ScrollToTop';
 const PrivateRoute = ({ children }) => {
 	const { user, loading } = useUser();
 	if(!loading)
-  	return user.isLoggedIn ? children : <Navigate to="/auth" replace />;
+		return user.isLoggedIn ? children : <Navigate to="/auth" replace />;
 };
 
 const App = () => {
@@ -45,13 +45,13 @@ const App = () => {
 	const { env } = useContext(Orgcontext) || { env: {} };
 
 	useEffect(() => {
-	  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-	  const isInstagram = userAgent.includes('Instagram');
-	  const isLark = userAgent.includes('Lark/');
-	  
-	  if (isInstagram || isLark) {
-	    setShowInAppBrowserWarning(true);
-	  }
+		const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+		const isInstagram = userAgent.includes('Instagram');
+		const isLark = userAgent.includes('Lark/');
+		
+		if (isInstagram || isLark) {
+			setShowInAppBrowserWarning(true);
+		}
 	}, []);
 
 	const openInBrowser = () => {
@@ -79,7 +79,7 @@ const App = () => {
 		<div>
 		{loading ? (
 			<LoadingPage />
-		  ) : (
+			) : (
 			<>
 			{process.env.REACT_APP_DEMO && <DemoOverlay />}
 			<OrganisationDetails>
@@ -94,12 +94,29 @@ const App = () => {
 									<SpeedInsights />
 									
 									{showInAppBrowserWarning ? (
-										<div className="in-app-warning" style={{ padding: '20px', backgroundColor: '#f8d7da', color: '#721c24', textAlign: 'center' }}>
-											<h2>Better Experience in Browser</h2>
-											<p>It looks like you're using an in-app browser. For the best experience, please open this page in your default browser.</p>
-											<button onClick={openInBrowser} style={{ padding: '10px 20px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
-												Open in Browser
-											</button>
+										<div className="in-app-warning" style={{
+												display: 'flex',
+												flexDirection: 'column',
+												justifyContent: 'center',
+												alignItems: 'center',
+												height: '100vh', // Full height of the viewport
+												padding: '20px',
+												backgroundColor: '#f8d7da',
+												color: '#721c24',
+												textAlign: 'center'
+										}}>
+												<h2>Better Experience in Browser</h2>
+												<p>It looks like you're using an in-app browser. For the best experience, please open this page in your default browser.</p>
+												<button onClick={openInBrowser} style={{
+														padding: '10px 20px',
+														backgroundColor: '#007bff',
+														color: '#fff',
+														border: 'none',
+														borderRadius: '5px',
+														cursor: 'pointer'
+												}}>
+														Open in Browser
+												</button>
 										</div>
 									) : (
 										<div className='flexcenter relative'>
@@ -134,7 +151,7 @@ const App = () => {
 				</AppProvider>
 			</OrganisationDetails>
 			</>
-		  )}
+			)}
 		</div>
 	);
 };
