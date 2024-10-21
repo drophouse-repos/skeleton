@@ -45,23 +45,22 @@ const App = () => {
 	const [loading, setLoading] = useState(true);
   const { env } = useContext(Orgcontext) || { env: {} };
 
-	// useEffect(() => {
-	//   const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-	//   console.log('user-agent', userAgent)
+	useEffect(() => {
+	  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+	  const isInstagram = userAgent.includes('Instagram');
+	  const isLark = userAgent.includes('Lark/');
 	  
-	//   const isInstagram = userAgent.includes('Instagram');
-	//   const isTwitter = userAgent.includes('Twitter');
-	  
-	//   if (isInstagram || isTwitter) {
-	//     window.location.href = process.env.REACT_APP_FRONTEND;
-	//   }
-	// }, []);
-useEffect(() => {
-  const timeout = setTimeout(() => {
-		setLoading(false);
-  }, 500); 
-  return () => clearTimeout(timeout);
-}, []);
+	  if (isInstagram || isLark) {
+	    window.location.href = window.location.origin;
+	  }
+	}, []);
+	useEffect(() => {
+  	const timeout = setTimeout(() => {
+			setLoading(false);
+  	}, 500); 
+  	return () => clearTimeout(timeout);
+	}, []);
+	
 	return (
 		<div>
 		{loading ? (
