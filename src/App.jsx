@@ -34,7 +34,6 @@ import ProductSection from './ProductSection/ProductSection';
 import DemoOverlay from './context/DemoContext';
 import ScrollToTop from './components/ScrollToTop';
 
-
 const PrivateRoute = ({ children }) => {
 	const { user, loading } = useUser();
 	if(!loading)
@@ -43,23 +42,40 @@ const PrivateRoute = ({ children }) => {
 
 const App = () => {
 	const [loading, setLoading] = useState(true);
-  const { env } = useContext(Orgcontext) || { env: {} };
+	const [showInAppBrowserWarning, setShowInAppBrowserWarning] = useState(false); // New state to manage the warning
+	const { env } = useContext(Orgcontext) || { env: {} };
 
 	useEffect(() => {
 	  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 	  const isInstagram = userAgent.includes('Instagram');
 	  const isLark = userAgent.includes('Lark/');
 	  
-	  const urlParams = new URLSearchParams(window.location.search);
-	  const isRedirected = urlParams.get('redirected');
-
-	  if ((isInstagram || isLark) && !isRedirected) {
-	    window.location.href = `${window.location.origin}?redirected=true`;
+	  if (isInstagram || isLark) {
+	    setShowInAppBrowserWarning(true); // Show the UI warning for in-app browser
 	  }
 	}, []);
+
+	// This function opens the current page in the default system browser (both iOS and Android)
+	const openInBrowser = () => {
+		const url = window.location.href;
+		const isAndroid = /Android/i.test(navigator.userAgent);
+		const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+		if (isAndroid) {
+			// Android: Use intent URL to open in Chrome
+			window.location.href = `intent://${url.replace(/^https?:\/\//, '')}#Intent;scheme=https;package=com.android.chrome;end;`;
+		} else if (isIOS) {
+			// iOS: Use `window.open` to open in Safari
+			window.open(url, '_blank', 'noopener,noreferrer');
+		} else {
+			// Default fallback (shouldn't happen, but just in case)
+			window.open(url, '_blank');
+		}
+	};
+
 	useEffect(() => {
   	const timeout = setTimeout(() => {
-			setLoading(false);
+		setLoading(false);
   	}, 500); 
   	return () => clearTimeout(timeout);
 	}, []);
@@ -78,32 +94,44 @@ const App = () => {
 					<MessageBannerProvider>
 						<PricesProvider>
 						<OrderProvider>
-						<Analytics/>
-						{env?.AUTHTYPE_SAML === true && <SAMLResponseHandler/>}
-						<SpeedInsights/>
-		<div className='flexcenter relative'>
-			<NavBar/>
-			<ScrollToTop/>
-			<Routes>
-			<Route path="/" element={<LandingPage/>} />
-			<Route path="/product" element={<PrivateRoute><ProductPage/></PrivateRoute>} />
-			<Route path="/information" element={<PrivateRoute><InformationPage /></PrivateRoute>} />
-			<Route path="/information/product" element={<PrivateRoute><ProductInformation /></PrivateRoute>} />
-			<Route path="/information/size" element={<PrivateRoute><ProductInformation /></PrivateRoute>} /> 
-			<Route path="/information/prompt" element={<PrivateRoute><PromptInformation /></PrivateRoute>} />            
-			<Route path="/success" element={<ThankYouPage />} />
-			<Route path="/error" element={<PrivateRoute><ErrorPage /></PrivateRoute>} />
-			<Route path="/auth" element={<AuthPage />} />
-			<Route path="/fav" element={<PrivateRoute><FavoritePage /></PrivateRoute>} />
-			<Route path="/user" element={<PrivateRoute><UserPage /></PrivateRoute>} />
-			<Route path="/cart" element={<PrivateRoute><CartPage /></PrivateRoute>} />
-			<Route path="/driver" element={<PrivateRoute><DriverPage /></PrivateRoute>} />
-			<Route path="/contact" element={<ContactPage />} />
-			<Route path="/product/gallery" element={<ProductSection />} />
-			<Route path="*" element={<NotFoundPage />} />
-			</Routes>
-			<Legal />
-		</div>
+							<Analytics/>
+							{env?.AUTHTYPE_SAML === true && <SAMLResponseHandler/>}
+							<SpeedInsights/>
+								<div className='flexcenter relative'>
+									<NavBar/>
+									<ScrollToTop/>
+
+									{/* Conditionally show the in-app browser warning */}
+									{showInAppBrowserWarning && (
+										<div className="in-app-warning" style={{ padding: '20px', backgroundColor: '#f8d7da', color: '#721c24', textAlign: 'center' }}>
+											<h2>Better Experience in Browser</h2>
+											<p>It looks like you're using an in-app browser. For the best experience, please open this page in your default browser.</p>
+											<button onClick={openInBrowser} style={{ padding: '10px 20px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
+												Open in Browser
+											</button>
+										</div>
+									)}
+									
+									<Routes>
+										<Route path="/" element={<LandingPage/>} />
+										<Route path="/product" element={<PrivateRoute><ProductPage/></PrivateRoute>} />
+										<Route path="/information" element={<PrivateRoute><InformationPage /></PrivateRoute>} />
+										<Route path="/information/product" element={<PrivateRoute><ProductInformation /></PrivateRoute>} />
+										<Route path="/information/size" element={<PrivateRoute><ProductInformation /></PrivateRoute>} /> 
+										<Route path="/information/prompt" element={<PrivateRoute><PromptInformation /></PrivateRoute>} />            
+										<Route path="/success" element={<ThankYouPage />} />
+										<Route path="/error" element={<PrivateRoute><ErrorPage /></PrivateRoute>} />
+										<Route path="/auth" element={<AuthPage />} />
+										<Route path="/fav" element={<PrivateRoute><FavoritePage /></PrivateRoute>} />
+										<Route path="/user" element={<PrivateRoute><UserPage /></PrivateRoute>} />
+										<Route path="/cart" element={<PrivateRoute><CartPage /></PrivateRoute>} />
+										<Route path="/driver" element={<PrivateRoute><DriverPage /></PrivateRoute>} />
+										<Route path="/contact" element={<ContactPage />} />
+										<Route path="/product/gallery" element={<ProductSection />} />
+										<Route path="*" element={<NotFoundPage />} />
+									</Routes>
+								<Legal />
+							</div>
 						</OrderProvider>
 						</PricesProvider>
 					</MessageBannerProvider>
