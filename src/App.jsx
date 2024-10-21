@@ -50,8 +50,11 @@ const App = () => {
 	  const isInstagram = userAgent.includes('Instagram');
 	  const isLark = userAgent.includes('Lark/');
 	  
-	  if (isInstagram || isLark) {
-	    window.location.href = window.location.origin;
+	  const urlParams = new URLSearchParams(window.location.search);
+	  const isRedirected = urlParams.get('redirected');
+
+	  if ((isInstagram || isLark) && !isRedirected) {
+	    window.location.href = `${window.location.origin}?redirected=true`;
 	  }
 	}, []);
 	useEffect(() => {
