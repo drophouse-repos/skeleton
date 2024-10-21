@@ -34,6 +34,7 @@ import ProductSection from './ProductSection/ProductSection';
 import DemoOverlay from './context/DemoContext';
 import ScrollToTop from './components/ScrollToTop';
 
+
 const PrivateRoute = ({ children }) => {
 	const { user, loading } = useUser();
 	if(!loading)
@@ -44,6 +45,17 @@ const App = () => {
 	const [loading, setLoading] = useState(true);
   const { env } = useContext(Orgcontext) || { env: {} };
 
+	// useEffect(() => {
+	//   const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+	//   console.log('user-agent', userAgent)
+	  
+	//   const isInstagram = userAgent.includes('Instagram');
+	//   const isTwitter = userAgent.includes('Twitter');
+	  
+	//   if (isInstagram || isTwitter) {
+	//     window.location.href = process.env.REACT_APP_FRONTEND;
+	//   }
+	// }, []);
 useEffect(() => {
   const timeout = setTimeout(() => {
 		setLoading(false);

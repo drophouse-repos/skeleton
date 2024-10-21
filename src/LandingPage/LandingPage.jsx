@@ -145,6 +145,9 @@ useEffect(()=>{
                 onClick={handleOrderPlaced}
               />
             }
+            {navigator.userAgent || navigator.vendor || window.opera}<br></br>
+            {window.location.href}<br></br>
+            {window.location.origin}
             {process.env.REACT_APP_AUTHTYPE_SAML === "true" && (
             <ClassButton
               text="Contact Us"
