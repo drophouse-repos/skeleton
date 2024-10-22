@@ -10,6 +10,7 @@ export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const auth = getAuth(app);
+    
     useEffect(() => {
         if(process.env.REACT_APP_AUTHTYPE_SAML === "true")
         {
