@@ -32,6 +32,22 @@ if (process.env.REACT_APP_AUTHTYPE_SAML === 'true') {
     }
   );
 }
+else if(sessionStorage.getItem('dh_guest_authToken'))
+{
+  axiosInstance.interceptors.request.use(
+    async (config) => {
+      const token = sessionStorage.getItem('dh_guest_authToken');
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+        config.headers['X-Bearer'] = 'Student'
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+}
 else
 {
   axiosInstance.interceptors.request.use(

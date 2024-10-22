@@ -395,7 +395,15 @@ export const fetchstatelist = async(selectedoption) => {
     }
 }
 
-
+export const fetchSetOrGetGuest = async(fingerprint) => {
+    try {
+        const response = await axiosInstance.post("/set-or-get-guest", {"fingerprint":fingerprint});
+        const data = response.data;
+        if (response.status !== 200) throw new Error('Failed to fetch Organisations');
+        return data;
+    } 
+    catch(err) { return handleHttpError(err, '', 'fetchSetOrGetGuest')}
+}
 export const fetchOrganisationlist = async (navigate) => {
     try {
         const response = await axiosInstance.post("/organisation_list");
