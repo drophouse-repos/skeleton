@@ -68,6 +68,9 @@ export const UserProvider = ({ children }) => {
         }
     }, []);
     useEffect(() => {
+        if(user?.isGuest)
+            return
+
         const fpPromise = FingerprintJS.load();
         fpPromise
           .then(fp => fp.get())
@@ -90,7 +93,7 @@ export const UserProvider = ({ children }) => {
                 setUser({ isLoggedIn: false, firstName, email,  phoneNumber, isGuest: true });
             }
           });    
-      }, [])
+      }, [user])
 
     const handleSignOut = async () => {
         try {
