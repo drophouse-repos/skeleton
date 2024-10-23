@@ -38,10 +38,10 @@ const AuthPage = () => {
     }
   };
 
-  useEffect(() => {
-    if(user.isLoggedIn && process.env.REACT_APP_AUTHTYPE_SAML === 'true')
-      navigate('/product/gallery')
-  }, [user])
+  // useEffect(() => {
+  //   if((user.isLoggedIn && process.env.REACT_APP_AUTHTYPE_SAML === 'true') || user.isGuest)
+  //     navigate('/product/gallery')
+  // }, [user])
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {

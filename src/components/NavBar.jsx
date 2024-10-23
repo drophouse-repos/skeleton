@@ -37,7 +37,7 @@ export default function NavBar() {
 
   useEffect(() => {
     const syncCartAndFav = () => {
-      if (user?.isLoggedIn) {
+      if (user?.isLoggedIn || user?.isGuest) {
         fetchCartAndFavNumber().then((data) => {
           setCartNumber(data.cart_number);
           setFavNumber(data.liked_number)
@@ -96,7 +96,7 @@ export default function NavBar() {
   }
 
   useEffect(() => {
-    if (!user.isLoggedIn && window.location.pathname === "/auth") {
+    if (!user.isLoggedIn && !user.isGuest && window.location.pathname === "/auth") {
       setNavbarHide(true);
     } else {
       setNavbarHide(false);
@@ -136,7 +136,7 @@ export default function NavBar() {
         </div>
         <div className="basis-1/3 space-x-4 px-2 md:space-x-8 text-end">
           <div className="flex flex-row justify-end items-center space-x-2 md:space-x-5">
-            {user.isLoggedIn && 
+            {(user.isLoggedIn || user.isGuest) && 
               <div className={`${(window.innerWidth >= 544) ? ``: `hidden`} inline md:space-x-2 whitespace-nowrap}`}>
               <HeartOutlined
               className={
@@ -153,7 +153,7 @@ export default function NavBar() {
                 </div>
               </div>
             }
-            {user.isLoggedIn &&
+            {(user.isLoggedIn || user.isGuest) &&
               <div className={`${(window.innerWidth >= 544) ? ``: `hidden`} inline md:space-x-2 whitespace-nowrap ${(env?.CART_ENABLED === true) ? `` : `hidden`}`}>
                 <ShoppingCartOutlined
                   className={
@@ -184,7 +184,7 @@ export default function NavBar() {
               Sign In
             </button>
           )}
-            {user.isLoggedIn && (
+            {(user.isLoggedIn || user.isGuest) && (
               <button
                 className={
                   "bg-transparent border bg-yellow-500 text-white text-xs px-2 py-1 rounded-full hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-50 transition ease-in-out duration-150 md:scale-100 lg:scale-125 mr-2" +
@@ -209,7 +209,7 @@ export default function NavBar() {
         </div>
       </div>
       <Drawer
-        title={user?.isLoggedIn ? `Hello ${user.firstName}` : "Menu"}
+        title={(user?.isLoggedIn || user?.isGuest) ? `Hello ${user.firstName}` : "Menu"}
         placement={"left"}
         closable={false}
         onClose={onMenuClose}
@@ -229,11 +229,13 @@ export default function NavBar() {
             My Profile
           </div>
 
-          <MenuItem
-            icon={<OrderIcon />}
-            text={"Account & Orders"}
-            href="/user"
-          />
+          {!user.isGuest && 
+            <MenuItem
+              icon={<OrderIcon />}
+              text={"Account & Orders"}
+              href="/user"
+            />
+          }
           <MenuItem icon={<HeartIcon />} text={"Saved for Later"} href="/fav" />
           <MenuItem
             icon={<ShopCartIcon />}

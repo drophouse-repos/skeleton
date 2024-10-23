@@ -136,7 +136,7 @@ useEffect(()=>{
               <ClassButton
                 text="Design Now"
                 className={`font-bold tracking-wide text-gray-200 rounded-[20px] mt-12 px-3 py-1 h-fit md:text-3xl md:px-8 md:py-2 ${(window.innerWidth <= 544) ? `btn-mbl`: ``}`}
-                link={user && user.isLoggedIn ? galleryPage === true ? "/product/gallery" : "/product" : "/auth"}
+                link={user && (user.isLoggedIn || user.isGuest) ? galleryPage === true ? "/product/gallery" : "/product" : "/auth"}
               />
             : 
               <ClassButton

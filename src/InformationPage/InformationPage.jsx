@@ -14,6 +14,8 @@ import { useLocation } from 'react-router-dom';
 import { createCheckoutSession, createStudentCheckout, fetchcountrylist, fetchstatelist } from '../utils/fetch';
 import ClassInput from '../components/ClassInput';
 import { Orgcontext } from '../context/ApiContext';
+import { useUser } from "../context/UserContext";
+
 const emailRegex = /\S+@\S+\.\S+/;
 import {
   LoadScript,
@@ -23,6 +25,7 @@ const libraries = ['places'];
 const apiKey = process.env.REACT_APP_GOOGLE_API;
 
 const InformationPage = () => {
+  const { user } = useUser();
   const location = useLocation();
   const searchBoxRef = useRef(null);
   const { productInfo } = location.state || {};
@@ -66,6 +69,12 @@ const InformationPage = () => {
   });
   const [countryList, setCountryList] = useState([])
   const [countryMap, setCountryMap] = useState({});
+
+  useEffect(() => {
+    if(!user.isLoggedIn)
+      navigate('/auth')
+  }, [user])
+  
   useEffect(()=>{
     const fetchCountryList = async () => {
       try {

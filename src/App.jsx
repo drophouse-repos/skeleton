@@ -36,7 +36,7 @@ import ScrollToTop from './components/ScrollToTop';
 const PrivateRoute = ({ children }) => {
 	const { user, loading } = useUser();
 	if(!loading)
-		return user.isLoggedIn ? children : <Navigate to="/auth" replace />;
+		return (user.isLoggedIn || user.isGuest) ? children : <Navigate to="/auth" replace />;
 };
 
 const App = () => {

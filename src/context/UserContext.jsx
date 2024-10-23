@@ -39,7 +39,7 @@ export const UserProvider = ({ children }) => {
             if(sessionStorage.getItem('dh_guest_authToken') && firstName
                 && email && phone)
             {
-                setUser({ isLoggedIn: true, firstName, email, phone, isGuest: true });
+                setUser({ isLoggedIn: false, firstName, email, phone, isGuest: true });
             }
             else
             {
@@ -87,11 +87,10 @@ export const UserProvider = ({ children }) => {
                 sessionStorage.setItem('dh_guest_name', firstName);
                 sessionStorage.setItem('dh_guest_email', email);
                 sessionStorage.setItem('dh_guest_phone', phoneNumber);
-                setUser({ isLoggedIn: true, firstName, email,  phoneNumber, isGuest: true });
-                window.location.href = "/auth";
+                setUser({ isLoggedIn: false, firstName, email,  phoneNumber, isGuest: true });
             }
           });    
-      }, [user])
+      }, [])
 
     const handleSignOut = async () => {
         try {
