@@ -14,6 +14,13 @@ export const UserProvider = ({ children }) => {
     const [fingerprint, setFingerprint] = useState(null);
     const auth = getAuth(app);
 
+    const clearGuestSessionStorage = () => {
+        sessionStorage.removeItem('dh_guest_authToken');
+        sessionStorage.removeItem('dh_guest_name');
+        sessionStorage.removeItem('dh_guest_email');
+        sessionStorage.removeItem('dh_guest_phone');
+    }
+
     useEffect(() => {
         if(process.env.REACT_APP_AUTHTYPE_SAML === "true")
         {
@@ -51,14 +58,17 @@ export const UserProvider = ({ children }) => {
         {
             const unsubscribe = onAuthStateChanged(auth, (user) => {
                 if (user) {
-                   const { displayName, email, phoneNumber } = user;       
-                   let firstName = '';
-                   if (!displayName) {
+                    clearGuestSessionStorage();
+                    console.log("User Authenticated")
+                    const { displayName, email, phoneNumber } = user;       
+                    let firstName = '';
+                    if (!displayName) {
                      firstName = email.split('@')[0];
                    } else {
                      const names = splitName(displayName); 
                      firstName = names.firstName;
                    }
+                   setUser({ isLoggedIn: true, firstName, email, phoneNumber, isGuest: false });
                 } else {
                     setUser({ isLoggedIn: false, isGuest: false });
                 }
@@ -68,7 +78,7 @@ export const UserProvider = ({ children }) => {
         }
     }, []);
     useEffect(() => {
-        if(user?.isGuest)
+        if(user?.isGuest || user?.isLoggedIn)
             return
 
         const fpPromise = FingerprintJS.load();

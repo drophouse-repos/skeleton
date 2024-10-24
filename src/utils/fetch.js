@@ -11,7 +11,8 @@ export async function postAuthData({email, firstName, lastName, phoneNumber, nav
         const response = await axiosInstance.post("/auth", payload);
         return {success: true};
     } catch (error) {
-        return handleHttpError(error, navigate, 'postAuthData')
+        console.log("Error in postAuthData", error)
+        return handleHttpError(error, navigate, 'postAuthData') 
     }
 }
 
