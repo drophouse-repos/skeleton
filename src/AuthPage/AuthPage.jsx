@@ -20,7 +20,7 @@ import { useUser } from "../context/UserContext";
 import { Orgcontext } from '../context/ApiContext';
 
 const AuthPage = () => {
-  const { orgDetails } = useContext(Orgcontext)
+  const { orgDetails, galleryPage } = useContext(Orgcontext)
   const auth = getAuth(app);
   const navigate = useNavigate();
   const { user } = useUser();
@@ -38,10 +38,10 @@ const AuthPage = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if((user.isLoggedIn && process.env.REACT_APP_AUTHTYPE_SAML === 'true') || user.isGuest)
-  //     navigate('/product/gallery')
-  // }, [user])
+  useEffect(() => {
+    if(user.isLoggedIn && process.env.REACT_APP_AUTHTYPE_SAML === 'true')
+      navigate(galleryPage ? '/product/gallery' : '/product')
+  }, [user])
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
@@ -60,7 +60,7 @@ const AuthPage = () => {
           postAuthData({email, firstName, lastName, phoneNumber, navigate})
             .then(() => {
                 setAuthError('');
-                navigate('/product/gallery');
+                navigate(galleryPage ? '/product/gallery' : '/product');
             })
             .catch(error => {
                 console.error("Log in failed", error);

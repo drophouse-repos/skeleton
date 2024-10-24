@@ -170,7 +170,7 @@ export default function NavBar() {
                 </div>
               </div>
             }
-            {isInLandingPage && !user.isLoggedIn && (
+            {!user.isGuest && isInLandingPage && !user.isLoggedIn && (
             <button
               className={
                 "bg-yellow-400 text-white text-xs px-2 py-1 rounded-full hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-50 transition ease-in-out duration-150 md:scale-100 lg:scale-125 mr-2" +

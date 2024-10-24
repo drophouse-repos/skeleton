@@ -27,6 +27,7 @@ export const UserProvider = ({ children }) => {
             let firstName = sessionStorage.getItem('saml_name')
             let email = sessionStorage.getItem('saml_email')
             let phone = sessionStorage.getItem('saml_phone')
+            clearGuestSessionStorage()
             if(sessionStorage.getItem('saml_authToken') && firstName
                 && email && phone)
             {
@@ -59,7 +60,6 @@ export const UserProvider = ({ children }) => {
             const unsubscribe = onAuthStateChanged(auth, (user) => {
                 if (user) {
                     clearGuestSessionStorage();
-                    console.log("User Authenticated")
                     const { displayName, email, phoneNumber } = user;       
                     let firstName = '';
                     if (!displayName) {
