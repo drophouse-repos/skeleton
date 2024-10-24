@@ -60,13 +60,6 @@ export default function NavBar() {
 		updateFavicon(favicon);
 	  }, []);
   
-
-  const getCartItemNumber = () => {
-    return cartNumber;
-  };
-  const getLikedItemNumber = () => {
-    return favNumber;
-  };
   function MenuItem({ icon, text, href }) {
     return (
       <div
@@ -149,7 +142,7 @@ export default function NavBar() {
                   className={
                     "inline md:scale-125 lg:scale-150 justify-self-center content-center items-center text-black" }
                 >
-                  {getLikedItemNumber()}
+                  {favNumber}
                 </div>
               </div>
             }
@@ -166,7 +159,7 @@ export default function NavBar() {
                   className={
                     "inline md:scale-125 lg:scale-150 justify-self-center content-center items-center text-black" }
                 >
-                  {getCartItemNumber()}
+                  {cartNumber}
                 </div>
               </div>
             }
