@@ -58,17 +58,18 @@ export const UserProvider = ({ children }) => {
         else
         {
             const unsubscribe = onAuthStateChanged(auth, (user) => {
+                console.log('am i here')
                 if (user) {
-                    clearGuestSessionStorage();
                     const { displayName, email, phoneNumber } = user;       
                     let firstName = '';
                     if (!displayName) {
-                     firstName = email.split('@')[0];
-                   } else {
-                     const names = splitName(displayName); 
-                     firstName = names.firstName;
-                   }
-                   setUser({ isLoggedIn: true, firstName, email, phoneNumber, isGuest: false });
+                        firstName = email.split('@')[0];
+                    } else {
+                        const names = splitName(displayName); 
+                        firstName = names.firstName;
+                    }
+                    setUser({ isLoggedIn: true, firstName, email, phoneNumber, isGuest: false });
+                    clearGuestSessionStorage();
                 } else {
                     setUser({ isLoggedIn: false, isGuest: false });
                 }
@@ -78,6 +79,7 @@ export const UserProvider = ({ children }) => {
         }
     }, []);
     useEffect(() => {
+        console.log('user updated', user)
         if(user?.isGuest || user?.isLoggedIn)
             return
 
@@ -92,10 +94,11 @@ export const UserProvider = ({ children }) => {
             {
                 const response = await fetchSetOrGetGuest(visitorId)
                 const data = response['user_data']
-                const firstName = data.first_name+"_"+data.last_name
+                const firstName = data.first_name
                 const email = data.email
                 const phoneNumber = data.phone_number
                 const token = response.token
+                console.log('user_data', data.browsed_images)
                 sessionStorage.setItem('dh_guest_authToken', token);
                 sessionStorage.setItem('dh_guest_name', firstName);
                 sessionStorage.setItem('dh_guest_email', email);
@@ -114,7 +117,7 @@ export const UserProvider = ({ children }) => {
       };
 
     return (
-        <UserContext.Provider value={{ user, setUser, loading, handleSignOut }}>
+        <UserContext.Provider value={{ user, setUser, loading, handleSignOut, clearGuestSessionStorage }}>
             {!loading && children}
         </UserContext.Provider>
     );

@@ -23,7 +23,7 @@ const AuthPage = () => {
   const { orgDetails, galleryPage } = useContext(Orgcontext)
   const auth = getAuth(app);
   const navigate = useNavigate();
-  const { user } = useUser();
+  const { user, setUser, clearGuestSessionStorage } = useUser();
   const [email, setEmail] = useState('');
   const [justLoggedIn, setJustLoggedIn] = useState(false);
   const [authError, setAuthError] = useState('');
@@ -45,6 +45,7 @@ const AuthPage = () => {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
+      console.log('i am hereddd', user)
       if (user && justLoggedIn) {
         const { displayName, email, phoneNumber } = user;       
         let firstName = '';
@@ -56,6 +57,9 @@ const AuthPage = () => {
           firstName = names.firstName;
           lastName = names.lastName;
         }
+        setUser({ isLoggedIn: true, firstName, email, phoneNumber, isGuest: false });
+        clearGuestSessionStorage();
+
         user.getIdToken(true).then(() => {
           postAuthData({email, firstName, lastName, phoneNumber, navigate})
             .then(() => {
@@ -78,6 +82,7 @@ const AuthPage = () => {
     const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
+      console.log('testing', result);
       setJustLoggedIn(true);
     } catch (error) {
       console.error('Error during Google Sign In:', error);
