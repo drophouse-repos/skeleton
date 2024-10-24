@@ -403,7 +403,7 @@ export const fetchSetOrGetGuest = async(fingerprint) => {
         if (response.status !== 200) throw new Error('Failed to fetch Organisations');
         return data;
     } 
-    catch(err) { return handleHttpError(err, '', 'fetchSetOrGetGuest')}
+    catch(err) { return handleHttpError(err, () => {}, 'fetchSetOrGetGuest')}
 }
 export const fetchOrganisationlist = async (navigate) => {
     try {
