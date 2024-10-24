@@ -58,7 +58,6 @@ export const UserProvider = ({ children }) => {
         else
         {
             const unsubscribe = onAuthStateChanged(auth, (user) => {
-                console.log('am i here')
                 if (user) {
                     const { displayName, email, phoneNumber } = user;       
                     let firstName = '';
@@ -79,45 +78,48 @@ export const UserProvider = ({ children }) => {
         }
     }, []);
     useEffect(() => {
-        console.log('user updated', user)
-        if(user?.isGuest || user?.isLoggedIn)
-            return
-
         const fpPromise = FingerprintJS.load();
         fpPromise
           .then(fp => fp.get())
           .then(async (result) => {
             const visitorId = result.visitorId;
             setFingerprint(visitorId)
+        });    
+    }, [])
+    useEffect(() => {
+        if(!fingerprint) return
+        if(user?.isGuest || user?.isLoggedIn) return
 
-            if(user && user.isLoggedIn === false)
-            {
-                const response = await fetchSetOrGetGuest(visitorId)
-                const data = response['user_data']
-                const firstName = data.first_name
-                const email = data.email
-                const phoneNumber = data.phone_number
-                const token = response.token
-                console.log('user_data', data.browsed_images)
-                sessionStorage.setItem('dh_guest_authToken', token);
-                sessionStorage.setItem('dh_guest_name', firstName);
-                sessionStorage.setItem('dh_guest_email', email);
-                sessionStorage.setItem('dh_guest_phone', phoneNumber);
-                setUser({ isLoggedIn: false, firstName, email,  phoneNumber, isGuest: true });
-            }
-          });    
-      }, [user])
+        fetchSetOrGetGuest(fingerprint)
+        .then((response) => {
+            const data = response['user_data']
+            const firstName = data.first_name
+            const email = data.email
+            const phoneNumber = data.phone_number
+            const token = response.token
+            sessionStorage.setItem('dh_guest_authToken', token);
+            sessionStorage.setItem('dh_guest_name', firstName);
+            sessionStorage.setItem('dh_guest_email', email);
+            sessionStorage.setItem('dh_guest_phone', phoneNumber);
+            window.location.href="/"
+        })
+        .catch((error)=>{
+            console.log(error)
+        })
+
+      }, [user, fingerprint])
 
     const handleSignOut = async () => {
         try {
           await signOut(auth);
+          window.location.href= '/'
         } catch (error) {
           console.error('Error signing out:', error);
         }
       };
 
     return (
-        <UserContext.Provider value={{ user, setUser, loading, handleSignOut, clearGuestSessionStorage }}>
+        <UserContext.Provider value={{ user, setUser, loading, handleSignOut, fingerprint, clearGuestSessionStorage }}>
             {!loading && children}
         </UserContext.Provider>
     );

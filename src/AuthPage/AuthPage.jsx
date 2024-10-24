@@ -30,14 +30,6 @@ const AuthPage = () => {
   const [showMessage, setShowMessage] = useState(false);
   const [resendTimer, setResendTimer] = useState(0);
 
-  const handleSignOut = async () => {
-    try {
-      await signOut(auth);
-    } catch (error) {
-      console.error('Error signing out:', error);
-    }
-  };
-
   useEffect(() => {
     if(user.isLoggedIn && process.env.REACT_APP_AUTHTYPE_SAML === 'true')
       navigate(galleryPage ? '/product/gallery' : '/product')
@@ -45,7 +37,6 @@ const AuthPage = () => {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
-      console.log('i am hereddd', user)
       if (user && justLoggedIn) {
         const { displayName, email, phoneNumber } = user;       
         let firstName = '';
@@ -64,12 +55,12 @@ const AuthPage = () => {
           postAuthData({email, firstName, lastName, phoneNumber, navigate})
             .then(() => {
                 setAuthError('');
-                navigate(galleryPage ? '/product/gallery' : '/product');
+                window.location.href = galleryPage ? '/product/gallery' : '/product'
             })
             .catch(error => {
                 console.error("Log in failed", error);
                 setAuthError('Failed to update user authentication data. Please try again.');
-                handleSignOut();
+                signOut();
             });
         });
       } 
@@ -151,7 +142,7 @@ const AuthPage = () => {
         <div className='text-center h-fit'>
           <h1 className='authWelcomeTitle mb-[2rem] text-[32px] text-black font-bold'>You're logged in</h1>
           <p>Welcome, {user.firstName || "User"}!</p>
-          <button className='mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' onClick={handleSignOut}>
+          <button className='mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' onClick={signOut}>
             Sign Out
           </button>
         </div>

@@ -7,7 +7,7 @@ import { ImageContext } from "../context/ImageContext";
 import { PricesContext } from '../context/PricesContext';
 import { MessageBannerContext } from "../context/MessageBannerContext";
 import { Select, Tour } from "antd";
-import { fetchAskAi, fetchAddToCart, fetchGetImage, fetchStorePrompt, fetchSaveImg } from "../utils/fetch";
+import { fetchAskAi, fetchAddToCart, fetchGetImage, fetchStorePrompt, fetchSaveImg, fetchSetOrGetGuest } from "../utils/fetch";
 import ProductGallery from "../components/ProductGallery";
 import PromptBoxButton from "../components/PromptBoxButton";
 import ProductPopup from "../components/ProductPopup";
@@ -19,8 +19,10 @@ import app from "../firebase-config";
 import { OrderContext } from '../context/OrderContext';
 import { Orgcontext } from "../context/ApiContext";
 import { LeftCircleOutlined} from "@ant-design/icons";
+import { useUser } from "../context/UserContext";
 
 const ProductPage = () => {
+  const { user, fingerprint } = useUser();
   const { product, orgDetails, galleryPage, greenmask,env } = useContext(Orgcontext);
   const [productListLoad, setProductListLoad] = useState([]);
   const [productImageList, setProductImageList] = useState([]);
@@ -78,6 +80,26 @@ const ProductPage = () => {
   const [colorNameToIndex, setColorNameToIndex] = useState({});
   const [indexColor, setIndexColor] = useState([])
   const [productList, setProductList] = useState([]);
+  const [guestDesignCount, setGuestDesignCount] = useState(0)
+
+  const guestDesignLimit = 5
+  const updateGuestDesignCount = ()=>{
+    if(user?.isGuest && fingerprint)
+    {
+      fetchSetOrGetGuest(fingerprint)
+      .then((response)=>{
+        const data = response['user_data']
+        console.log('design count ', data.browsed_images.length)
+        setGuestDesignCount(data.browsed_images.length)
+      })
+      .catch((error)=>{
+        console.log(error)
+      })
+    }
+  }
+  useEffect(() => {
+    updateGuestDesignCount()
+  }, [fingerprint])
   useEffect(() => {
     if(apparel === 'mug'){
       setSize('M')
@@ -248,6 +270,7 @@ const ProductPage = () => {
 
   useEffect(() => {
     setToggled(false);
+    setGuestDesignCount(prevKey => prevKey+1)
   }, [generatedImage]);
 
   useEffect(() => {
@@ -595,13 +618,23 @@ const ProductPage = () => {
             disabled={isGenerating}
           />
           <div className="flex flex-row justify-end space-x-2 my-[1rem]">
-            <PromptBoxButton
-              ref={generateBtnRef}
-              text={"Design Now"}
-              onClick={handleAskAI}
-              loading={isAskingRosie | isGenerating}
-              className={(shouldFlash && isFirstVisit) ? "flash" : ""}
-            />
+            {(user?.isGuest && guestDesignCount >= guestDesignLimit) ? (
+              <PromptBoxButton
+                ref={generateBtnRef}
+                text={"Login"}
+                onClick={()=>navigate('/auth')}
+                loading={isAskingRosie | isGenerating}
+                className={(shouldFlash && isFirstVisit) ? "flash" : ""}
+              />
+            ) : (
+              <PromptBoxButton
+                ref={generateBtnRef}
+                text={"Design Now"}
+                onClick={handleAskAI}
+                loading={isAskingRosie | isGenerating}
+                className={(shouldFlash && isFirstVisit) ? "flash" : ""}
+              />
+            )}
           </div>
         </div>
         <ProductGallery
