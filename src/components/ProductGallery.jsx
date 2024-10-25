@@ -19,8 +19,10 @@ import { enhanceImageClarity } from '../utils/enhanceImageClarity';
 import { Orgcontext } from '../context/ApiContext';
 import ProductPopup from "./ProductPopup";
 import ZoomIcon from '../assets/zoom.png';
+import { useUser } from "../context/UserContext";
 
 const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, currentIndex, setCurrentIndex, changeFromMug, isZoomEnabled, setIsZoomEnabled }, ref) => {
+  const { user } = useUser();
   const { apparel, setApparel, color, setColor, prompt, setFavNumber,productPopupIsShown, setProductPopupIsShown,productPopupInfo, setProductPopupInfo,
     productPopupTitle, setProductPopupTitle,isSaveDesign, setisSaveDesign } = useContext(AppContext);
   const [slideIndex, setSlideIndex] = useState(0);
@@ -727,7 +729,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
                   Design saved
                 </button>
               ) : (
-                <button ref={addFavBtnRef} onClick={handleLike} 
+                <button ref={addFavBtnRef} onClick={user?.isGuest ? () => navigate('/auth') : handleLike} 
                   style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`, fontSize: window.innerWidth <= 544 ? '17px': ''}}
                   className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
                   Save for later
@@ -735,6 +737,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
               )
           ) : (
             <button ref={addFavBtnRef} 
+              onClick={user?.isGuest ? () => navigate('/auth') : console.log('No designs found')}
               style={{fontFamily : `${orgDetails.font}`, backgroundColor: `lightgrey`, fontSize: window.innerWidth <= 544 ? '17px': ''}}
               className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
               Save for later

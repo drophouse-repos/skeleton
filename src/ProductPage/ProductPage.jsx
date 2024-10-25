@@ -272,7 +272,7 @@ const ProductPage = () => {
     setToggled(false);
     setGuestDesignCount(prevKey => prevKey+1)
   }, [generatedImage]);
-
+  
   useEffect(() => {
     const active = prompt && apparel && color && generatedImage && !isGenerating && !toggleActivated;
     setIsActive(!!active);
@@ -604,7 +604,10 @@ const ProductPage = () => {
       )}
       <div className="m-auto max-w-screen-lg">
         <div className="w-full px-5">
-          <div className="text-left"><span className="ml-1 mr-2 text-lg" style={{fontFamily : `${orgDetails.font}`}}>Description Box</span><InfoButton link="/information/prompt" /></div>
+          <div className="grid grid-cols-2">
+            <div className="text-left"><span className="ml-1 mr-2 text-lg" style={{fontFamily : `${orgDetails.font}`}}>Description Box</span><InfoButton link="/information/prompt" /></div>
+            {user?.isGuest && <div className="text-right"><span className="ml-1 mr-2 text-lg text-red-800" style={{fontFamily : `${orgDetails.font}`}}>{(guestDesignLimit - guestDesignCount) >= 0 ? (guestDesignLimit - guestDesignCount) : 0} - Designs Left</span></div>}
+          </div>
           <textarea
             ref={promptBoxRef}
             name="prompt"
@@ -618,23 +621,14 @@ const ProductPage = () => {
             disabled={isGenerating}
           />
           <div className="flex flex-row justify-end space-x-2 my-[1rem]">
-            {(user?.isGuest && guestDesignCount >= guestDesignLimit) ? (
-              <PromptBoxButton
-                ref={generateBtnRef}
-                text={"Login"}
-                onClick={()=>navigate('/auth')}
-                loading={isAskingRosie | isGenerating}
-                className={(shouldFlash && isFirstVisit) ? "flash" : ""}
-              />
-            ) : (
-              <PromptBoxButton
-                ref={generateBtnRef}
-                text={"Design Now"}
-                onClick={handleAskAI}
-                loading={isAskingRosie | isGenerating}
-                className={(shouldFlash && isFirstVisit) ? "flash" : ""}
-              />
-            )}
+            <PromptBoxButton
+              ref={generateBtnRef}
+              text={"Design Now"}
+              onClick={(user?.isGuest && guestDesignCount >= guestDesignLimit)
+                ? ()=> navigate('/auth') : handleAskAI}
+              loading={isAskingRosie | isGenerating}
+              className={(shouldFlash && isFirstVisit) ? "flash" : ""}
+            />
           </div>
         </div>
         <ProductGallery
@@ -702,7 +696,7 @@ const ProductPage = () => {
             <button
               style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`, fontSize: window.innerWidth <= 544 ? '17px': ''}}
               className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(env?.CART_ENABLED === true) ? (window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]` : `hidden`}`}
-              onClick={handleAddToCart} ref={addToCartBtn}
+              onClick={user?.isGuest ? () => navigate('/auth') : handleAddToCart} ref={addToCartBtn}
             >
               Add to Cart
             </button>
