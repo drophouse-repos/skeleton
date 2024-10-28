@@ -43,7 +43,6 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
   },[props.dimensions.Dim_width,props])
 
   function resetAllPositions() {
-    console.log('Positions are reseted')
     if (window.innerWidth < 544) {
       //mobile devices
       setContainerWidth(180);

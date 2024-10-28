@@ -606,7 +606,7 @@ const ProductPage = () => {
         <div className="w-full px-5">
           <div className="grid grid-cols-2">
             <div className="text-left"><span className="ml-1 mr-2 text-lg" style={{fontFamily : `${orgDetails.font}`}}>Description Box</span><InfoButton link="/information/prompt" /></div>
-            {user?.isGuest && <div className="text-right"><span className="ml-1 mr-2 text-lg text-red-800" style={{fontFamily : `${orgDetails.font}`}}>Designs left: {(guestDesignLimit - guestDesignCount) >= 0 ? (guestDesignLimit - guestDesignCount) : 0}</span></div>}
+            {user?.isGuest && <div className="text-right hidden"><span className="ml-1 mr-2 text-lg text-red-800" style={{fontFamily : `${orgDetails.font}`}}>Designs left: {(guestDesignLimit - guestDesignCount) >= 0 ? (guestDesignLimit - guestDesignCount) : 0}</span></div>}
           </div>
           <textarea
             ref={promptBoxRef}

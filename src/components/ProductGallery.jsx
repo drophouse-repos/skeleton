@@ -737,7 +737,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
               )
           ) : (
             <button ref={addFavBtnRef} 
-              onClick={user?.isGuest ? () => navigate('/auth') : console.log('No designs found')}
+              onClick={user?.isGuest ? () => navigate('/auth') : ()=>{}}
               style={{fontFamily : `${orgDetails.font}`, backgroundColor: `lightgrey`, fontSize: window.innerWidth <= 544 ? '17px': ''}}
               className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
               Save for later
