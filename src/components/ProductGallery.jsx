@@ -226,7 +226,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
       title: "Design added to favourites"
     };
     setIsLiked(!isLiked);
-    fetchPostLike(!isLiked, generatedImage.img_id, prompt)
+    fetchPostLike(!isLiked, generatedImage.img_id, prompt, navigate)
       .then(succeeded => {
         if (!succeeded.success) {
           setMessageBannerText(succeeded.message);
