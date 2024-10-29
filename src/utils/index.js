@@ -53,7 +53,7 @@ import { useContext } from 'react';
 
   export const loadState = (key, defaultValue, storageName) => {
 	try {
-	  const savedState = sessionStorage.getItem(storageName);
+	  const savedState = localStorage.getItem(storageName);
 	  if (savedState) {
 		const state = JSON.parse(savedState);
 		return state[key] !== undefined ? state[key] : defaultValue;
@@ -61,7 +61,7 @@ import { useContext } from 'react';
 		return defaultValue;
 	  }
 	} catch (err) {
-	  console.error('Error reading from sessionStorage:', err);
+	  console.error('Error reading from localStorage:', err);
 	  return defaultValue;
 	}
   };

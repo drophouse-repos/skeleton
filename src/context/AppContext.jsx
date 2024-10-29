@@ -25,7 +25,7 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     setLoading(true);
     const state = { prompt, apparel, size, color, price, aiSuggestions };
-    sessionStorage.setItem('appState', JSON.stringify(state));
+    localStorage.setItem('appState', JSON.stringify(state));
     setLoading(false);
   }, [prompt, apparel, size, color, price, aiSuggestions]);
 
