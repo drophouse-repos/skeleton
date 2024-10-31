@@ -22,7 +22,7 @@ import { LeftCircleOutlined} from "@ant-design/icons";
 import { useUser } from "../context/UserContext";
 
 const ProductPage = () => {
-  const { user, fingerprint } = useUser();
+  const { user, guestId, guestKeyId } = useUser();
   const { product, orgDetails, galleryPage, greenmask,env } = useContext(Orgcontext);
   const [productListLoad, setProductListLoad] = useState([]);
   const [productImageList, setProductImageList] = useState([]);
@@ -84,9 +84,12 @@ const ProductPage = () => {
 
   const guestDesignLimit = 5
   const updateGuestDesignCount = ()=>{
-    if(user?.isGuest && fingerprint)
+    console.log("updateGuestDesignCount is called")
+    console.log("guest state: ", user?.isGuest, guestId, guestKeyId)
+    if(user?.isGuest && guestId && guestKeyId)
     {
-      fetchSetOrGetGuest(fingerprint)
+      console.log("do we get in here?")
+      fetchSetOrGetGuest({salt_id: guestKeyId, encrypted_data: guestId})
       .then((response)=>{
         const data = response['user_data']
         console.log('design count ', data.browsed_images.length)
@@ -98,8 +101,9 @@ const ProductPage = () => {
     }
   }
   useEffect(() => {
+    console.log("ProductPage.jsx: updateGuestDesignCount is called")
     updateGuestDesignCount()
-  }, [fingerprint])
+  }, [guestId, guestKeyId])
   useEffect(() => {
     if(apparel === 'mug'){
       setSize('M')
@@ -271,6 +275,7 @@ const ProductPage = () => {
   useEffect(() => {
     setToggled(false);
     setGuestDesignCount(prevKey => prevKey+1)
+    console.log("guestDesignCount: ", guestDesignCount)
   }, [generatedImage]);
   
   useEffect(() => {
@@ -296,7 +301,7 @@ const ProductPage = () => {
     if (!isAskingRosie) {
       productGalleryRef.current.disenableZoomer();
       setIsAskingRosie(true);
-      fetchAskAi(localPrompt, setAiSuggestions, setAiTaskId, setDictionaryId, navigate)
+      fetchAskAi({ prompt: localPrompt, user_key: user.isGuest ? guestKeyId : null }, setAiSuggestions, setAiTaskId, setDictionaryId, navigate)
         .then(succeeded => {
           if (!succeeded.success) {
             if (succeeded.navigated)
@@ -322,7 +327,7 @@ const ProductPage = () => {
     let promptsArray = aiSuggestions.Prompts;
     const promptKey = Object.keys(promptsArray[promptIndex])[0];
     const aiChosenPrompt = promptsArray[promptIndex][promptKey];
-    fetchGetImage({ idx: promptIndex, prompt: aiChosenPrompt, task_id: taskId }, setGeneratedImage, setEditedImage, navigate)
+    fetchGetImage({ idx: promptIndex, prompt: aiChosenPrompt, task_id: taskId, user_key: user.isGuest ? guestKeyId : null }, setGeneratedImage, setEditedImage, navigate)
       .then(succeeded => {
         if (!succeeded.success) {
           if (succeeded.navigated)

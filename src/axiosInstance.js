@@ -39,11 +39,12 @@ else if(sessionStorage.getItem('dh_guest_authToken'))
       const token = sessionStorage.getItem('dh_guest_authToken');
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
-        config.headers['X-Bearer'] = 'Student'
+        config.headers['X-Bearer'] = 'Guest'
       }
       return config;
     },
     (error) => {
+      console.log("axiosInstance error: ", error)
       return Promise.reject(error);
     }
   );
@@ -56,7 +57,7 @@ else
       if (user) {
         const token = await user.getIdToken();
         config.headers.Authorization = `Bearer ${token}`;
-        config.headers['X-Bearer'] = 'Alumini'
+        config.headers['X-Bearer'] = 'Alumni'
       }
       return config;
     },

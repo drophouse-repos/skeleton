@@ -191,10 +191,10 @@ export const fetchSaveImg = async (item, navigate) => {
     }
 };
 
-export const fetchAskAi = async (prompt, setAiSuggestions, setAiTaskId, setDictionaryId, navigate) => {
-    if (prompt) {
+export const fetchAskAi = async (request, setAiSuggestions, setAiTaskId, setDictionaryId, navigate) => {
+    if (request.prompt) {
         try {
-            const response = await axiosInstance.post("/ask_gpt", { prompt });
+            const response = await axiosInstance.post("/ask_gpt", request);
             const data = response.data;
             setAiSuggestions(data.response);
             setAiTaskId(data.response.task_id);
@@ -248,8 +248,10 @@ export const createCheckoutSessionCart = async (data) => {
 
 export const fetchGetImage = async (request, setGeneratedImage, setEditedImage, navigate) =>{
     try {
+        console.log("fetchGetImage request: ", request)
         const response = await axiosInstance.post("/get_image", request);
         const data = response.data;
+        console.log("fetchGetImage data: ", data)
         if (response.status !== 200) throw new Error(data.message);
         setGeneratedImage({
             photo: `data:image/jpeg;base64,${data.photo}`,
@@ -396,9 +398,11 @@ export const fetchstatelist = async(selectedoption) => {
     }
 }
 
-export const fetchSetOrGetGuest = async(fingerprint) => {
+export const fetchSetOrGetGuest = async(cookie) => {
     try {
-        const response = await axiosInstance.post("/set-or-get-guest", {"fingerprint":fingerprint});
+        console.log("fetchjs cookie: ", cookie)
+        const response = await axiosInstance.post("/set-or-get-guest", cookie || {});
+        console.log("fetchjs response: ", response)
         const data = response.data;
         if (response.status !== 200) throw new Error('Failed to fetch Organisations');
         return data;
