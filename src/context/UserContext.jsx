@@ -12,8 +12,8 @@ export const useUser = () => useContext(UserContext);
 
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [guestId, setGuestId] = useState(null)
-    const [guestKeyId, setGuestKeyId] = useState(null)
+    const [guestId, setGuestId] = useState(null);
+    const [guestKeyId, setGuestKeyId] = useState(null);
     const [loading, setLoading] = useState(true);
     const auth = getAuth(app);
 
@@ -25,8 +25,8 @@ export const UserProvider = ({ children }) => {
     }
 
     const fetchGuestData = async () => {
-        const id = Cookies.get('guestId')
-        const keyId = Cookies.get('guestKeyId')
+        const id = Cookies.get('guestId');
+        const keyId = Cookies.get('guestKeyId');
 
         console.log("try to get guestId: ", id)
 
@@ -37,50 +37,50 @@ export const UserProvider = ({ children }) => {
         const data = response.user_data;
 
         if (!id) {
-            Cookies.set('guestId', data.user_id)
-            Cookies.set('guestKeyId', data.key_id)
-            console.log("set guestId and guestKeyId: ", data.user_id, data.key_id)
+            Cookies.set('guestId', data.user_id);
+            Cookies.set('guestKeyId', data.key_id);
+            console.log("set guestId and guestKeyId: ", data.user_id, data.key_id);
         }
         
-        const firstName = data.first_name
-        const email = data.email
-        const phoneNumber = data.phone_number
-        console.log("do we get to setting sessionStorage?")
+        const firstName = data.first_name;
+        const email = data.email;
+        const phoneNumber = data.phone_number;
+        console.log("do we get to setting sessionStorage?");
         sessionStorage.setItem('dh_guest_authToken', response.token);
         sessionStorage.setItem('dh_guest_name', firstName);
         sessionStorage.setItem('dh_guest_email', email);
         sessionStorage.setItem('dh_guest_phone', phoneNumber);
 
-        setGuestId(data.user_id)
-        setGuestKeyId(data.key_id)
+        setGuestId(data.user_id);
+        setGuestKeyId(data.key_id);
     };
 
     useEffect(() => {
         fetchGuestData();
         if (process.env.REACT_APP_AUTHTYPE_SAML === "true")
         {
-            let firstName = sessionStorage.getItem('saml_name')
-            let email = sessionStorage.getItem('saml_email')
-            let phone = sessionStorage.getItem('saml_phone')
-            clearGuestSessionStorage()
+            let firstName = sessionStorage.getItem('saml_name');
+            let email = sessionStorage.getItem('saml_email');
+            let phone = sessionStorage.getItem('saml_phone');
+            clearGuestSessionStorage();
             if(sessionStorage.getItem('saml_authToken') && firstName
                 && email && phone)
             {
                 setUser({ isLoggedIn: true, firstName, email, phone, isGuest: false });
-                setGuestId(null)
-                setGuestKeyId(null)
+                setGuestId(null);
+                setGuestKeyId(null);
             }
             else
             {
-                setUser({ isLoggedIn: false })
+                setUser({ isLoggedIn: false });
             }
             setLoading(false);
         }
         else if (sessionStorage.getItem("dh_guest_authToken"))
         {
-            let firstName = sessionStorage.getItem('dh_guest_name')
-            let email = sessionStorage.getItem('dh_guest_email')
-            let phone = sessionStorage.getItem('dh_guest_phone')
+            let firstName = sessionStorage.getItem('dh_guest_name');
+            let email = sessionStorage.getItem('dh_guest_email');
+            let phone = sessionStorage.getItem('dh_guest_phone');
             if(sessionStorage.getItem('dh_guest_authToken') && firstName
                 && email && phone)
             {
@@ -88,7 +88,7 @@ export const UserProvider = ({ children }) => {
             }
             else
             {
-                setUser({ isLoggedIn: false })
+                setUser({ isLoggedIn: false });
             }
             setLoading(false);
         } 
@@ -105,8 +105,8 @@ export const UserProvider = ({ children }) => {
                         firstName = names.firstName;
                     }
                     setUser({ isLoggedIn: true, firstName, email, phoneNumber, isGuest: false });
-                    setGuestId(null)
-                    setGuestKeyId(null)
+                    setGuestId(null);
+                    setGuestKeyId(null);
                     console.log("user is logged into firebase")
                     clearGuestSessionStorage();
                 } else {
@@ -119,10 +119,17 @@ export const UserProvider = ({ children }) => {
     }, []);
 
     useEffect(() => {
-        if(!guestId || user?.isGuest || user?.isLoggedIn) return
+        const urlParams = new URLSearchParams(window.location.search);
+        const isEmailLink = urlParams.has("mode") && urlParams.get("mode") === "signIn";
+        if (!guestId || user?.isGuest || user?.isLoggedIn || isEmailLink) return;
+
+        console.log("guestId: ", guestId)
+        console.log("userIsGuest: ", user?.isGuest)
+        console.log("userIsLoggedIn: ", user?.isLoggedIn)
         fetchGuestData();
-        setUser({ isLoggedIn: false, isGuest: true })
-        window.location.href="/"
+        setUser({ isLoggedIn: false, isGuest: true });
+
+        if (!isEmailLink) window.location.href="/"; // if not email link, redirect to home page
     }, [user, guestId, guestKeyId])
     
     // useEffect(() => {
