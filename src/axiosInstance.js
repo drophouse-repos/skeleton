@@ -44,7 +44,6 @@ else if(sessionStorage.getItem('dh_guest_authToken'))
       return config;
     },
     (error) => {
-      console.log("axiosInstance error: ", error)
       return Promise.reject(error);
     }
   );

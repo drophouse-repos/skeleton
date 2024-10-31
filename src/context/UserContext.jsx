@@ -28,8 +28,6 @@ export const UserProvider = ({ children }) => {
         const id = Cookies.get('guestId');
         const keyId = Cookies.get('guestKeyId');
 
-        console.log("try to get guestId: ", id)
-
         const response = id ?
             await fetchSetOrGetGuest({salt_id: keyId, encrypted_data: id}) :
             await fetchSetOrGetGuest();
@@ -39,13 +37,11 @@ export const UserProvider = ({ children }) => {
         if (!id) {
             Cookies.set('guestId', data.user_id);
             Cookies.set('guestKeyId', data.key_id);
-            console.log("set guestId and guestKeyId: ", data.user_id, data.key_id);
         }
         
         const firstName = data.first_name;
         const email = data.email;
         const phoneNumber = data.phone_number;
-        console.log("do we get to setting sessionStorage?");
         sessionStorage.setItem('dh_guest_authToken', response.token);
         sessionStorage.setItem('dh_guest_name', firstName);
         sessionStorage.setItem('dh_guest_email', email);
@@ -107,7 +103,6 @@ export const UserProvider = ({ children }) => {
                     setUser({ isLoggedIn: true, firstName, email, phoneNumber, isGuest: false });
                     setGuestId(null);
                     setGuestKeyId(null);
-                    console.log("user is logged into firebase")
                     clearGuestSessionStorage();
                 } else {
                     setUser({ isLoggedIn: false, isGuest: false });
@@ -123,46 +118,11 @@ export const UserProvider = ({ children }) => {
         const isEmailLink = urlParams.has("mode") && urlParams.get("mode") === "signIn";
         if (!guestId || user?.isGuest || user?.isLoggedIn || isEmailLink) return;
 
-        console.log("guestId: ", guestId)
-        console.log("userIsGuest: ", user?.isGuest)
-        console.log("userIsLoggedIn: ", user?.isLoggedIn)
         fetchGuestData();
         setUser({ isLoggedIn: false, isGuest: true });
 
         if (!isEmailLink) window.location.href="/"; // if not email link, redirect to home page
     }, [user, guestId, guestKeyId])
-    
-    // useEffect(() => {
-    //     const fpPromise = FingerprintJS.load();
-    //     fpPromise
-    //       .then(fp => fp.get())
-    //       .then(async (result) => {
-    //         const visitorId = result.visitorId;
-    //         setFingerprint(visitorId)
-    //     });    
-    // }, [])
-
-    // useEffect(() => {
-    //     if(!guestId) return
-    //     if(user?.isGuest || user?.isLoggedIn) return
-
-    //     fetchSetOrGetGuest()
-    //     .then((response) => {
-    //         const data = response['user_data']
-    //         const firstName = data.first_name
-    //         const email = data.email
-    //         const phoneNumber = data.phone_number
-    //         const token = response.token
-    //         sessionStorage.setItem('dh_guest_authToken', token);
-    //         sessionStorage.setItem('dh_guest_name', firstName);
-    //         sessionStorage.setItem('dh_guest_email', email);
-    //         sessionStorage.setItem('dh_guest_phone', phoneNumber);
-    //         window.location.href="/"
-    //     })
-    //     .catch((error)=>{
-    //         console.log(error)
-    //     })
-    //   }, [user, guestId])
 
     const handleSignOut = async () => {
         try {

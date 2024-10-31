@@ -84,15 +84,11 @@ const ProductPage = () => {
 
   const guestDesignLimit = 5
   const updateGuestDesignCount = ()=>{
-    console.log("updateGuestDesignCount is called")
-    console.log("guest state: ", user?.isGuest, guestId, guestKeyId)
     if(user?.isGuest && guestId && guestKeyId)
     {
-      console.log("do we get in here?")
       fetchSetOrGetGuest({salt_id: guestKeyId, encrypted_data: guestId})
       .then((response)=>{
         const data = response['user_data']
-        console.log('design count ', data.browsed_images.length)
         setGuestDesignCount(data.browsed_images.length)
       })
       .catch((error)=>{
@@ -101,7 +97,6 @@ const ProductPage = () => {
     }
   }
   useEffect(() => {
-    console.log("ProductPage.jsx: updateGuestDesignCount is called")
     updateGuestDesignCount()
   }, [guestId, guestKeyId])
   useEffect(() => {
@@ -275,7 +270,6 @@ const ProductPage = () => {
   useEffect(() => {
     setToggled(false);
     setGuestDesignCount(prevKey => prevKey+1)
-    console.log("guestDesignCount: ", guestDesignCount)
   }, [generatedImage]);
   
   useEffect(() => {

@@ -248,10 +248,8 @@ export const createCheckoutSessionCart = async (data) => {
 
 export const fetchGetImage = async (request, setGeneratedImage, setEditedImage, navigate) =>{
     try {
-        console.log("fetchGetImage request: ", request)
         const response = await axiosInstance.post("/get_image", request);
         const data = response.data;
-        console.log("fetchGetImage data: ", data)
         if (response.status !== 200) throw new Error(data.message);
         setGeneratedImage({
             photo: `data:image/jpeg;base64,${data.photo}`,
@@ -400,9 +398,7 @@ export const fetchstatelist = async(selectedoption) => {
 
 export const fetchSetOrGetGuest = async(cookie) => {
     try {
-        console.log("fetchjs cookie: ", cookie)
         const response = await axiosInstance.post("/set-or-get-guest", cookie || {});
-        console.log("fetchjs response: ", response)
         const data = response.data;
         if (response.status !== 200) throw new Error('Failed to fetch Organisations');
         return data;
