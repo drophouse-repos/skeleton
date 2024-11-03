@@ -55,7 +55,7 @@ const AuthPage = () => {
           postAuthData({email, firstName, lastName, phoneNumber, navigate})
             .then(() => {
                 setAuthError('');
-                window.location.href = galleryPage ? '/product/gallery' : '/product'
+                //window.location.href = galleryPage ? '/product/gallery' : '/product'
             })
             .catch(error => {
                 console.error("Log in failed", error);
