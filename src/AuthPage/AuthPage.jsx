@@ -18,7 +18,7 @@ import { splitName } from '../utils';
 import { postAuthData } from '../utils/fetch';
 import { useUser } from "../context/UserContext";
 import { Orgcontext } from '../context/ApiContext';
-
+import { FaCopy } from 'react-icons/fa';
 // Add the isInAppBrowser function
 const isInAppBrowser = () => {
   const ua = navigator.userAgent || navigator.vendor || window.opera;
@@ -176,9 +176,9 @@ const AuthPage = () => {
     };
   
     return (
-      <div className="bg-white w-[80%] max-w-[400px] h-[85vh] w-10/12 grid content-center font-arsenal">
-        <div className="h-fit text-center">
-          <h1 className="mb-[2rem] text-[28px] text-black font-bold">Open in Browser</h1>
+      <div className="bg-white max-w-[400px] mx-auto px-4 py-8 font-arsenal">
+        <div className="text-center">
+          <h1 className="mb-8 text-2xl text-black font-bold">Open in Browser</h1>
           <p className="mb-8">
             We know it's frustrating, but we have some pretty cool stuff to show you, and it won't work here.
           </p>
@@ -188,8 +188,8 @@ const AuthPage = () => {
               <strong>Open in Browser</strong>.
             </p>
           </div>
-          <hr className="my-4" />
-          <div>
+          <Divider content="Or"></Divider>
+          <div className="mt-4">
             <p>You can also copy the link below and paste it into your browser:</p>
             <div className="mt-2 flex items-center">
               <input
@@ -200,9 +200,10 @@ const AuthPage = () => {
               />
               <button
                 onClick={copyLink}
-                className="ml-2 p-2 bg-blue-500 text-white rounded"
+                className="ml-2 p-2"
               >
-                Copy Link
+                {/* Replace button text with copy icon */}
+                <CopyIcon />
               </button>
             </div>
           </div>
