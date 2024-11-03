@@ -179,7 +179,7 @@ const AuthPage = () => {
         });
     };
     return (
-      <div className="bg-white max-w-[400px] mx-auto px-4 py-8 font-arsenal">
+      <div className="bg-white max-w-[400px] mx-auto px-4 py-8 font-arsenal mt-16">
         <div className="text-center">
           <h1 className="mb-8 text-2xl text-black font-bold">Open in Browser</h1>
           <p className="mb-8">
