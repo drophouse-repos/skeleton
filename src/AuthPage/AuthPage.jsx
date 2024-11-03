@@ -40,7 +40,6 @@ const AuthPage = () => {
   const [inAppBrowser, setInAppBrowser] = useState(false);
 
   useEffect(() => {
-    // Check if we are in an in-app browser on component mount
     setInAppBrowser(isInAppBrowser());
   }, []);
 
@@ -96,7 +95,6 @@ const AuthPage = () => {
     const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
-      console.log('testing', result);
       setJustLoggedIn(true);
     } catch (error) {
       console.error('Error during Google Sign In:', error);
@@ -130,9 +128,8 @@ const AuthPage = () => {
   };
 
   const resendMagicLink = () => {
-    if (email && resendTimer === 0) {
+    if (email && resendTimer === 0) 
       sendMagicLink(email); 
-    }
   };
 
   useEffect(() => {
@@ -176,7 +173,6 @@ const AuthPage = () => {
           <h1 className='mb-[2rem] text-[28px] text-black font-bold'>Open in Your Browser</h1>
           <p className='mb-4'>For the best experience, please open this link in your device's browser.</p>
           <div className='mb-4'>
-            {/** Instructions based on device type **/}
             {/iphone|ipad|ipod/i.test(navigator.userAgent) ? (
               <p>
                 Tap the <strong>Share</strong> icon and select <strong>Open in Safari</strong>.
@@ -187,15 +183,6 @@ const AuthPage = () => {
               </p>
             )}
           </div>
-          <button
-            className='emailBtn'
-            onClick={() => {
-              // Attempt to open the link in the default browser
-              window.location.href = window.location.href;
-            }}
-          >
-            Open in Browser
-          </button>
         </div>
       </div>
     );
