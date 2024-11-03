@@ -191,7 +191,7 @@ const AuthPage = () => {
           <Divider content="Or"></Divider>
           <div className="mt-4">
             <p>You can also copy the link below and paste it into your browser:</p>
-            <div className="mt-2 flex items-center">
+            {/* <div className="mt-2 flex items-center">
               <input
                 type="text"
                 readOnly
@@ -205,7 +205,7 @@ const AuthPage = () => {
                 {/* Replace button text with copy icon */}
                 <CopyIcon />
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
