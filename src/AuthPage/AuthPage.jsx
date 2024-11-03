@@ -35,6 +35,7 @@ const AuthPage = () => {
   const [authError, setAuthError] = useState('');
   const [showMessage, setShowMessage] = useState(false);
   const [resendTimer, setResendTimer] = useState(0);
+  const [copied, setCopied] = useState(false);
 
   // New state to track if in-app browser is detected
   const [inAppBrowser, setInAppBrowser] = useState(false);
@@ -168,13 +169,15 @@ const AuthPage = () => {
     const copyLink = () => {
       navigator.clipboard.writeText(currentLink)
         .then(() => {
-          alert('Link copied to clipboard');
+          setCopied(true);
+          setTimeout(() => {
+            setCopied(false);
+          }, 2000);
         })
         .catch(err => {
           console.error('Failed to copy: ', err);
         });
     };
-  
     return (
       <div className="bg-white max-w-[400px] mx-auto px-4 py-8 font-arsenal">
         <div className="text-center">
@@ -189,25 +192,27 @@ const AuthPage = () => {
             </p>
           </div>
           <Divider content="Or"></Divider>
-            <div className="mt-4">
-            <p>You can also copy the link below and paste it into your browser:</p>
-            <div className="mt-2 flex items-center">
-              <input
-              type="text"
-              readOnly
-              value={currentLink}
-              className="border p-2 flex-1"
-            />
-            <button
-              onClick={copyLink}
-              className="ml-2 p-2"
-              aria-label="Copy Link"
-            >
-              {/* Use the FaCopy icon */}
-              <FaCopy size={24} />
-            </button>
-    </div>
-</div>
+                <div className="mt-4">
+                <p>You can also copy the link below and paste it into your browser:</p>
+                <div className="mt-2 flex items-center">
+                  <input
+                    type="text"
+                    readOnly
+                    value={currentLink}
+                    className="border p-2 flex-1"
+                  />
+                  <button
+                    onClick={copyLink}
+                    className="ml-2 p-2"
+                    aria-label="Copy Link"
+                  >
+                    <FaCopy size={24} />
+                  </button>
+                </div>
+                {copied && (
+                  <p className="text-green-500 mt-2">Link copied to clipboard!</p>
+                )}
+              </div>
         </div>
       </div>
     );
