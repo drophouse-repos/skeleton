@@ -22,7 +22,7 @@ import { Orgcontext } from '../context/ApiContext';
 // Add the isInAppBrowser function
 const isInAppBrowser = () => {
   const ua = navigator.userAgent || navigator.vendor || window.opera;
-  return /instagram|snapchat|fbav|fban|facebook|line/i.test(ua);
+  return /instagram|snapchat|linkedin|fbav|fban|facebook|line/i.test(ua);
 };
 
 const AuthPage = () => {
@@ -167,28 +167,17 @@ const AuthPage = () => {
 
   // Render a prompt if in an in-app browser
   if (inAppBrowser) {
-    const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-    const isAndroid = /android/i.test(navigator.userAgent);
-    
     return (
       <div className="bg-white w-[80%] max-w-[400px] h-[85vh] w-10/12 grid content-center">
         <div className='h-[20vh]'>
-          <img
-            className='h-[60px] md:h-[100px] mx-auto'
-            src={DropHouseLogo}
-            alt="Drop House Logo"
-            onClick={() => navigate('/')}
-          />
+          <img className='h-[60px] md:h-[100px] mx-auto' src={DropHouseLogo} alt="Drop House Logo" onClick={() => navigate('/')}/>
         </div>
         <div className='h-fit text-center'>
-          <h1 className='mb-[2rem] text-[28px] text-black font-bold'>
-            Open in Your Browser
-          </h1>
-          <p className='mb-4'>
-            For the best experience, please open this link in your device's browser.
-          </p>
+          <h1 className='mb-[2rem] text-[28px] text-black font-bold'>Open in Your Browser</h1>
+          <p className='mb-4'>For the best experience, please open this link in your device's browser.</p>
           <div className='mb-4'>
-            {isIOS ? (
+            {/** Instructions based on device type **/}
+            {/iphone|ipad|ipod/i.test(navigator.userAgent) ? (
               <p>
                 Tap the <strong>Share</strong> icon and select <strong>Open in Safari</strong>.
               </p>
@@ -201,29 +190,11 @@ const AuthPage = () => {
           <button
             className='emailBtn'
             onClick={() => {
-              if (isAndroid) {
-                // Attempt to open the link using an Intent URL on Android
-                const androidIntentUrl = `intent://${window.location.host}${window.location.pathname}${window.location.search}#Intent;scheme=https;package=com.android.chrome;end`;
-                window.location.href = androidIntentUrl;
-              } else if (isIOS) {
-                // For iOS, use window.open (limited effectiveness)
-                window.open(window.location.href, '_blank');
-              } else {
-                // For other devices, use window.open
-                window.open(window.location.href, '_blank');
-              }
+              // Attempt to open the link in the default browser
+              window.location.href = window.location.href;
             }}
           >
             Open in Browser
-          </button>
-          <button
-            className='copyLinkBtn'
-            onClick={() => {
-              navigator.clipboard.writeText(window.location.href);
-              alert('Link copied to clipboard. Please paste it into your browser.');
-            }}
-          >
-            Copy Link
           </button>
         </div>
       </div>
