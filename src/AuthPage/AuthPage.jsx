@@ -199,7 +199,7 @@ const AuthPage = () => {
                     type="text"
                     readOnly
                     value={currentLink}
-                    className="border p-2 flex-1 text-gray-500"
+                    className="border p-2 flex-1 text-gray-500 appearance-none"
                   />
                   <button
                     onClick={copyLink}
