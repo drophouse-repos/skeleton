@@ -19,6 +19,12 @@ import { postAuthData } from '../utils/fetch';
 import { useUser } from "../context/UserContext";
 import { Orgcontext } from '../context/ApiContext';
 
+// Add the isInAppBrowser function
+const isInAppBrowser = () => {
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
+  return /instagram|snapchat|fbav|fban|facebook|line/i.test(ua);
+};
+
 const AuthPage = () => {
   const { orgDetails, galleryPage } = useContext(Orgcontext)
   const auth = getAuth(app);
@@ -30,12 +36,25 @@ const AuthPage = () => {
   const [showMessage, setShowMessage] = useState(false);
   const [resendTimer, setResendTimer] = useState(0);
 
+  // New state to track if in-app browser is detected
+  const [inAppBrowser, setInAppBrowser] = useState(false);
+
+  useEffect(() => {
+    // Check if we are in an in-app browser on component mount
+    setInAppBrowser(isInAppBrowser());
+  }, []);
+
   useEffect(() => {
     if(user.isLoggedIn && process.env.REACT_APP_AUTHTYPE_SAML === 'true')
       navigate(galleryPage ? '/product/gallery' : '/product')
   }, [user])
 
   useEffect(() => {
+    if (inAppBrowser) {
+      // Skip authentication logic if in an in-app browser
+      return;
+    }
+
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user && justLoggedIn) {
         const { displayName, email, phoneNumber } = user;       
@@ -67,9 +86,13 @@ const AuthPage = () => {
     });
     
     return () => unsubscribe();
-  }, [justLoggedIn]);
+  }, [justLoggedIn, inAppBrowser]); // Include inAppBrowser in dependencies
 
   const signInWithGoogle = async () => {
+    if (inAppBrowser) {
+      return;
+    }
+
     const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
@@ -81,6 +104,10 @@ const AuthPage = () => {
   };
 
   const sendMagicLink = async (email) => {
+    if (inAppBrowser) {
+      return;
+    }
+
     try {
       const actionCodeSettings = {
         url: `${window.location.origin}/auth`,
@@ -109,6 +136,11 @@ const AuthPage = () => {
   };
 
   useEffect(() => {
+    if (inAppBrowser) {
+      // Skip email link sign-in if in an in-app browser
+      return;
+    }
+
     if (isSignInWithEmailLink(auth, window.location.href)) {
       let email = window.localStorage.getItem('emailForSignIn');
       if (!email) {
@@ -123,7 +155,7 @@ const AuthPage = () => {
           console.error('Error during email link sign-in:', error);
         });
     }
-  }, []);
+  }, [inAppBrowser]); // Include inAppBrowser in dependencies
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -132,6 +164,42 @@ const AuthPage = () => {
   const handleMagicLinkSignIn = () => {
     sendMagicLink(email);
   };
+
+  // Render a prompt if in an in-app browser
+  if (inAppBrowser) {
+    return (
+      <div className="bg-white w-[80%] max-w-[400px] h-[85vh] w-10/12 grid content-center">
+        <div className='h-[20vh]'>
+          <img className='h-[60px] md:h-[100px] mx-auto' src={DropHouseLogo} alt="Drop House Logo" onClick={() => navigate('/')}/>
+        </div>
+        <div className='h-fit text-center'>
+          <h1 className='mb-[2rem] text-[28px] text-black font-bold'>Open in Your Browser</h1>
+          <p className='mb-4'>For the best experience, please open this link in your device's browser.</p>
+          <div className='mb-4'>
+            {/** Instructions based on device type **/}
+            {/iphone|ipad|ipod/i.test(navigator.userAgent) ? (
+              <p>
+                Tap the <strong>Share</strong> icon and select <strong>Open in Safari</strong>.
+              </p>
+            ) : (
+              <p>
+                Tap the <strong>Menu</strong> button and select <strong>Open in Browser</strong>.
+              </p>
+            )}
+          </div>
+          <button
+            className='emailBtn'
+            onClick={() => {
+              // Attempt to open the link in the default browser
+              window.location.href = window.location.href;
+            }}
+          >
+            Open in Browser
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (user.isLoggedIn) {
     return (
@@ -168,6 +236,7 @@ const AuthPage = () => {
       </div>
     );
   }
+
   return (
     <div className="bg-white w-[80%] max-w-[400px] h-[85vh] w-10/12 grid content-center">
       <div className='h-[20vh]'>
@@ -212,6 +281,5 @@ const AuthPage = () => {
     </div>
   );
 };
-
 
 export default AuthPage;
