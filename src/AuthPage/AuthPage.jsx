@@ -189,7 +189,25 @@ const AuthPage = () => {
             </p>
           </div>
           <Divider content="Or"></Divider>
-    
+            <div className="mt-4">
+            <p>You can also copy the link below and paste it into your browser:</p>
+            <div className="mt-2 flex items-center">
+              <input
+              type="text"
+              readOnly
+              value={currentLink}
+              className="border p-2 flex-1"
+            />
+            <button
+              onClick={copyLink}
+              className="ml-2 p-2"
+              aria-label="Copy Link"
+            >
+              {/* Use the FaCopy icon */}
+              <FaCopy size={24} />
+            </button>
+    </div>
+</div>
         </div>
       </div>
     );
