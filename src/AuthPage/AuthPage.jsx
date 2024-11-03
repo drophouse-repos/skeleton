@@ -166,22 +166,19 @@ const AuthPage = () => {
   if (inAppBrowser) {
     return (
       <div className="bg-white w-[80%] max-w-[400px] h-[85vh] w-10/12 grid content-center">
-        <div className='h-[20vh]'>
-          <img className='h-[60px] md:h-[100px] mx-auto' src={DropHouseLogo} alt="Drop House Logo" onClick={() => navigate('/')}/>
-        </div>
-        <div className='h-fit text-center'>
-          <h1 className='mb-[2rem] text-[28px] text-black font-bold'>Open in Your Browser</h1>
-          <p className='mb-4'>For the best experience, please open this link in your device's browser.</p>
-          <div className='mb-4'>
-            {/iphone|ipad|ipod/i.test(navigator.userAgent) ? (
-              <p>
-                Tap the <strong>Share</strong> icon and select <strong>Open in Safari</strong>.
-              </p>
-            ) : (
-              <p>
-                Tap the <strong>Menu</strong> button and select <strong>Open in Browser</strong>.
-              </p>
-            )}
+        <div className="h-fit text-center">
+          <h1 className="mb-[2rem] text-[28px] text-black font-bold">Open in Your Browser</h1>
+          <p className="mb-4">
+            For the best experience, please open this link in your device's browser.
+          </p>
+          <div className="mb-4">
+            <p>
+              Tap the <strong>three dots</strong> <span>•••</span> at the top right corner and select{' '}
+              <strong>Open in Browser</strong>.
+            </p>
+            <p className="mt-2">
+              If you don't see the three dots, use your browser's menu to open this link.
+            </p>
           </div>
         </div>
       </div>
