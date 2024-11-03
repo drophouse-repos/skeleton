@@ -169,15 +169,15 @@ const AuthPage = () => {
         <div className="h-fit text-center">
           <h1 className="mb-[2rem] text-[28px] text-black font-bold">Open in Your Browser</h1>
           <p className="mb-4">
-            For the best experience, please open this link in your device's browser.
+            We know its frustrating, but we have some pretty cool tech, and it won't work here.
           </p>
           <div className="mb-4">
             <p>
               Tap the <strong>three dots</strong> <span>•••</span> at the top right corner and select{' '}
-              <strong>Open in Browser</strong>.
+              <strong>Open in Browser</strong>
             </p>
             <p className="mt-2">
-              If you don't see the three dots, use your browser's menu to open this link.
+              If that doesn't work, click here to copy the link and paste it into chrome/safari.
             </p>
           </div>
         </div>
