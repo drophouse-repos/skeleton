@@ -23,7 +23,7 @@ const AuthPage = () => {
   const { orgDetails, galleryPage } = useContext(Orgcontext)
   const auth = getAuth(app);
   const navigate = useNavigate();
-  const { user, setUser, clearGuestSessionStorage } = useUser();
+  const { user, setUser, clearGuestSessionStorage, handleSignOut } = useUser();
   const [email, setEmail] = useState('');
   const [justLoggedIn, setJustLoggedIn] = useState(false);
   const [authError, setAuthError] = useState('');
@@ -50,17 +50,17 @@ const AuthPage = () => {
         }
         setUser({ isLoggedIn: true, firstName, email, phoneNumber, isGuest: false });
         clearGuestSessionStorage();
-
+        
         user.getIdToken(true).then(() => {
           postAuthData({email, firstName, lastName, phoneNumber, navigate})
-            .then(() => {
-                setAuthError('');
-                window.location.href = galleryPage ? '/product/gallery' : '/product'
+          .then(() => {
+            setAuthError('');
+            navigate('/product')
             })
             .catch(error => {
                 console.error("Log in failed", error);
                 setAuthError('Failed to update user authentication data. Please try again.');
-                signOut();
+                handleSignOut();
             });
         });
       } 
@@ -73,7 +73,6 @@ const AuthPage = () => {
     const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
-      console.log('testing', result);
       setJustLoggedIn(true);
     } catch (error) {
       console.error('Error during Google Sign In:', error);
@@ -87,7 +86,7 @@ const AuthPage = () => {
         handleCodeInApp: true,
       };
       await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-      window.localStorage.setItem('emailForSignIn', email);
+      localStorage.setItem('emailForSignIn', email);
       setShowMessage(true); 
       setResendTimer(30); 
       const interval = setInterval(() => {
@@ -110,13 +109,13 @@ const AuthPage = () => {
 
   useEffect(() => {
     if (isSignInWithEmailLink(auth, window.location.href)) {
-      let email = window.localStorage.getItem('emailForSignIn');
+      let email = localStorage.getItem('emailForSignIn');
       if (!email) {
         email = window.prompt('Please provide your email for confirmation');
       }
       signInWithEmailLink(auth, email, window.location.href)
         .then((result) => {
-          window.localStorage.removeItem('emailForSignIn');
+          localStorage.removeItem('emailForSignIn');
           setJustLoggedIn(true);
         })
         .catch((error) => {
@@ -142,7 +141,7 @@ const AuthPage = () => {
         <div className='text-center h-fit'>
           <h1 className='authWelcomeTitle mb-[2rem] text-[32px] text-black font-bold'>You're logged in</h1>
           <p>Welcome, {user.firstName || "User"}!</p>
-          <button className='mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' onClick={signOut}>
+          <button className='mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' onClick={handleSignOut}>
             Sign Out
           </button>
         </div>
@@ -169,12 +168,12 @@ const AuthPage = () => {
     );
   }
   return (
-    <div className="bg-white w-[80%] max-w-[400px] h-[85vh] w-10/12 grid content-center">
+    <div className="bg-white w-[80%] max-w-[400px] h-[85vh] w-10/12 mt-[5vh] grid content-center">
       <div className='h-[20vh]'>
         <img className='h-[60px] md:h-[100px] mx-auto' src={DropHouseLogo} alt="drop house logo" onClick={() => navigate('/')}/>
       </div>
       <div className='h-fit'>
-        <h1 className='mb-[2rem] text-[32px] text-black font-bold'>Sign In to Design Now</h1>
+        <h1 className='mb-[2rem] text-[32px] text-black font-bold'>Sign In to Continue</h1>
         <button className='loginBtn' onClick={signInWithGoogle}>
           <img className="loginBtnIcon" src={GoogleIcon} alt="google icon" />
           <span>Continue with Google</span>

@@ -32,22 +32,6 @@ if (process.env.REACT_APP_AUTHTYPE_SAML === 'true') {
     }
   );
 }
-else if(sessionStorage.getItem('dh_guest_authToken'))
-{
-  axiosInstance.interceptors.request.use(
-    async (config) => {
-      const token = sessionStorage.getItem('dh_guest_authToken');
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-        config.headers['X-Bearer'] = 'Guest'
-      }
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
-}
 else
 {
   axiosInstance.interceptors.request.use(
@@ -57,6 +41,12 @@ else
         const token = await user.getIdToken();
         config.headers.Authorization = `Bearer ${token}`;
         config.headers['X-Bearer'] = 'Alumni'
+      }
+      else if (sessionStorage.getItem('dh_guest_authToken'))
+      {
+        const token = sessionStorage.getItem('dh_guest_authToken');
+        config.headers.Authorization = `Bearer ${token}`;
+        config.headers['X-Bearer'] = 'Guest'
       }
       return config;
     },
