@@ -8,15 +8,6 @@ const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_BACKBONE, 
 });
 
-export const getUserToken = async () => {
-  const user = auth.currentUser;
-  if (user) {
-    const token = await user.getIdToken();
-    return token;
-  }
-  return null; 
-};
-
 if (process.env.REACT_APP_AUTHTYPE_SAML === 'true') {
   axiosInstance.interceptors.request.use(
     async (config) => {
