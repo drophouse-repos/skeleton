@@ -22,6 +22,7 @@ import { fetchCartAndFavNumber } from "../utils/fetch";
 import NavBarModal from "./NavBarModal";
 import { Orgcontext } from "../context/ApiContext";
 import { updateFavicon } from '../utils';
+
 export default function NavBar() {
   const { orgDetails,env } = useContext(Orgcontext)
   const [navbarHide, setNavbarHide] = useState(false);
@@ -29,7 +30,6 @@ export default function NavBar() {
   const [isModalOpen, setModalOpen] = useState(false);
   const { user, handleSignOut } = useUser();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
   const { favNumber, setFavNumber, cartNumber, setCartNumber,menuOpen, setMenuOpen } = useContext(AppContext);
   const onMenuClose = () => {
     setMenuOpen(false);
@@ -41,24 +41,21 @@ export default function NavBar() {
         fetchCartAndFavNumber().then((data) => {
           setCartNumber(data.cart_number);
           setFavNumber(data.liked_number)
-          setLoading(false);
         })
         .catch((error) => {
           setCartNumber(0);
           setFavNumber(0)
           console.error(error)
-          setLoading(false)
         })
       }
     };
-    setLoading(true)
     syncCartAndFav();
   }, [user]);
 
   const { favicon } = useContext(Orgcontext)
 	useEffect(() => {
-		updateFavicon(favicon);
-	  }, []);
+    updateFavicon(favicon);
+  }, []);
   
   function MenuItem({ icon, text, href }) {
     return (

@@ -83,13 +83,15 @@ const ProductPage = () => {
   const [guestDesignCount, setGuestDesignCount] = useState(0)
 
   const guestDesignLimit = 5
-  const updateGuestDesignCount = ()=>{
+  const updateGuestDesignCount = () => {
     if(user?.isGuest && guestId && guestKeyId)
     {
       fetchSetOrGetGuest({salt_id: guestKeyId, encrypted_data: guestId})
       .then((response)=>{
         const data = response['user_data']
-        setGuestDesignCount(data.browsed_images.length)
+        if (data.browsed_images) {
+          setGuestDesignCount(data.browsed_images.length)
+        }
       })
       .catch((error)=>{
         console.log(error)
@@ -269,7 +271,6 @@ const ProductPage = () => {
 
   useEffect(() => {
     setToggled(false);
-    setGuestDesignCount(prevKey => prevKey+1)
   }, [generatedImage]);
   
   useEffect(() => {
@@ -330,6 +331,8 @@ const ProductPage = () => {
           setShowMessageBanner(true);
           setBannerKey(prevKey => prevKey + 1);
           return;
+        } else {
+          setGuestDesignCount(prev => prev + 1) // image successfully generated
         }
         setImageToCart(false);
       })

@@ -6,12 +6,11 @@ export async function postAuthData({email, firstName, lastName, phoneNumber, nav
             email,
             first_name: firstName,
             last_name: lastName,
-            phone_number: phoneNumber,
+            phone_number: phoneNumber
         };
         const response = await axiosInstance.post("/auth", payload);
         return {success: true};
     } catch (error) {
-        console.log("Error in postAuthData", error)
         return handleHttpError(error, navigate, 'postAuthData') 
     }
 }
