@@ -32,6 +32,7 @@ if (process.env.REACT_APP_AUTHTYPE_SAML === 'true') {
     }
   );
 }
+
 else
 {
   axiosInstance.interceptors.request.use(
