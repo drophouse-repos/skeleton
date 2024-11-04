@@ -191,28 +191,6 @@ const AuthPage = () => {
               <strong>Open in Browser</strong>.
             </p>
           </div>
-          <Divider content="Or"></Divider>
-                <div className="mt-8">
-                <p>Copy the link below and paste it into your browser:</p>
-                <div className="mt-2 flex items-center">
-                  <input
-                    type="text"
-                    readOnly
-                    value={currentLink}
-                    className="border p-2 flex-1 text-gray-500 appearance-none"
-                  />
-                  <button
-                    onClick={copyLink}
-                    className="ml-2 p-2"
-                    aria-label="Copy Link"
-                  >
-                    <FaCopy size={24} />
-                  </button>
-                </div>
-                {copied && (
-                  <p className="text-green-500 mt-2">Link copied to clipboard!</p>
-                )}
-              </div>
         </div>
       </div>
     );
