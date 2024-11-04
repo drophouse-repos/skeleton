@@ -581,7 +581,7 @@ const ProductPage = () => {
       )}
       <div className="m-auto max-w-screen-lg">
         <div className="w-full px-5">
-          <div className="text-left"><span className="ml-1 mr-2 text-lg" style={{fontFamily : `${orgDetails.font}`}}>Description Box</span><InfoButton link="/information/prompt" /></div>
+          <div className="text-left"><span className="ml-1 mr-2 text-lg" style={{fontFamily : `${orgDetails.font}`}}>Describe Your Designx</span><InfoButton link="/information/prompt" /></div>
           <textarea
             ref={promptBoxRef}
             name="prompt"
@@ -591,7 +591,7 @@ const ProductPage = () => {
             className="productPageInputbox shadow-lg rounded-md border"
             rows="2"
             style={{fontFamily : `${orgDetails.font}`, overflowY: 'auto', height: '70px',fontSize: '15px'}}
-            placeholder="Describe Your design..."
+            placeholder="type here or click on shuffle to get ideas..."
             disabled={isGenerating}
           />
           <div className="flex flex-row justify-end space-x-2 my-[1rem]">
