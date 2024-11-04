@@ -581,7 +581,7 @@ const ProductPage = () => {
       )}
       <div className="m-auto max-w-screen-lg">
         <div className="w-full px-5">
-          <div className="text-left"><span className="ml-1 mr-2 text-lg" style={{fontFamily : `${orgDetails.font}`}}>Describe Your Designx</span><InfoButton link="/information/prompt" /></div>
+          <div className="text-left"><span className="ml-1 mr-2 text-lg" style={{fontFamily : `${orgDetails.font}`}}>Describe Your Design</span><InfoButton link="/information/prompt" /></div>
           <textarea
             ref={promptBoxRef}
             name="prompt"
