@@ -18,6 +18,12 @@ import { splitName } from '../utils';
 import { postAuthData } from '../utils/fetch';
 import { useUser } from "../context/UserContext";
 import { Orgcontext } from '../context/ApiContext';
+import { FaCopy } from 'react-icons/fa';
+// Add the isInAppBrowser function
+const isInAppBrowser = () => {
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
+  return /instagram|snapchat|linkedin|fbav|fban|facebook|line/i.test(ua);
+};
 
 const AuthPage = () => {
   const { orgDetails, galleryPage } = useContext(Orgcontext)
@@ -29,6 +35,14 @@ const AuthPage = () => {
   const [authError, setAuthError] = useState('');
   const [showMessage, setShowMessage] = useState(false);
   const [resendTimer, setResendTimer] = useState(0);
+  const [copied, setCopied] = useState(false);
+
+  // New state to track if in-app browser is detected
+  const [inAppBrowser, setInAppBrowser] = useState(false);
+
+  useEffect(() => {
+    setInAppBrowser(isInAppBrowser());
+  }, []);
 
   useEffect(() => {
     if(user.isLoggedIn && process.env.REACT_APP_AUTHTYPE_SAML === 'true')
@@ -36,6 +50,11 @@ const AuthPage = () => {
   }, [user])
 
   useEffect(() => {
+    if (inAppBrowser) {
+      // Skip authentication logic if in an in-app browser
+      return;
+    }
+
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user && justLoggedIn) {
         const { displayName, email, phoneNumber } = user;       
@@ -67,9 +86,13 @@ const AuthPage = () => {
     });
     
     return () => unsubscribe();
-  }, [justLoggedIn]);
+  }, [justLoggedIn, inAppBrowser]); 
 
   const signInWithGoogle = async () => {
+    if (inAppBrowser) {
+      return;
+    }
+
     const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
@@ -80,6 +103,10 @@ const AuthPage = () => {
   };
 
   const sendMagicLink = async (email) => {
+    if (inAppBrowser) {
+      return;
+    }
+
     try {
       const actionCodeSettings = {
         url: `${window.location.origin}/auth`,
@@ -102,12 +129,16 @@ const AuthPage = () => {
   };
 
   const resendMagicLink = () => {
-    if (email && resendTimer === 0) {
+    if (email && resendTimer === 0) 
       sendMagicLink(email); 
-    }
   };
 
   useEffect(() => {
+    if (inAppBrowser) {
+      // Skip email link sign-in if in an in-app browser
+      return;
+    }
+
     if (isSignInWithEmailLink(auth, window.location.href)) {
       let email = localStorage.getItem('emailForSignIn');
       if (!email) {
@@ -122,7 +153,7 @@ const AuthPage = () => {
           console.error('Error during email link sign-in:', error);
         });
     }
-  }, []);
+  }, [inAppBrowser]); // Include inAppBrowser in dependencies
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -131,6 +162,39 @@ const AuthPage = () => {
   const handleMagicLinkSignIn = () => {
     sendMagicLink(email);
   };
+
+  if (inAppBrowser) {
+    const currentLink = window.location.href;
+  
+    const copyLink = () => {
+      navigator.clipboard.writeText(currentLink)
+        .then(() => {
+          setCopied(true);
+          setTimeout(() => {
+            setCopied(false);
+          }, 2000);
+        })
+        .catch(err => {
+          console.error('Failed to copy: ', err);
+        });
+    };
+    return (
+      <div className="bg-white max-w-[400px] mx-auto px-4 py-8 font-arsenal mt-16">
+        <div className="text-center">
+          <h1 className="mb-8 text-2xl text-black font-bold">Open in Browser</h1>
+          <p className="mb-8">
+            We know it's frustrating, but it won't work here.
+          </p>
+          <div className="mb-4">
+            <p>
+              Tap the <strong>three dots</strong> <span>•••</span> at the top right corner and select{' '}
+              <strong>Open in Browser</strong>.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (user.isLoggedIn) {
     return (
@@ -167,6 +231,7 @@ const AuthPage = () => {
       </div>
     );
   }
+
   return (
     <div className="bg-white w-[80%] max-w-[400px] h-[85vh] w-10/12 mt-[5vh] grid content-center">
       <div className='h-[20vh]'>
@@ -211,6 +276,5 @@ const AuthPage = () => {
     </div>
   );
 };
-
 
 export default AuthPage;
