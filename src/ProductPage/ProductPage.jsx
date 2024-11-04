@@ -34,7 +34,7 @@ const ProductPage = () => {
   const [modalSelectionMade, setModalSelectionMade] = useState(false);
   const [changeFromMug, setChangeFromMug] = useState(1);
   const {isOrderPlaced} = useContext(OrderContext)
-
+  const [isShuffleEnabled, setIsShuffleEnabled] = useState(false)
   if(isOrderPlaced)
   {
     window.location.href = "/user";
@@ -81,7 +81,29 @@ const ProductPage = () => {
   const [indexColor, setIndexColor] = useState([])
   const [productList, setProductList] = useState([]);
   const [guestDesignCount, setGuestDesignCount] = useState(0)
+  const toggleShuffleRandomly = () => {
+    setIsShuffleEnabled(Math.random() < 0.5); // 50% chance to enable shuffle
+  };
+  const ShufflePrompt = async () => {
+    try {
+      const response = await fetch('/prompts.json');
+      const prompts = await response.json();
 
+      if (Array.isArray(prompts) && prompts.length > 0) {
+        const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
+        return randomPrompt;
+      } else {
+        console.error("Prompts file is empty or not an array.");
+      }
+    } catch (error) {
+      console.error("Error fetching prompts:", error);
+    }
+  };
+  const handleShuffleClick = async () => {
+    const randomPrompt = await ShufflePrompt();
+    console.log('new suffled prompt -> ', randomPrompt)
+    setPrompt(randomPrompt);
+  };
   const guestDesignLimit = 5
   const updateGuestDesignCount = ()=>{
     if(user?.isGuest && guestId && guestKeyId)
@@ -96,6 +118,9 @@ const ProductPage = () => {
       })
     }
   }
+  useEffect(() => {
+    toggleShuffleRandomly();
+  }, []);
   useEffect(() => {
     updateGuestDesignCount()
   }, [guestId, guestKeyId])
@@ -610,7 +635,7 @@ const ProductPage = () => {
           <textarea
             ref={promptBoxRef}
             name="prompt"
-            value={localPrompt}
+            value={prompt}
             onChange={(e) => handlePromptChange(e)}
             onInput={handleInput}
             className="productPageInputbox shadow-lg rounded-md border"
@@ -620,6 +645,10 @@ const ProductPage = () => {
             disabled={isGenerating}
           />
           <div className="flex flex-row justify-end space-x-2 my-[1rem]">
+            {isShuffleEnabled && 
+              <button className="bg-orange-500 text-zinc-100 font-extrabold py-1 px-4 rounded-xl whitespace-nowrap"
+              onClick={handleShuffleClick}>Shuffle</button>
+            }
             <PromptBoxButton
               ref={generateBtnRef}
               text={"Design Now"}
