@@ -93,32 +93,7 @@ const App = () => {
 									{env?.AUTHTYPE_SAML === true && <SAMLResponseHandler />}
 									<SpeedInsights />
 									
-									{showInAppBrowserWarning ? (
-										<div className="in-app-warning" style={{
-												display: 'flex',
-												flexDirection: 'column',
-												justifyContent: 'center',
-												alignItems: 'center',
-												height: '100vh', // Full height of the viewport
-												padding: '20px',
-												backgroundColor: '#f8d7da',
-												color: '#721c24',
-												textAlign: 'center'
-										}}>
-												<h2>Better Experience in Browser</h2>
-												<p>It looks like you're using an in-app browser. For the best experience, please open this page in your default browser.</p>
-												<button onClick={openInBrowser} style={{
-														padding: '10px 20px',
-														backgroundColor: '#007bff',
-														color: '#fff',
-														border: 'none',
-														borderRadius: '5px',
-														cursor: 'pointer'
-												}}>
-														Open in Browser
-												</button>
-										</div>
-									) : (
+								
 										<div className='flexcenter relative'>
 											<NavBar />
 											<ScrollToTop />
@@ -142,7 +117,7 @@ const App = () => {
 											</Routes>
 											<Legal />
 										</div>
-									)}
+								
 								</OrderProvider>
 								</PricesProvider>
 							</MessageBannerProvider>

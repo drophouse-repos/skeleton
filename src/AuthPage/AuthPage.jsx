@@ -86,7 +86,7 @@ const AuthPage = () => {
     });
     
     return () => unsubscribe();
-  }, [justLoggedIn, inAppBrowser]); // Include inAppBrowser in dependencies
+  }, [justLoggedIn, inAppBrowser]); 
 
   const signInWithGoogle = async () => {
     if (inAppBrowser) {
@@ -183,7 +183,7 @@ const AuthPage = () => {
         <div className="text-center">
           <h1 className="mb-8 text-2xl text-black font-bold">Open in Browser</h1>
           <p className="mb-8">
-            We know it's frustrating, but we have some pretty cool stuff to show you, and it won't work here.
+            We know it's frustrating, but it won't work here.
           </p>
           <div className="mb-4">
             <p>
