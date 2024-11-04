@@ -24,7 +24,6 @@ const ProductPage = () => {
   const { product, orgDetails, galleryPage, greenmask,env } = useContext(Orgcontext);
   const [productListLoad, setProductListLoad] = useState([]);
   const [productImageList, setProductImageList] = useState([]);
-  const [tourOpen, setTourOpen] = useState(true);
   // const [productPopupIsShown, setProductPopupIsShown] = useState(false);
   // const [productPopupInfo, setProductPopupInfo] = useState({});
   // const [productPopupTitle, setProductPopupTitle] = useState("");
@@ -71,7 +70,7 @@ const ProductPage = () => {
   const [toggled, setToggled] = useState(false);
   const [isAskingRosie, setIsAskingRosie] = useState(false);
   const navigate = useNavigate();
-  const [isFirstVisit, setIsFirstVist] = useState(false);
+  const [isFirstVisit, setIsFirstVisit] = useState(false);
   const [isZoomEnabled, setIsZoomEnabled] = useState(false);
   const {priceMap, getPriceNum} = useContext(PricesContext);
   const [currentGalleryIndex, setCurrentGalleryIndex] = useState();
@@ -232,19 +231,17 @@ const ProductPage = () => {
   useEffect(() => {
     const firstVisit = localStorage.getItem("firstVisit");
     if (firstVisit == null) {
-      setIsFirstVist(true)
-    } else {
-      setIsFirstVist(false)
-    }
-    if (firstVisit == null) {
-      setIsFirstVist(true)
-    } else {
-      setIsFirstVist(false)
-    }
-    if (firstVisit) {
-      setTourOpen(false);
+      setIsFirstVisit(true)
     }
   }, []);
+
+  useEffect(() => {
+    if (isFirstVisit) {
+      disableScrolling();
+    } else {
+      enableScrolling();
+    }
+  }, [isFirstVisit])
 
   useEffect(() => {
     setToggled(false);
@@ -476,6 +473,14 @@ const ProductPage = () => {
   const generateBtnRef = useRef(null);
   const addToCartBtn = useRef(null);
 
+  const disableScrolling = () => {
+    document.body.style.overflow = 'hidden';
+  }
+
+  const enableScrolling = () => {
+    document.body.style.overflow = '';
+  }
+  
   const steps = [
     {
       title: "Type Description",
@@ -489,14 +494,14 @@ const ProductPage = () => {
     },
     {
       title: "Save Design",
-      description: "Tap the Heart Icon to save your design",
+      description: "Click the button to save your design",
       target: () => productGalleryRef.current.getSaveBtn,
     },
     {
       title: "Edit Design",
       placement:"top",
       description: 
-        <div className="w-[80vw] md:w-[28rem]">
+        <div className="w-[80vw] md:w-[20rem]">
           <img className="mx-auto w-[80%]" src={EditDesignTip} alt=""/>
           <span className="text-xl">Click here to reposition your design</span>
         </div>,
@@ -542,7 +547,7 @@ const ProductPage = () => {
   }
 
   return (
-    <div className={`pt-[4rem] md:pt-[6rem] w-[96vw] ${isZoomEnabled ? '' : 'touch-pan-y'}`}>
+    <div className={`pt-[4rem] md:pt-[4rem] w-[96vw] ${isZoomEnabled ? '' : 'touch-pan-y'}`}>
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"></meta>
       {showMessageBanner && <MessageBanner message={messageBannerText} keyTrigger={bannerKey} />}
       {isModalVisible && (
@@ -553,11 +558,10 @@ const ProductPage = () => {
         />
       )}
       <Tour
-        open={tourOpen}
+        open={isFirstVisit}
         onClose={() => {
-          localStorage.setItem("firstVisit", true);
-          setIsFirstVist(false)
-          setTourOpen(false);
+          localStorage.setItem("firstVisit", false);
+          setIsFirstVisit(false);
         }}
         steps={steps}
         indicatorsRender={(current, total) => (
@@ -581,7 +585,7 @@ const ProductPage = () => {
       )}
       <div className="m-auto max-w-screen-lg">
         <div className="w-full px-5">
-          <div className="text-left"><span className="ml-1 mr-2 text-lg" style={{fontFamily : `${orgDetails.font}`}}>Describe Your Design</span><InfoButton link="/information/prompt" /></div>
+          <div className="text-left mt-[1rem] md:pt-[1.2rem]"><span className="ml-1 mr-2 text-lg" style={{fontFamily : `${orgDetails.font}`}}>Describe Your Design</span><InfoButton link="/information/prompt" /></div>
           <textarea
             ref={promptBoxRef}
             name="prompt"
