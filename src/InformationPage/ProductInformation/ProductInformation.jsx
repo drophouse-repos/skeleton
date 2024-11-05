@@ -32,7 +32,6 @@ function ProductInformation(){
         const fetchData = async () => {
             const tshirtClip = await getFirstAsset('tshirt');
             const hoodieClip = await getFirstAsset('hoodie');
-            console.log(hoodieClip)
             setTshirt(tshirtClip);
             setHoodie(hoodieClip);
             setHoodieAvail(hoodieClip); // Set hoodie availability based on hoodieClip existence
