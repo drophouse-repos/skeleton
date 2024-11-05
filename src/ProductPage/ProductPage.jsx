@@ -526,11 +526,6 @@ const ProductPage = () => {
       target: () => generateBtnRef.current,
     },
     {
-      title: "Save Design",
-      description: "Click the button to save your design",
-      target: () => productGalleryRef.current.getSaveBtn,
-    },
-    {
       title: "Edit Design",
       placement:"top",
       description: 

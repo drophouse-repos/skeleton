@@ -34,7 +34,6 @@ class PromptInformation extends Component {
 
     navigateToDesign() {
         this.props.navigate('../product');
-
     }
 
     render() {
@@ -101,7 +100,6 @@ class PromptInformation extends Component {
                         </button>
                     )}
                 </div>
-
                 <div className="text-left text-xl my-[2rem]" style={{ fontFamily: `${orgDetails.font}` }}>Example</div>
                 <div className="text-lg text-justify mb-[4rem]" style={{ fontFamily: `${orgDetails.font}` }}>
                     "Create an image of a mystical forest at dusk. The scene should feature ancient trees with glowing moss, a small pond reflecting the twilight sky, and fireflies around the water. The mood is serene and enchanting. Colors should be mainly greens, blues, and purples, with a realistic yet slightly dreamy style."
