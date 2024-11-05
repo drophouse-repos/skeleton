@@ -21,7 +21,6 @@ function ProductInformation(){
     useEffect(() => {
         const  getFirstAsset =  (productName) => {
             const filteredProducts = landingpage.filter(item => item.SampleProduct_Name === productName);
-            console.log(productName, filteredProducts)
             const sampleproduct = Object.values(filteredProducts).map(item => {return {name : item.SampleProduct_Name, asset : item.SampleProduct_asset_front}});
             if (sampleproduct[0]) {
                 return sampleproduct[0].asset;
