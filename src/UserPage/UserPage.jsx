@@ -2,7 +2,6 @@ import { React, useEffect, useState, useContext, useRef } from "react";
 import "./UserPage.css";
 import { Modal, Input, Select } from "antd";
 import { FormOutlined, LeftCircleOutlined } from "@ant-design/icons";
-import { USStatesNames } from "../utils/USStateNames";
 import { fetchBasicUserInfo, fetchOrderHistory, fetchShippingInfo, fetchUpdateBasicInfo, fetchUpdateShippingInfo, fetchcountrylist, fetchstatelist } from "../utils/fetch";
 import { useNavigate } from 'react-router';
 import { PricesContext } from '../context/PricesContext';

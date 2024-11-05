@@ -20,6 +20,7 @@ import { OrderContext } from '../context/OrderContext';
 import { Orgcontext } from "../context/ApiContext";
 import { LeftCircleOutlined} from "@ant-design/icons";
 import { useUser } from "../context/UserContext";
+import { getRandomPrompt } from "../utils";
 
 const ProductPage = () => {
   const { user, guestId, guestKeyId } = useUser();
@@ -81,30 +82,11 @@ const ProductPage = () => {
   const [productList, setProductList] = useState([]);
   const [guestDesignCount, setGuestDesignCount] = useState(0)
   
-
-  const ShufflePrompt = async () => {
-    try {
-      const response = await fetch('/prompts.json');
-      const prompts = await response.json();
-
-      if (Array.isArray(prompts) && prompts.length > 0) {
-        const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
-        return randomPrompt;
-      } else {
-        console.error("Prompts file is empty or not an array.");
-      }
-    } catch (error) {
-      console.error("Error fetching prompts:", error);
-    }
+  
+  const handleShuffle= () => {
+    const randomPrompt = getRandomPrompt();
+    setLocalPrompt(randomPrompt);
   };
-
-
-  const handleShuffleClick = async () => {
-    const randomPrompt = await ShufflePrompt();
-    setPrompt(randomPrompt);
-  };
-
-
 
   const guestDesignLimit = 5
   const updateGuestDesignCount = () => {
@@ -643,7 +625,7 @@ const ProductPage = () => {
           <textarea
             ref={promptBoxRef}
             name="prompt"
-            value={prompt}
+            value={localPrompt}
             onChange={(e) => handlePromptChange(e)}
             onInput={handleInput}
             className="productPageInputbox shadow-lg rounded-md border"
@@ -653,9 +635,8 @@ const ProductPage = () => {
             disabled={isGenerating}
           />
           <div className="flex flex-row justify-end space-x-2 my-[1rem]">
-              <button className="bg-orange-500 text-zinc-100 font-extrabold py-1 px-4 rounded-xl whitespace-nowrap"
-              onClick={handleShuffleClick}>Shuffle</button>
-            
+            <button className="bg-orange-500 text-zinc-100 font-extrabold py-1 px-4 rounded-xl whitespace-nowrap"
+              onClick={handleShuffle}>Shuffle</button> 
             <PromptBoxButton
               ref={generateBtnRef}
               text={"Design Now"}

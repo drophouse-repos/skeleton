@@ -6,7 +6,6 @@ import MessageBanner from "../components/MessageBanner";
 import { OrderContext } from '../context/OrderContext';
 import { useNavigate } from 'react-router';
 import { fetchShippingInfo, fetchUpdateShippingInfo } from '../utils/fetch';
-import { USStatesNames } from '../utils/USStateNames';
 import { Modal, Input, Select } from "antd";
 import { FormOutlined } from "@ant-design/icons";
 import SelectableCard from '../components/SelectableCard';

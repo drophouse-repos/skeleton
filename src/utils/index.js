@@ -2,12 +2,16 @@ import FileSaver from 'file-saver';
 import { randomPrompts } from '../data';
 import { v4 as uuidv4 } from 'uuid';
 import { useContext } from 'react';
+import prompts from '../data/prompts.json'; // Adjust the path as needed
 
   export const getRandomPrompt = () => {
-    const randomIndex = Math.floor(Math.random() * randomPrompts.length);
-    const randomPrompt = randomPrompts[randomIndex];
-
-    return randomPrompt;
+    if (Array.isArray(prompts) && prompts.length > 0) {
+      const randomIndex = Math.floor(Math.random() * prompts.length);
+      return prompts[randomIndex];
+    } else {
+      console.error("Prompts file is empty or not an array.");
+      return null;
+    }
   };
 
   export async function downloadImage(photo) {
