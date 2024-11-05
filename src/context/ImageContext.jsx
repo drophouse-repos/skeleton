@@ -17,7 +17,7 @@ export const ImageProvider = ({ children }) => {
 
     useEffect(() => {
       const state = { isGenerating, generatedImage, isLiked, editedImage, thumbnail: thumbnailsrc, isImageToCart};
-      sessionStorage.setItem('imageState', JSON.stringify(state));
+      localStorage.setItem('imageState', JSON.stringify(state));
     }, [isGenerating, generatedImage, isLiked, editedImage, thumbnailsrc, isImageToCart]);
     
     useEffect(() => {

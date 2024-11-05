@@ -7,7 +7,7 @@ import { ImageContext } from "../context/ImageContext";
 import { PricesContext } from '../context/PricesContext';
 import { MessageBannerContext } from "../context/MessageBannerContext";
 import { Select, Tour } from "antd";
-import { fetchAskAi, fetchAddToCart, fetchGetImage, fetchStorePrompt, fetchSaveImg } from "../utils/fetch";
+import { fetchAskAi, fetchAddToCart, fetchGetImage, fetchStorePrompt, fetchSaveImg, fetchSetOrGetGuest } from "../utils/fetch";
 import ProductGallery from "../components/ProductGallery";
 import PromptBoxButton from "../components/PromptBoxButton";
 import ProductPopup from "../components/ProductPopup";
@@ -19,12 +19,14 @@ import app from "../firebase-config";
 import { OrderContext } from '../context/OrderContext';
 import { Orgcontext } from "../context/ApiContext";
 import { LeftCircleOutlined} from "@ant-design/icons";
+import { useUser } from "../context/UserContext";
+import { getRandomPrompt } from "../utils";
 
 const ProductPage = () => {
+  const { user, guestId, guestKeyId } = useUser();
   const { product, orgDetails, galleryPage, greenmask,env } = useContext(Orgcontext);
   const [productListLoad, setProductListLoad] = useState([]);
   const [productImageList, setProductImageList] = useState([]);
-  const [tourOpen, setTourOpen] = useState(true);
   // const [productPopupIsShown, setProductPopupIsShown] = useState(false);
   // const [productPopupInfo, setProductPopupInfo] = useState({});
   // const [productPopupTitle, setProductPopupTitle] = useState("");
@@ -71,13 +73,41 @@ const ProductPage = () => {
   const [toggled, setToggled] = useState(false);
   const [isAskingRosie, setIsAskingRosie] = useState(false);
   const navigate = useNavigate();
-  const [isFirstVisit, setIsFirstVist] = useState(false);
+  const [isFirstVisit, setIsFirstVisit] = useState(false);
   const [isZoomEnabled, setIsZoomEnabled] = useState(false);
   const {priceMap, getPriceNum} = useContext(PricesContext);
   const [currentGalleryIndex, setCurrentGalleryIndex] = useState();
   const [colorNameToIndex, setColorNameToIndex] = useState({});
   const [indexColor, setIndexColor] = useState([])
   const [productList, setProductList] = useState([]);
+  const [guestDesignCount, setGuestDesignCount] = useState(0)
+  
+  
+  const handleShuffle= () => {
+    const randomPrompt = getRandomPrompt();
+    setLocalPrompt(randomPrompt);
+  };
+
+  const guestDesignLimit = 5
+  const updateGuestDesignCount = () => {
+    if(user?.isGuest && guestId && guestKeyId)
+    {
+      fetchSetOrGetGuest({salt_id: guestKeyId, encrypted_data: guestId})
+      .then((response)=>{
+        const data = response['user_data']
+        if (data.browsed_images) {
+          setGuestDesignCount(data.browsed_images.length)
+        }
+      })
+      .catch((error)=>{
+        console.log(error)
+      })
+    }
+  }
+
+  useEffect(() => {
+    updateGuestDesignCount()
+  }, [guestId, guestKeyId])
   useEffect(() => {
     if(apparel === 'mug'){
       setSize('M')
@@ -232,24 +262,22 @@ const ProductPage = () => {
   useEffect(() => {
     const firstVisit = localStorage.getItem("firstVisit");
     if (firstVisit == null) {
-      setIsFirstVist(true)
-    } else {
-      setIsFirstVist(false)
-    }
-    if (firstVisit == null) {
-      setIsFirstVist(true)
-    } else {
-      setIsFirstVist(false)
-    }
-    if (firstVisit) {
-      setTourOpen(false);
+      setIsFirstVisit(true)
     }
   }, []);
 
   useEffect(() => {
+    if (isFirstVisit) {
+      disableScrolling();
+    } else {
+      enableScrolling();
+    }
+  }, [isFirstVisit])
+
+  useEffect(() => {
     setToggled(false);
   }, [generatedImage]);
-
+  
   useEffect(() => {
     const active = prompt && apparel && color && generatedImage && !isGenerating && !toggleActivated;
     setIsActive(!!active);
@@ -273,7 +301,7 @@ const ProductPage = () => {
     if (!isAskingRosie) {
       productGalleryRef.current.disenableZoomer();
       setIsAskingRosie(true);
-      fetchAskAi(localPrompt, setAiSuggestions, setAiTaskId, setDictionaryId, navigate)
+      fetchAskAi({ prompt: localPrompt, user_key: user.isGuest ? guestKeyId : null }, setAiSuggestions, setAiTaskId, setDictionaryId, navigate)
         .then(succeeded => {
           if (!succeeded.success) {
             if (succeeded.navigated)
@@ -299,7 +327,7 @@ const ProductPage = () => {
     let promptsArray = aiSuggestions.Prompts;
     const promptKey = Object.keys(promptsArray[promptIndex])[0];
     const aiChosenPrompt = promptsArray[promptIndex][promptKey];
-    fetchGetImage({ idx: promptIndex, prompt: aiChosenPrompt, task_id: taskId }, setGeneratedImage, setEditedImage, navigate)
+    fetchGetImage({ idx: promptIndex, prompt: aiChosenPrompt, task_id: taskId, user_key: user.isGuest ? guestKeyId : null }, setGeneratedImage, setEditedImage, navigate)
       .then(succeeded => {
         if (!succeeded.success) {
           if (succeeded.navigated)
@@ -308,6 +336,8 @@ const ProductPage = () => {
           setShowMessageBanner(true);
           setBannerKey(prevKey => prevKey + 1);
           return;
+        } else {
+          setGuestDesignCount(prev => prev + 1) // image successfully generated
         }
         setImageToCart(false);
       })
@@ -437,6 +467,9 @@ const ProductPage = () => {
   }
 
   const handleBuy = async () => {
+    if (user?.isGuest) {
+      navigate('/auth')
+    }
     if (!isActive) {
       handleCartBtnDisable();
       return
@@ -476,6 +509,14 @@ const ProductPage = () => {
   const generateBtnRef = useRef(null);
   const addToCartBtn = useRef(null);
 
+  const disableScrolling = () => {
+    document.body.style.overflow = 'hidden';
+  }
+
+  const enableScrolling = () => {
+    document.body.style.overflow = '';
+  }
+  
   const steps = [
     {
       title: "Type Description",
@@ -488,15 +529,10 @@ const ProductPage = () => {
       target: () => generateBtnRef.current,
     },
     {
-      title: "Save Design",
-      description: "Tap the Heart Icon to save your design",
-      target: () => productGalleryRef.current.getSaveBtn,
-    },
-    {
       title: "Edit Design",
       placement:"top",
       description: 
-        <div className="w-[80vw] md:w-[28rem]">
+        <div className="w-[80vw] md:w-[20rem]">
           <img className="mx-auto w-[80%]" src={EditDesignTip} alt=""/>
           <span className="text-xl">Click here to reposition your design</span>
         </div>,
@@ -542,7 +578,7 @@ const ProductPage = () => {
   }
 
   return (
-    <div className={`pt-[4rem] md:pt-[6rem] w-[96vw] ${isZoomEnabled ? '' : 'touch-pan-y'}`}>
+    <div className={`pt-[4rem] md:pt-[4rem] w-[96vw] ${isZoomEnabled ? '' : 'touch-pan-y'}`}>
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"></meta>
       {showMessageBanner && <MessageBanner message={messageBannerText} keyTrigger={bannerKey} />}
       {isModalVisible && (
@@ -553,11 +589,10 @@ const ProductPage = () => {
         />
       )}
       <Tour
-        open={tourOpen}
+        open={isFirstVisit}
         onClose={() => {
-          localStorage.setItem("firstVisit", true);
-          setIsFirstVist(false)
-          setTourOpen(false);
+          localStorage.setItem("firstVisit", false);
+          setIsFirstVisit(false);
         }}
         steps={steps}
         indicatorsRender={(current, total) => (
@@ -581,7 +616,10 @@ const ProductPage = () => {
       )}
       <div className="m-auto max-w-screen-lg">
         <div className="w-full px-5">
-          <div className="text-left"><span className="ml-1 mr-2 text-lg" style={{fontFamily : `${orgDetails.font}`}}>Describe Your Design</span><InfoButton link="/information/prompt" /></div>
+          <div className="grid grid-cols-2">
+            <div className="text-left mt-[1rem] md:pt-[1.2rem]"><span className="ml-1 mr-2 text-lg" style={{fontFamily : `${orgDetails.font}`}}>Describe Your Design</span><InfoButton link="/information/prompt" /></div>
+            {user?.isGuest && <div className="text-right hidden"><span className="ml-1 mr-2 text-lg text-red-800" style={{fontFamily : `${orgDetails.font}`}}>Designs left: {(guestDesignLimit - guestDesignCount) >= 0 ? (guestDesignLimit - guestDesignCount) : 0}</span></div>}
+          </div>
           <textarea
             ref={promptBoxRef}
             name="prompt"
@@ -591,16 +629,22 @@ const ProductPage = () => {
             className="productPageInputbox shadow-lg rounded-md border"
             rows="2"
             style={{fontFamily : `${orgDetails.font}`, overflowY: 'auto', height: '70px',fontSize: '15px'}}
-            placeholder="type here or click on shuffle to get ideas..."
+            placeholder="type here or shuffle for ideas.."
             disabled={isGenerating}
           />
           <div className="flex flex-row justify-end space-x-2 my-[1rem]">
             <PromptBoxButton
+              text={"Shuffle"}
+              onClick={handleShuffle}
+              className={"bg-orange-500"}
+            />
+            <PromptBoxButton
               ref={generateBtnRef}
               text={"Design Now"}
-              onClick={handleAskAI}
+              onClick={(user?.isGuest && guestDesignCount >= guestDesignLimit)
+                ? ()=> navigate('/auth') : handleAskAI}
               loading={isAskingRosie | isGenerating}
-              className={(shouldFlash && isFirstVisit) ? "flash" : ""}
+              className={(shouldFlash && isFirstVisit) ? "flash bg-teal-500 " : "bg-teal-500 "}
             />
           </div>
         </div>
@@ -669,7 +713,7 @@ const ProductPage = () => {
             <button
               style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`, fontSize: window.innerWidth <= 544 ? '17px': ''}}
               className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(env?.CART_ENABLED === true) ? (window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]` : `hidden`}`}
-              onClick={handleAddToCart} ref={addToCartBtn}
+              onClick={user?.isGuest ? () => navigate('/auth') : handleAddToCart} ref={addToCartBtn}
             >
               Add to Cart
             </button>

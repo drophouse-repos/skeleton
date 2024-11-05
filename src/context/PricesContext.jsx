@@ -19,6 +19,7 @@ export const PricesProvider=({children}) => {
 	    })
   	}, []);
 	  
+	
   	const getPriceNum = (apparel) => {
     	return priceMap[apparel] ? parseFloat(priceMap[apparel]) : parseFloat('0');
   	}

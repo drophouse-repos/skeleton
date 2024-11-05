@@ -6,12 +6,12 @@ export async function postAuthData({email, firstName, lastName, phoneNumber, nav
             email,
             first_name: firstName,
             last_name: lastName,
-            phone_number: phoneNumber,
+            phone_number: phoneNumber
         };
         const response = await axiosInstance.post("/auth", payload);
         return {success: true};
     } catch (error) {
-        return handleHttpError(error, navigate, 'postAuthData')
+        return handleHttpError(error, navigate, 'postAuthData') 
     }
 }
 
@@ -190,10 +190,10 @@ export const fetchSaveImg = async (item, navigate) => {
     }
 };
 
-export const fetchAskAi = async (prompt, setAiSuggestions, setAiTaskId, setDictionaryId, navigate) => {
-    if (prompt) {
+export const fetchAskAi = async (request, setAiSuggestions, setAiTaskId, setDictionaryId, navigate) => {
+    if (request.prompt) {
         try {
-            const response = await axiosInstance.post("/ask_gpt", { prompt });
+            const response = await axiosInstance.post("/ask_gpt", request);
             const data = response.data;
             setAiSuggestions(data.response);
             setAiTaskId(data.response.task_id);
@@ -395,7 +395,15 @@ export const fetchstatelist = async(selectedoption) => {
     }
 }
 
-
+export const fetchSetOrGetGuest = async(cookie) => {
+    try {
+        const response = await axiosInstance.post("/set-or-get-guest", cookie || {});
+        const data = response.data;
+        if (response.status !== 200) throw new Error('Failed to fetch Organisations');
+        return data;
+    } 
+    catch(err) { return handleHttpError(err, () => {}, 'fetchSetOrGetGuest')}
+}
 export const fetchOrganisationlist = async (navigate) => {
     try {
         const response = await axiosInstance.post("/organisation_list");

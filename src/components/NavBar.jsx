@@ -22,6 +22,7 @@ import { fetchCartAndFavNumber } from "../utils/fetch";
 import NavBarModal from "./NavBarModal";
 import { Orgcontext } from "../context/ApiContext";
 import { updateFavicon } from '../utils';
+
 export default function NavBar() {
   const { orgDetails,env } = useContext(Orgcontext)
   const [navbarHide, setNavbarHide] = useState(false);
@@ -29,7 +30,6 @@ export default function NavBar() {
   const [isModalOpen, setModalOpen] = useState(false);
   const { user, handleSignOut } = useUser();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
   const { favNumber, setFavNumber, cartNumber, setCartNumber,menuOpen, setMenuOpen } = useContext(AppContext);
   const onMenuClose = () => {
     setMenuOpen(false);
@@ -37,36 +37,26 @@ export default function NavBar() {
 
   useEffect(() => {
     const syncCartAndFav = () => {
-      if (user?.isLoggedIn) {
+      if (user?.isLoggedIn || user?.isGuest) {
         fetchCartAndFavNumber().then((data) => {
           setCartNumber(data.cart_number);
           setFavNumber(data.liked_number)
-          setLoading(false);
         })
         .catch((error) => {
           setCartNumber(0);
           setFavNumber(0)
           console.error(error)
-          setLoading(false)
         })
       }
     };
-    setLoading(true)
     syncCartAndFav();
   }, [user]);
 
   const { favicon } = useContext(Orgcontext)
 	useEffect(() => {
-		updateFavicon(favicon);
-	  }, []);
+    updateFavicon(favicon);
+  }, []);
   
-
-  const getCartItemNumber = () => {
-    return cartNumber;
-  };
-  const getLikedItemNumber = () => {
-    return favNumber;
-  };
   function MenuItem({ icon, text, href }) {
     return (
       <div
@@ -96,7 +86,7 @@ export default function NavBar() {
   }
 
   useEffect(() => {
-    if (!user.isLoggedIn && window.location.pathname === "/auth") {
+    if (!user.isLoggedIn && !user.isGuest && window.location.pathname === "/auth") {
       setNavbarHide(true);
     } else {
       setNavbarHide(false);
@@ -136,7 +126,7 @@ export default function NavBar() {
         </div>
         <div className="basis-1/3 space-x-4 px-2 md:space-x-8 text-end">
           <div className="flex flex-row justify-end items-center space-x-2 md:space-x-5">
-            {user.isLoggedIn && 
+            {(user.isLoggedIn || user.isGuest) && 
               <div className={`${(window.innerWidth >= 544) ? ``: `hidden`} inline md:space-x-2 whitespace-nowrap}`}>
               <HeartOutlined
               className={
@@ -149,11 +139,11 @@ export default function NavBar() {
                   className={
                     "inline md:scale-125 lg:scale-150 justify-self-center content-center items-center text-black" }
                 >
-                  {getLikedItemNumber()}
+                  {favNumber}
                 </div>
               </div>
             }
-            {user.isLoggedIn &&
+            {(user.isLoggedIn || user.isGuest) &&
               <div className={`${(window.innerWidth >= 544) ? ``: `hidden`} inline md:space-x-2 whitespace-nowrap ${(env?.CART_ENABLED === true) ? `` : `hidden`}`}>
                 <ShoppingCartOutlined
                   className={
@@ -166,11 +156,11 @@ export default function NavBar() {
                   className={
                     "inline md:scale-125 lg:scale-150 justify-self-center content-center items-center text-black" }
                 >
-                  {getCartItemNumber()}
+                  {cartNumber}
                 </div>
               </div>
             }
-            {isInLandingPage && !user.isLoggedIn && (
+            {!user.isGuest && isInLandingPage && !user.isLoggedIn && (
             <button
               className={
                 "bg-yellow-400 text-white text-xs px-2 py-1 rounded-full hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-50 transition ease-in-out duration-150 md:scale-100 lg:scale-125 mr-2" +
@@ -184,7 +174,7 @@ export default function NavBar() {
               Sign In
             </button>
           )}
-            {user.isLoggedIn && (
+            {(user.isLoggedIn || user.isGuest) && (
               <button
                 className={
                   "bg-transparent border bg-yellow-500 text-white text-xs px-2 py-1 rounded-full hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-50 transition ease-in-out duration-150 md:scale-100 lg:scale-125 mr-2" +
@@ -209,7 +199,7 @@ export default function NavBar() {
         </div>
       </div>
       <Drawer
-        title={user?.isLoggedIn ? `Hello ${user.firstName}` : "Menu"}
+        title={(user?.isLoggedIn || user?.isGuest) ? `Hello ${user.firstName}` : "Menu"}
         placement={"left"}
         closable={false}
         onClose={onMenuClose}
@@ -229,11 +219,13 @@ export default function NavBar() {
             My Profile
           </div>
 
-          <MenuItem
-            icon={<OrderIcon />}
-            text={"Account & Orders"}
-            href="/user"
-          />
+          {!user.isGuest && 
+            <MenuItem
+              icon={<OrderIcon />}
+              text={"Account & Orders"}
+              href="/user"
+            />
+          }
           <MenuItem icon={<HeartIcon />} text={"Saved for Later"} href="/fav" />
           <MenuItem
             icon={<ShopCartIcon />}

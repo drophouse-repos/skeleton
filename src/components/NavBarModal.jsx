@@ -56,35 +56,51 @@ const NavBarModal = ({ onClose, user, handleSignOut }) => {
           </h2>
         </div>
         
-        <h4 className="text-sm text-gray-900 mb-6 mt-2 text-center" style={{fontFamily : `${orgDetails.font}`}}>
-          {user.email}
-        </h4>
+        { !user.isGuest &&
+          <h4 className="text-sm text-gray-900 mb-6 mt-2 text-center" style={{fontFamily : `${orgDetails.font}`}}>
+            {user.email}
+          </h4>
+        }
         
-        
-        <div className="flex space-x-4 mb-1 justify-center">
-          <button
-            onClick={() => {
-                navigate("/user")
-                onClose()
-            }}
-            className="py-2 px-4 bg-blue-500 hover:bg-blue-600 rounded text-white text-lg font-bold"
-            style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
-          >
-            View Details
-          </button>
+        {user.isGuest ? (
+          <div className="flex space-x-4 mb-1 justify-center">
+            <button
+              onClick={() => {
+                  navigate("/auth")
+                  onClose()
+              }}
+              className="py-2 px-4 bg-blue-500 hover:bg-blue-600 rounded text-white text-lg font-bold mt-2"
+              style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
+            >
+              Login
+            </button>
+          </div>
+        ):(
+          <div className="flex space-x-4 mb-1 justify-center">
+            <button
+              onClick={() => {
+                  navigate("/user")
+                  onClose()
+              }}
+              className="py-2 px-4 bg-blue-500 hover:bg-blue-600 rounded text-white text-lg font-bold"
+              style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
+            >
+              View Details
+            </button>
+            <button
+              onClick={()=> {
+                  handleSignOut()
+                  navigate("/")
+                  onClose()
+              }}
+              className="py-2 px-4 border border-black text-black hover:bg-gray-100 rounded bg-transparent text-lg"
+              style={{fontFamily : `${orgDetails.font}`}}
+            >
+              Sign out
+            </button>
+          </div>
+        )}
   
-          <button
-            onClick={()=> {
-                handleSignOut()
-                navigate("/")
-                onClose()
-            }}
-            className="py-2 px-4 border border-black text-black hover:bg-gray-100 rounded bg-transparent text-lg"
-            style={{fontFamily : `${orgDetails.font}`}}
-          >
-            Sign out
-          </button>
-        </div>
       </div>
     </div>
   );

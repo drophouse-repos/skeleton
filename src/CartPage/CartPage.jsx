@@ -3,6 +3,7 @@ import "./CartPage.css";
 import { useEffect } from 'react'; // Fixed import
 import { fetchCartItems, fetchRemoveFromCart, fetchImageBase64 } from '../utils/fetch';
 import { useNavigate } from 'react-router';
+import { useUser } from "../context/UserContext";
 import { AppContext } from '../context/AppContext';
 import { ImageContext } from '../context/ImageContext';
 import { PricesContext } from '../context/PricesContext';
@@ -13,6 +14,7 @@ import { Loading } from '../components/LoadingComponent/Loading';
 import { Orgcontext } from '../context/ApiContext';
 
 function CartPage() {
+    const { user } = useUser();
     const [cartItems, setCartItems] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [updateTrigger, setUpdateTrigger] = useState(false);
@@ -139,9 +141,15 @@ function CartPage() {
                         </div>
                         <span className='mt-[1rem] md:mt-auto text-md col-auto md:text-lg justify-self-center md:justify-self-end lg:hidden' style={{fontFamily : `${orgDetails.font}`}}>Subtotal: ${totalPrice.toFixed(2)}</span>
                     </div>
-                    <div className='border-b-2 border-[#DDDDDD] grid grid-cols-1 justify-items-center lg:hidden'>
-                        <button className='mx-auto text-white h-[2rem] my-[1rem] rounded-3xl text-lg font-medium w-[10rem]' style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}} onClick={handleBuyAll}>Checkout</button>
-                    </div>
+                    {!user.isGuest ? (
+                        <div className='border-b-2 border-[#DDDDDD] grid grid-cols-1 justify-items-center lg:hidden'>
+                            <button className='mx-auto text-white h-[2rem] my-[1rem] rounded-3xl text-lg font-medium w-[10rem]' style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}} onClick={handleBuyAll}>Checkout</button>
+                        </div>
+                    ) : (
+                        <div className='border-b-2 border-[#DDDDDD] grid grid-cols-1 justify-items-center lg:hidden'>
+                            <button className='mx-auto text-white h-[2rem] my-[1rem] rounded-3xl text-lg font-medium w-[10rem]' style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}} onClick={()=>navigate('/auth')}>Login to Checkout</button>
+                        </div>
+                    )}
                     {cartItems.filter(item => !item.saveForLater).map((product, index) => (
                             <div className='flex flex-row border-b cursor-pointer' key={index} onClick={() => handleRowClick(product)}>
                             <div className='w-[10rem] p-[1rem] self-center'>
@@ -162,7 +170,11 @@ function CartPage() {
                     <div className='uppercase text-3xl font-medium border-b-2 border-gray-600 pb-[1rem]' style={{fontFamily : `${orgDetails.font}`}}>Summary</div>
                     <div className='uppercase text-2xl font-medium mt-[2rem]' style={{fontFamily : `${orgDetails.font}`}}>Subtotal</div>
                     <div className='uppercase text-xl font-normal text-slate-500' style={{fontFamily : `${orgDetails.font}`}}>$ {totalPrice.toFixed(2)}</div>
-                    <button className='mx-auto text-white h-[2rem] my-[1rem] rounded-3xl text-lg font-medium w-[10rem]' style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}} onClick={handleBuyAll}>Checkout</button>
+                    {!user.isGuest ? (
+                        <button className='mx-auto text-white h-[2rem] my-[1rem] rounded-3xl text-lg font-medium w-[10rem]' style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}} onClick={handleBuyAll}>Checkout</button>
+                    ) : (
+                        <button className='mx-auto text-white h-[2rem] my-[1rem] rounded-3xl text-lg font-medium w-[10rem]' style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}} onClick={()=>navigate('/auth')}>Login to Checkout</button>
+                    )}
                 </div>
                 <div className={`${cartItems.length === 0? '' : 'hidden'} w-full col-span-6`}>
                     <div className='text-2xl md:text-2xl mb-2 mt-16' style={{fontFamily : `${orgDetails.font}`}}>Shopping Cart is empty.</div>

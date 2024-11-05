@@ -2,12 +2,16 @@ import FileSaver from 'file-saver';
 import { randomPrompts } from '../data';
 import { v4 as uuidv4 } from 'uuid';
 import { useContext } from 'react';
+import prompts from '../data/prompts.json'; // Adjust the path as needed
 
   export const getRandomPrompt = () => {
-    const randomIndex = Math.floor(Math.random() * randomPrompts.length);
-    const randomPrompt = randomPrompts[randomIndex];
-
-    return randomPrompt;
+    if (Array.isArray(prompts) && prompts.length > 0) {
+      const randomIndex = Math.floor(Math.random() * prompts.length);
+      return prompts[randomIndex];
+    } else {
+      console.error("Prompts file is empty or not an array.");
+      return null;
+    }
   };
 
   export async function downloadImage(photo) {
@@ -53,7 +57,7 @@ import { useContext } from 'react';
 
   export const loadState = (key, defaultValue, storageName) => {
 	try {
-	  const savedState = sessionStorage.getItem(storageName);
+	  const savedState = localStorage.getItem(storageName);
 	  if (savedState) {
 		const state = JSON.parse(savedState);
 		return state[key] !== undefined ? state[key] : defaultValue;
@@ -61,7 +65,7 @@ import { useContext } from 'react';
 		return defaultValue;
 	  }
 	} catch (err) {
-	  console.error('Error reading from sessionStorage:', err);
+	  console.error('Error reading from localStorage:', err);
 	  return defaultValue;
 	}
   };
