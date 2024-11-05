@@ -467,6 +467,9 @@ const ProductPage = () => {
   }
 
   const handleBuy = async () => {
+    if (user?.isGuest) {
+      navigate('/auth')
+    }
     if (!isActive) {
       handleCartBtnDisable();
       return
