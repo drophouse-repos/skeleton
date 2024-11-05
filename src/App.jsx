@@ -92,8 +92,6 @@ const App = () => {
 									<Analytics />
 									{env?.AUTHTYPE_SAML === true && <SAMLResponseHandler />}
 									<SpeedInsights />
-									
-								
 										<div className='flexcenter relative'>
 											<NavBar />
 											<ScrollToTop />

@@ -19,8 +19,6 @@ function ProductInformation(){
     const [Hoodie, setHoodie] = useState();
     const [HoodieAvail, setHoodieAvail] = useState(true);
     useEffect(() => {
-        // const tshirtClips = landingpage.filter(item => item.SampleProduct_Name === 'tshirt').map(item => item[0].SampleProduct_asset);
-        // const hoodieClips = landingpage.filter(item => item.SampleProduct_Name === 'hoodie').map(item => item[0].SampleProduct_asset);
         const  getFirstAsset =  (productName) => {
             const filteredProducts = landingpage.filter(item => item.SampleProduct_Name === productName);
             const sampleproduct = Object.values(filteredProducts).map(item => {return {name : item.SampleProduct_Name,asset : item.SampleProduct_asset}});

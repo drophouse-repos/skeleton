@@ -3,6 +3,8 @@ import React, { Component, useContext } from "react";
 import { Carousel } from 'antd';
 import "./PromptInformation.css";
 import { Orgcontext } from "../../context/ApiContext";
+import { useNavigate } from 'react-router-dom';
+
 
 class PromptInformation extends Component {
     constructor(props) {
@@ -13,6 +15,7 @@ class PromptInformation extends Component {
         this.next = this.next.bind(this);
         this.previous = this.previous.bind(this);
         this.navigateToDesign = this.navigateToDesign.bind(this);
+
     }
 
     next() {
@@ -30,7 +33,8 @@ class PromptInformation extends Component {
     }
 
     navigateToDesign() {
-        window.open('../product', '_self');
+        this.props.navigate('../product');
+
     }
 
     render() {
@@ -109,8 +113,8 @@ class PromptInformation extends Component {
 
 const PromptInformationContainer = () => {
     const orgDetails = useContext(Orgcontext);
-
-    return <PromptInformation orgDetails={orgDetails} />;
+    const navigate = useNavigate();
+    return <PromptInformation orgDetails={orgDetails} navigate={navigate} />;
 }
 
 export default PromptInformationContainer;
