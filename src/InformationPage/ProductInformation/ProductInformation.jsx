@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import "./ProductInformation.css"
 import InformationTopNav from "../../components/InformationTopNav/InformationTopNav";
-// import Tshirt_Carbon_Clip from "../../assets/ProductInformationTshirt.png"
-import Hoodie_Clip from "../../assets/ProductInformationHoodie.jpg"
+import Tshirt_Brick_Clip from "../../assets/Tshirt_Brick_Clip.png"
+import Hoodie_Carbon_Clip from "../../assets/Hoodie_Carbon_Clip.png"
 import React, { useContext, useState } from "react";
 import HoodieSizeInfo from "../../assets/HoodieSizeInfo.jpg"
 import TshirtSizeInfo from "../../assets/TshirtSizeInfo.jpg"
@@ -21,7 +21,8 @@ function ProductInformation(){
     useEffect(() => {
         const  getFirstAsset =  (productName) => {
             const filteredProducts = landingpage.filter(item => item.SampleProduct_Name === productName);
-            const sampleproduct = Object.values(filteredProducts).map(item => {return {name : item.SampleProduct_Name,asset : item.SampleProduct_asset}});
+            console.log(productName, filteredProducts)
+            const sampleproduct = Object.values(filteredProducts).map(item => {return {name : item.SampleProduct_Name, asset : item.SampleProduct_asset_front}});
             if (sampleproduct[0]) {
                 return sampleproduct[0].asset;
             } else {
@@ -31,6 +32,7 @@ function ProductInformation(){
         const fetchData = async () => {
             const tshirtClip = await getFirstAsset('tshirt');
             const hoodieClip = await getFirstAsset('hoodie');
+            console.log(hoodieClip)
             setTshirt(tshirtClip);
             setHoodie(hoodieClip);
             setHoodieAvail(hoodieClip); // Set hoodie availability based on hoodieClip existence
@@ -112,13 +114,13 @@ function ProductInformation(){
 
     const  productInformation = [
         {
-            productImg: Tshirt_Carbon_Clip,
+            productImg: Tshirt_Brick_Clip,
             productTitle: "T-Shirt",
             productDesp: "Elevate any casual outfit with a Premium T-Shirt. This durable yet soft tee is made of ring-spun cotton and has a classy, structured fit thanks to its heavyweight material. Layer the t-shirt with a jacket or wear it on its own and create an effortlessly cool look.",
             productDetail: "100% combed ring-spun cotton; Carbon Grey is 60% cotton and 40% polyester; Fabric weight: 6.5 oz/yd² or 220 g/m²;Yarn diameter: 20 singles; Relaxed fit; Side-seamed construction; Ribbed lycra collar; Single-needle edgestitch 2 ⅖ cm"
         },
         {
-            productImg: Hoodie_Clip,
+            productImg: Hoodie_Carbon_Clip,
             productTitle: "Hoodie",
             productDesp: "This All-Over Print Recycled Unisex Hoodie has a relaxed fit and super soft cotton-feel fabric thanks to the recycled polyester and spandex blend. The brushed fleece inside makes this hoodie a true wardrobe favorite.",
             productDetail: "95% recycled polyester, 5% spandex; Fabric weight may vary by 5%: 9.08 oz./yd.² or 308 g/m²; Soft cotton-feel fabric face; Brushed fleece fabric inside; Double-lined hood with design on both sides; Unisex style; White or black drawstrings; Area for a custom logo on the inside of the lower hem; Overlock seams; Printed, cut, and hand-sewn by our expert in-house team; Fabric is OEKO-TEX 100 standard and Global Recycled Standard certified"
