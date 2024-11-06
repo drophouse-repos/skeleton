@@ -1,7 +1,7 @@
 import { React, useContext, useState, useEffect } from "react";
 import { Orgcontext } from "../context/ApiContext";
 export default function ProductColorFooter({ currentIndex, onFooterClick , apparel}) {    
-    const { product } = useContext(Orgcontext);
+    const { greenmask, product } = useContext(Orgcontext);
     const [productListLoad, setProductListLoad] = useState([]);
     const [productImageList, setProductImageList] = useState([]);
   
@@ -12,10 +12,13 @@ export default function ProductColorFooter({ currentIndex, onFooterClick , appar
     }, [product]);
     useEffect(() => {
       if (productListLoad.length > 0 && apparel) {
-        const productList = Object.values(productListLoad).filter(item => item.Product_Name === apparel);
+        const productList = Object.values(productListLoad).filter(item => (
+          (greenmask === "" && item.Product_Name === apparel) ||
+          (greenmask !== "" && item.Product_Greenmask === greenmask)
+        ));
         const productListColour = productList[0]?.Product_Colors || [];
-        const productImage = Object.values(productListColour).map(item => item.color_map ? item.color_map: item.name);
-        setProductImageList(productImage);
+        const productColor = Object.values(productListColour).map(item => item.color_map ? item.color_map: item.name);
+        setProductImageList(productColor);
       }
     }, [productListLoad, apparel]);
     const ColorBall = ({ color, highlight, onClick }) => {

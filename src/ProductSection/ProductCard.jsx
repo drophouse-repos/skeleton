@@ -10,9 +10,18 @@ const ProductCard = ({ product }) => {
   const { apparel, setApparel, setColor } = useContext(AppContext);
   const navigate = useNavigate();
 
-  const handleclick = (_greenmask, type, link) => {
+  const handleclick = (_greenmask, type, color, color_map, link) => {
+    var def_color = 'white'
+    if(color_map && color)
+    {
+      for(var i in color_map)
+      {
+         def_color = color_map[i]?.name || 'white'
+         break  
+      }
+    }
     setGreenmask(_greenmask);
-    setColor("white");
+    setColor(def_color);
     setApparel(type);
     navigate(link);
   }
@@ -23,7 +32,7 @@ const ProductCard = ({ product }) => {
     <div className="flex flex-col justify-between bg-white shadow-lg rounded-lg p-4 border border-gray-400">
       <div 
         className="image-container aspect-w-4 aspect-h-3 bg-gray-25 border border-gray-100 rounded-lg"  // Added border
-        onClick={() => handleclick(product.greenmask, product.type, '/product')}
+        onClick={() => handleclick(product.greenmask, product.type, product.color, product.color_map, '/product')}
       >
         {/* Front Image */}
         <img

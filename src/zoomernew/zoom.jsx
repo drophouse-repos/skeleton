@@ -253,7 +253,7 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
           border: `3px dotted red`,
           pointerEvents: `none`
         }}
-        ><div className="control-point point-ne"></div><div className="control-point point-nw"></div><div className="control-point point-se"></div><div class="control-point point-sw"></div>
+        ><div className="control-point point-ne"></div><div className="control-point point-nw"></div><div className="control-point point-se"></div><div className="control-point point-sw"></div>
       </div>
       {/* dotted lines on zoomer */}
       {/* <canvas className={`canvas-R ${(window.innerWidth < 544) ? `hidden` : ``}`} style={{ */}
