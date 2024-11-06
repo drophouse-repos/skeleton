@@ -9,25 +9,38 @@ const ProductSection = () => {
   const { priceMap, getPriceNum } = useContext(PricesContext)
   
   var products = []
-  const getProductImg = (index, type) => {
-    var img = ''
+  function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array
+  }
+  const getProductImg = (index) => {
+    var img = {}
     if(orgDetails && orgDetails.Products && orgDetails.Products[index] && orgDetails.Products[index].Product_Colors)
     {
       var variants = orgDetails.Products[index].Product_Colors
-      var keys = Object.keys(variants)
+      var keys = shuffleArray(Object.keys(variants))
       for(var i=0; i<keys.length; i++)
       {
-        if(variants && variants[keys[i]] && variants[keys[i]]['asset'] && variants[keys[i]]['asset'][type] && variants[keys[i]]['asset'][type] != '' && variants[keys[i]]['asset'][type] != null)
+        if(variants && variants[keys[i]] && variants[keys[i]]['asset'] && variants[keys[i]]['asset']['front'] && variants[keys[i]]['asset']['front'] != '' && variants[keys[i]]['asset']['front'] != null)
         {
-          img = variants[keys[i]]['asset'][type]
-          break
+          img['front'] = variants[keys[i]]['asset']['front']
         }
+        if(variants && variants[keys[i]] && variants[keys[i]]['asset'] && variants[keys[i]]['asset']['back'] && variants[keys[i]]['asset']['back'] != '' && variants[keys[i]]['asset']['back'] != null)
+        {
+          img['back'] = variants[keys[i]]['asset']['back']
+        }
+        if(img?.front && img?.back)
+          break
       }
     }
     return img
   }
   for(var i=0; i<orgDetails.Products.length; i++)
   {
+    var img = getProductImg(i)
     var product = orgDetails.Products[i]
     var obj = {
       name: product.Product_Description,
@@ -35,13 +48,13 @@ const ProductSection = () => {
       type: product.Product_Name,
       price: getPriceNum(product.Product_Name),
       color: product.Product_Default_Color,
+      color_map: product.Product_Colors,
       size: product.Product_Sizes,
-      frontImage: getProductImg(i, 'front'),
-      backImage: getProductImg(i, 'back')
+      frontImage: img['front'],
+      backImage: img['back']
     }
     products.push(obj)
   }
-  console.log(products) 
   const [ProductsList, setProductsList] = useState(products);
   const [selectedType, setSelectedType] = useState('All');
   const handleFilter = (apparel) => {

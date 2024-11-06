@@ -473,12 +473,12 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
       //     setToggled(enhancedImageUrl);
       //     setEditedImage(enhancedImageUrl);
       //   }
-        const enhancedImage = await enhanceImageClarity(base64Image);
-        if(enhancedImage){
-          setUploadedImageUrl(enhancedImage);
-          setToggled(enhancedImage);
-          setEditedImage(enhancedImage);
-        }
+        // const enhancedImage = await enhanceImageClarity(base64Image);
+        // if(enhancedImage){
+          setUploadedImageUrl(base64Image);
+          setToggled(base64Image);
+          setEditedImage(base64Image);
+        // }
       } else {
         setError('Please enter a valid base64 image URL.');
       }

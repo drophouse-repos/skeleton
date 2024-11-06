@@ -212,6 +212,10 @@ const ProductPage = () => {
   } = useContext(MessageBannerContext);
   useEffect(()=> {
     setShowMessageBanner(false)
+    setTimeout(()=>{
+      setCurrentGalleryIndex(0);
+      productGalleryRef.current.galleryGoTo(0);
+    }, 250)
   },[])
   const productGalleryRef = useRef(null);
 
