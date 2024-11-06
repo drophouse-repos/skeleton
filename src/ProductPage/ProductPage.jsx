@@ -471,6 +471,9 @@ const ProductPage = () => {
   }
 
   const handleBuy = async () => {
+    if (user?.isGuest) {
+      navigate('/auth')
+    }
     if (!isActive) {
       handleCartBtnDisable();
       return
@@ -528,11 +531,6 @@ const ProductPage = () => {
       title: "Generate Design",
       description: "Click here to generate your design",
       target: () => generateBtnRef.current,
-    },
-    {
-      title: "Save Design",
-      description: "Click the button to save your design",
-      target: () => productGalleryRef.current.getSaveBtn,
     },
     {
       title: "Edit Design",
@@ -639,15 +637,18 @@ const ProductPage = () => {
             disabled={isGenerating}
           />
           <div className="flex flex-row justify-end space-x-2 my-[1rem]">
-            <button className="bg-orange-500 text-zinc-100 font-extrabold py-1 px-4 rounded-xl whitespace-nowrap"
-              onClick={handleShuffle}>Shuffle</button> 
+            <PromptBoxButton
+              text={"Shuffle"}
+              onClick={handleShuffle}
+              className={"bg-orange-500"}
+            />
             <PromptBoxButton
               ref={generateBtnRef}
               text={"Design Now"}
               onClick={(user?.isGuest && guestDesignCount >= guestDesignLimit)
                 ? ()=> navigate('/auth') : handleAskAI}
               loading={isAskingRosie | isGenerating}
-              className={(shouldFlash && isFirstVisit) ? "flash" : ""}
+              className={(shouldFlash && isFirstVisit) ? "flash bg-teal-500 " : "bg-teal-500 "}
             />
           </div>
         </div>

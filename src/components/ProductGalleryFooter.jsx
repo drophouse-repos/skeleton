@@ -34,7 +34,7 @@ export default function ProductColorFooter({ currentIndex, onFooterClick , appar
     };
 
     return (
-        <div style={{marginTop: '15px'}} className={`flex flex-row justify-center items-center space-x-5`}>
+        <div style={{marginTop: '35px'}} className={`flex flex-row justify-center items-center space-x-5`}>
             {
                 productImageList.map((color, index)=>{
                     return <ColorBall key={index} color={color} highlight={currentIndex === index} onClick={() => { onFooterClick(index);}}/>
