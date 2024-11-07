@@ -8,6 +8,7 @@ import HoodieSizeInfo from "../../assets/HoodieSizeInfo.jpg"
 import TshirtSizeInfo from "../../assets/TshirtSizeInfo.jpg"
 import { Modal } from "antd";
 import { Orgcontext } from "../../context/ApiContext";
+import { decode } from 'html-entities';
 
 function ProductInformation(){
     const { orgDetails, product, landingpage } = useContext(Orgcontext)
@@ -136,7 +137,6 @@ function ProductInformation(){
         )
     })
 
-
     return(
         <div className="flex flex-col align-center justify-center w-4/5 max-w-screen-lg mt-[4rem]">
             <InformationTopNav title="Product and Size Information"/>
@@ -202,7 +202,7 @@ function ProductInformation(){
                 </thead>
                 <tbody>
                     {sizeInformation[activeIndex].unitInformation[unitIndex].sizeData.map((data, index)=> <tr key={index}>
-                        {data.map((d, index)=> <td key={index} className="border border-slate-300 ..." style={{fontFamily : `${orgDetails.font}`}} dangerouslySetInnerHTML={{ __html: d }}></td>)}
+                        {data.map((d, index)=> <td key={index} className="border border-slate-300 ..." style={{fontFamily : `${orgDetails.font}`}}>{decode(d)}</td>)}
                     </tr>)}
                 </tbody>
             </table>
