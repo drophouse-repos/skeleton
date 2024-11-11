@@ -123,7 +123,7 @@ export default function UserPage() {
             order.item.forEach(item => {
               transformedData.push({
                 imageSrc: item.thumbnail,
-                title: `Customized ${orgDetails.name} ${item.color} ${item.apparel}`,
+                title: `Customized ${orgDetails.name} ${item.color} ${item.apparel == 'mug' ? 'mug/ornament' : item.apparel}`,
                 type: item.apparel,
                 color: item.color,
                 size: item.size,
