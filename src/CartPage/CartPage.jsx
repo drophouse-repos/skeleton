@@ -50,7 +50,7 @@ function CartPage() {
                 const transformedData = items.cart.map(item => ({
                     image: item.image,
                     img_id: item.img_id,
-                    title: `${orgDetails.name} ${(item.apparel) == 'mug' ? `` : `${item.color.charAt(0).toUpperCase() + item.color.slice(1)}`}  ${item.apparel.charAt(0).toUpperCase() + item.apparel.slice(1)}`,
+                    title: `${orgDetails.name} ${(item.apparel) == 'mug' ? `` : `${item.color.charAt(0).toUpperCase() + item.color.slice(1)}`}  ${item.apparel == 'mug' ? 'mug/ornament' : item.apparel.charAt(0).toUpperCase() + item.apparel.slice(1)}`,
                     prompt: item.prompt,
                     apparel: item.apparel,
                     color: item.color,
