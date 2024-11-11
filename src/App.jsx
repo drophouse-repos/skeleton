@@ -99,7 +99,6 @@ const App = () => {
 												<Route path="/" element={<LandingPage />} />
 												<Route path="/product" element={<PrivateRoute><ProductPage /></PrivateRoute>} />
 												<Route path="/information" element={<PrivateRoute><InformationPage /></PrivateRoute>} />
-												<Route path="/information/product" element={<PrivateRoute><ProductInformation /></PrivateRoute>} />
 												<Route path="/information/size" element={<PrivateRoute><ProductInformation /></PrivateRoute>} /> 
 												<Route path="/information/prompt" element={<PrivateRoute><PromptInformation /></PrivateRoute>} />            
 												<Route path="/success" element={<ThankYouPage />} />

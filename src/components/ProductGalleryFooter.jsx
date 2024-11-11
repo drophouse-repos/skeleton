@@ -5,6 +5,7 @@ export default function ProductColorFooter({ currentIndex, onFooterClick , appar
     const [productListLoad, setProductListLoad] = useState([]);
     const [productImageList, setProductImageList] = useState([]);
   
+    
     useEffect(() => {
       if (product) {
         setProductListLoad(product);
