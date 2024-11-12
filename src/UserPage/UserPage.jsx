@@ -11,7 +11,7 @@ import { MessageBannerContext } from "../context/MessageBannerContext";
 import MessageBanner from "../components/MessageBanner";
 import ClassInput from '../components/ClassInput';
 import {
-  LoadScript,
+  useJsApiLoader,
   StandaloneSearchBox,
 } from '@react-google-maps/api';
 const libraries = ['places'];
@@ -58,6 +58,12 @@ export default function UserPage() {
   useEffect(()=> {
     setShowMessageBanner(false)
   },[]) 
+
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: apiKey,
+    libraries: libraries
+  });
+
   const { orgDetails } = useContext(Orgcontext)
 
   const [countryList, setCountryList] = useState([])
@@ -453,97 +459,96 @@ export default function UserPage() {
             zIndex={40}
             width={'80%'}
           >
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {['firstName', 'lastName', 'email', 'phone', 'address1', 'address2', 'city','country', 'zipCode'].map(field => (
-            <div key={field}>
-              <h2 className='text-start'>{field === 'address2' ? 'BUILDING/UNIT NO. ' : field==='address1' ? 'ADDRESS LINE' : field.replace(/([A-Z])/g, ' $1').toUpperCase()}<span className="text-red-600 ml-2">{field === 'address2' ? '' : '*'}</span></h2>
-              {field == 'address1' ?
-                <LoadScript googleMapsApiKey={apiKey} libraries={libraries}>
-                <StandaloneSearchBox
-                  onLoad={ref => (searchBoxRef.current = ref)}
-                  onPlacesChanged={onPlacesChanged}
-                  className="custom-search-box"
-                >
-                  <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
-                    <span className="material-icons p-2">location_on</span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {['firstName', 'lastName', 'email', 'phone', 'address1', 'address2', 'city','country', 'zipCode'].map(field => (
+                  <div key={field}>
+                    <h2 className='text-start'>{field === 'address2' ? 'BUILDING/UNIT NO. ' : field==='address1' ? 'ADDRESS LINE' : field.replace(/([A-Z])/g, ' $1').toUpperCase()}<span className="text-red-600 ml-2">{field === 'address2' ? '' : '*'}</span></h2>
+                    {field == 'address1' ?
+                      isLoaded ?
+                      (<StandaloneSearchBox
+                        onLoad={ref => (searchBoxRef.current = ref)}
+                        onPlacesChanged={onPlacesChanged}
+                        className="custom-search-box"
+                      >
+                        <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
+                          <span className="material-icons p-2">location_on</span>
+                          <ClassInput
+                            id={`modal${field}`}
+                            placeholder='Address Line'
+                            value={modalData[field]}
+                            onChange={e => handleModalInputChange(field, e)}
+                            className="flex-1 p-2 focus:outline-none focus:border-primary-500 input-infopage"
+                          />
+                        </div>
+                      </StandaloneSearchBox>) :
+                      <span>Loading...</span>
+                    :
+                    <>
+                    {field == 'country' ? 
+                    <>
+                    <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
+                      <span className="material-icons p-2">{getIconForField('state')}</span>
+                      <Select
+                        id="modalCountry"
+                        placeholder="SELECT COUNTRY"
+                        value={modalData.country}
+                        style={{ width: "100%", height: "40px", marginBottom: "10px", padding:"0px", borderColor:"lightgrey"
+                          ,borderWidth:"2px", boxShadow:"none", borderRadius:'0px'}}
+                        onChange={(selectedOption) => handleCountryChange( selectedOption, true )}
+                        options={countryList}
+                        className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500 input-infopage"
+                        />
+                      </div>
+              </>:<div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
+                    <span className="material-icons p-2">{getIconForField(field)}</span>
                     <ClassInput
                       id={`modal${field}`}
                       placeholder='Address Line'
                       value={modalData[field]}
                       onChange={e => handleModalInputChange(field, e)}
                       className="flex-1 p-2 focus:outline-none focus:border-primary-500 input-infopage"
-                    />
-                  </div>
-                </StandaloneSearchBox>
-              </LoadScript>
-              :
-              <>
-              {field == 'country' ? 
-              <>
-              <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
-                <span className="material-icons p-2">{getIconForField('state')}</span>
-                <Select
-                  id="modalCountry"
-                  placeholder="SELECT COUNTRY"
-                  value={modalData.country}
-                  style={{ width: "100%", height: "40px", marginBottom: "10px", padding:"0px", borderColor:"lightgrey"
-                  ,borderWidth:"2px", boxShadow:"none", borderRadius:'0px'}}
-                  onChange={(selectedOption) => handleCountryChange( selectedOption, true )}
-                  options={countryList}
-                  className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500 input-infopage"
-                />
+                      />
+                  </div>}
+                  </>
+                    }
+                </div>))}
+              <div>
+                <h2 className='text-start' style={{fontFamily : `${orgDetails.font}`}}>STATE<span className="text-red-600 ml-2">*</span></h2>
+                <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
+                  <span className="material-icons p-2">{getIconForField('state')}</span>
+                  <Select id="modalState"
+                    placeholder="SELECT STATE"
+                    value={modalData.state}
+                    style={{ width: "100%", height: "40px", marginBottom: "10px", padding:"0px", borderColor:"lightgrey"
+                    ,borderWidth:"2px", boxShadow:"none", borderRadius:'0px'}}
+                    onChange={(value) => { handleModalInputChange('state', value)}}
+                    className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500 input-infopage"
+                    options={stateList} />
                 </div>
-        </>:<div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
-              <span className="material-icons p-2">{getIconForField(field)}</span>
-              <ClassInput
-                id={`modal${field}`}
-                placeholder={field === 'address2' ? 'Building/Unit No. ' : field.replace(/([A-Z])/g, ' $1')}
-                value={modalData[field]}
-                onChange={e => handleModalInputChange(field, e)}
-                className="flex-1 p-2 focus:outline-none focus:border-primary-500 input-infopage"
-              />
-            </div>}
-            </>
-              }
+              </div>
             </div>
-          ))}
-          <div>
-            <h2 className='text-start' style={{fontFamily : `${orgDetails.font}`}}>STATE<span className="text-red-600 ml-2">*</span></h2>
-            <div className="flex items-center border-2 border-neutral-300 w-full h-10 icon-infopage">
-            <span className="material-icons p-2">{getIconForField('state')}</span>
-              <Select id="modalState"
-                placeholder="SELECT STATE"
-                value={modalData.state}
-                style={{ width: "100%", height: "40px", marginBottom: "10px", padding:"0px", borderColor:"lightgrey"
-                ,borderWidth:"2px", boxShadow:"none", borderRadius:'0px'}}
-                onChange={(value) => { handleModalInputChange('state', value)}}
-                className="border-2 border-neutral-300 w-full h-10 p-2 focus:outline-none focus:border-primary-500 input-infopage"
-                options={stateList} />
-              </div>
-          </div>
-        </div>
             <div className="flex flex-row w-full justify-end mt-3">
-                <button className="bg-gray-200 text-black-100 font-extrabold py-2 px-4 rounded-full mr-5" onClick={closeModal}>CANCEL</button>
-                <button
-                  style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
-                  className="bg-sky-600 text-zinc-100 font-extrabold py-2 px-4 rounded-full text-lg"
-                  onClick={() => handleAddressItemEdit(
-                    modalData.firstName,
-                    modalData.lastName,
-                    modalData.email,
-                    modalData.phone,
-                    modalData.address1,
-                    modalData.address2,
-                    modalData.city,
-                    modalData.country ? modalData.country : "US", // Default to 'US' if no country is selected
-                    modalData.state ? modalData.state : "AL", // Default to 'AL' if no state is selected
-                    modalData.zipCode,
-                    modalAddressType
-                  )}
-                >
-                  OK
-                </button>
-              </div>
+              <button className="bg-gray-200 text-black-100 font-extrabold py-2 px-4 rounded-full mr-5" onClick={closeModal}>CANCEL</button>
+              <button
+                style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`}}
+                className="bg-sky-600 text-zinc-100 font-extrabold py-2 px-4 rounded-full text-lg"
+                onClick={() => handleAddressItemEdit(
+                  modalData.firstName,
+                  modalData.lastName,
+                  modalData.email,
+                  modalData.phone,
+                  modalData.address1,
+                  modalData.address2,
+                  modalData.city,
+                  modalData.country ? modalData.country : "US", // Default to 'US' if no country is selected
+                  modalData.state ? modalData.state : "AL", // Default to 'AL' if no state is selected
+                  modalData.zipCode,
+                  modalAddressType
+                )}
+              >
+                OK
+              </button>
+            </div>
           </Modal>
 
           <br /><br />

@@ -17,7 +17,7 @@ import { useUser } from "../context/UserContext";
 
 const emailRegex = /\S+@\S+\.\S+/;
 import {
-  LoadScript,
+  useJsApiLoader,
   StandaloneSearchBox,
 } from '@react-google-maps/api';
 const libraries = ['places'];
@@ -68,6 +68,11 @@ const InformationPage = () => {
   });
   const [countryList, setCountryList] = useState([])
   const [countryMap, setCountryMap] = useState({});
+
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: apiKey,
+    libraries: libraries
+  });
 
   useEffect(() => {
     if(!user.isLoggedIn)
@@ -446,7 +451,7 @@ const InformationPage = () => {
             <div key={field}>
               <h2 className='text-start'>{field === 'address2' ? 'BUILDING/UNIT NO. ' : field==='address1' ? 'ADDRESS LINE' : field.replace(/([A-Z])/g, ' $1').toUpperCase()}<span className="text-red-600 ml-2">{field === 'address2' ? '' : '*'}</span></h2>
               {field == 'address1' ?
-                <LoadScript googleMapsApiKey={apiKey} libraries={libraries}>
+                isLoaded ?
                 <StandaloneSearchBox
                   onLoad={ref => (searchBoxRef.current = ref)}
                   onPlacesChanged={onPlacesChanged}
@@ -462,8 +467,8 @@ const InformationPage = () => {
                       className="flex-1 p-2 focus:outline-none focus:border-primary-500 input-infopage"
                     />
                   </div>
-                </StandaloneSearchBox>
-              </LoadScript>
+                </StandaloneSearchBox> :
+                <span>Loading...</span>
               :
               <>
               {field == 'country' ? 

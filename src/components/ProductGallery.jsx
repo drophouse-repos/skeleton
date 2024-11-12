@@ -172,7 +172,6 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
   const [isActive, setIsActive] = useState(false);
   const navigate = useNavigate();
   const [buttonText, setButtonText] = useState('Edit Design');
-  // setdesignbtn = {text: 'Edit Design'};
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState('');
   const [imgHeightZoom, setImgHeightZoom] = useState('80')
@@ -716,7 +715,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
             Save Design</button>
       </div>
       <div className={`${(window.innerWidth <= 544)? `px-5`: ``} mt-6 mb-6 justify-center w-full md:w-[30rem] mx-auto text-lg md:text-2xl md:whitespace-nowrap gap-4 grid-cols-2 md:grid-cols-2  grid ${!isZoomEnabled ? '' : 'hidden'}`}>
-          <button ref={toggleZoomBtnRef} onClick={() => {toggleZoom();setTimeout(()=>{editedImageRef.current.resetAllPositions();}, 500);}} 
+          <button ref={toggleZoomBtnRef} onClick={() => {toggleZoom();}} 
             style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`, fontSize: window.innerWidth <= 544 ? '17px': ''}}
             className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
             Edit Design
