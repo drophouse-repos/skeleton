@@ -114,7 +114,6 @@ const App = () => {
 											</Routes>
 											<Legal />
 										</div>
-								
 								</OrderProvider>
 								</PricesProvider>
 							</MessageBannerProvider>
