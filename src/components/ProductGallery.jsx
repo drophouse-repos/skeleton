@@ -492,7 +492,8 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
     
   
   async function saveAsImage() {
-    const imageRef = editedImageRef.current.getEditedImageRef();
+    // const imageRef = editedImageRef.current.getEditedImageRef();
+    const imageRef = editedImageRef.current.getEditedImageRef_hidden();
     const transformedCanvas = document.createElement('canvas');
     transformedCanvas.width = 512;
     transformedCanvas.height = 512;
@@ -509,7 +510,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
     await Promise.all([image.decode()]);
     ctx.drawImage(image, 0, 0, transformedCanvas.width, transformedCanvas.height);
     imageRef.current.innerHTML = tmp;
-    let imgSrc = transformedCanvas.toDataURL("image/jpeg");
+    let imgSrc = transformedCanvas.toDataURL("image/jpeg", 1.0);
     handleImageUpload(imgSrc);
   }
 
