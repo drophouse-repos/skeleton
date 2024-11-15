@@ -44,7 +44,6 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
   },[props.dimensions.Dim_width,props])
 
   function resetAllPositions() {
-    console.log('reset calling')
     if (window.innerWidth < 544) {
       //mobile devices
       setContainerWidth(180);
@@ -99,7 +98,6 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
   );
 
   const handlePreviewChange = () => {
-    console.log('preview change calling')
     const mainCanvas = zoomerImageRef.current;
     const hiddenCanvas = zoomerImageRef_hidden.current;
     const { width: mainWidth, height: mainHeight } = mainCanvas.getBoundingClientRect();
@@ -377,8 +375,8 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
           width: `512px`,
           height: `512px`,
           position: 'absolute',
-          top:'0px',
-          left: '50px',
+          top:'-5000px',
+          left: '-5000px',
           backgroundImage: `url(${backgroundImage})`,
         }}
         ref={zoomerImageRef_hidden}

@@ -15,7 +15,6 @@ import { HeartOutlined, HeartFilled, EditFilled } from "@ant-design/icons";
 import { fetchIsLiked, fetchPostLike, fetchImageBase64 } from "../utils/fetch";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { enhanceImageClarity } from '../utils/enhanceImageClarity';
 import { Orgcontext } from '../context/ApiContext';
 import ProductPopup from "./ProductPopup";
 import ZoomIcon from '../assets/zoom.png';
@@ -465,19 +464,9 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
   
     const handleImageUpload = async (base64Image) => {
       if (base64Image)  { 
-      //   const uploadedImageUrl = await uploadToCloudinary(base64Image);
-      //   if (uploadedImageUrl)  {
-      //     const enhancedImageUrl = enhanceImage(uploadedImageUrl);
-      //     setUploadedImageUrl(enhancedImageUrl);
-      //     setToggled(enhancedImageUrl);
-      //     setEditedImage(enhancedImageUrl);
-      //   }
-        // const enhancedImage = await enhanceImageClarity(base64Image);
-        // if(enhancedImage){
           setUploadedImageUrl(base64Image);
           setToggled(base64Image);
           setEditedImage(base64Image);
-        // }
       } else {
         setError('Please enter a valid base64 image URL.');
       }
