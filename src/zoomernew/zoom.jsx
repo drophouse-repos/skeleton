@@ -35,6 +35,7 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
   const [out_container_width, setOutContainerWidth] = useState(512);
   const [initOffset, setInitOffset] = useState(25);
   const { apparel } = useContext(AppContext);
+  const zoomerImageRef_hidden = useRef(null);
   const zoomerImageRef = useRef(null);
   const navigate = useNavigate();
   
@@ -43,6 +44,7 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
   },[props.dimensions.Dim_width,props])
 
   function resetAllPositions() {
+    console.log('reset calling')
     if (window.innerWidth < 544) {
       //mobile devices
       setContainerWidth(180);
@@ -56,7 +58,6 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
       setInitOffset(33);
       setImageX(63);
       // setImageWidth(65);
-      
       setImageY(63);
     } else {
       setContainerWidth(270);
@@ -69,6 +70,7 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
       setImageX(95);
       setImageY(95);
     }
+    setTimeout(() => {handlePreviewChange()}, 100);
   }
   
   useEffect(() => {
@@ -82,6 +84,9 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
         getEditedImageRef() {
           return zoomerImageRef;
         },
+        getEditedImageRef_hidden() {
+          return zoomerImageRef_hidden;
+        },
         resetImagePosition() {
           return resetAllPositions();
         },
@@ -93,6 +98,32 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
     []
   );
 
+  const handlePreviewChange = () => {
+    console.log('preview change calling')
+    const mainCanvas = zoomerImageRef.current;
+    const hiddenCanvas = zoomerImageRef_hidden.current;
+    const { width: mainWidth, height: mainHeight } = mainCanvas.getBoundingClientRect();
+    const { width: hiddenWidth, height: hiddenHeight } = hiddenCanvas.getBoundingClientRect();
+
+    const widthRatio = hiddenWidth / mainWidth;
+    const heightRatio = hiddenHeight / mainHeight;
+
+    hiddenCanvas.style.width = `${mainWidth * widthRatio}px`;
+    hiddenCanvas.style.height = `${mainHeight * heightRatio}px`;
+
+    const backgroundPosition = mainCanvas.style.backgroundPosition;
+    const backgroundSize = mainCanvas.style.backgroundSize;
+
+    if (backgroundPosition) {
+        const [posX, posY] = backgroundPosition.split(' ').map(val => parseFloat(val));
+      hiddenCanvas.style.backgroundPosition = `${posX * widthRatio}px ${posY * heightRatio}px`;
+    }
+
+    if (backgroundSize) {
+        const [sizeX, sizeY] = backgroundSize.split(' ').map(val => parseFloat(val));
+      hiddenCanvas.style.backgroundSize = `${sizeX * widthRatio}px ${sizeY * heightRatio}px`;
+    }
+  };
   function setZoomBoundaryStyle(apparel) {
     switch (apparel) {
       case "mug":
@@ -324,12 +355,14 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
         onDrag={(e, d) => {
           setImageX(imageX + d.deltaX);
           setImageY(imageY + d.deltaY);
+          handlePreviewChange();
         }}
         onResize={(e, direction, ref, delta, position) => {
           setImageWidth(ref.offsetWidth + "px");
           setImageHeight(ref.offsetHeight + "px");
           setImageX(position.x);
           setImageY(position.y);
+          handlePreviewChange();
         }}
       >
         {pointDirections.map((item, index) => (
@@ -338,6 +371,19 @@ const ZoomItem = forwardRef(function Zoom(props, ref) {
       </Rnd>
       </div>
       </div>
+      <canvas 
+        className={`${props.TshirtImageSrc ? props.TshirtImageSrc.split('/').pop().split('_')[0] : ``}-R-Src-Img bg-repeat R_Preview outline-dashed outline-offset outline-green-500`}
+        style={{
+          width: `512px`,
+          height: `512px`,
+          position: 'absolute',
+          top:'0px',
+          left: '50px',
+          backgroundImage: `url(${backgroundImage})`,
+        }}
+        ref={zoomerImageRef_hidden}
+         >
+      </canvas>
     </div>
   );
 });

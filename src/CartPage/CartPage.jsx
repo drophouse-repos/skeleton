@@ -1,6 +1,6 @@
-import React, { useState } from 'react'; // Fixed import
+import React, { useState } from 'react'; 
 import "./CartPage.css";
-import { useEffect } from 'react'; // Fixed import
+import { useEffect } from 'react'; 
 import { fetchCartItems, fetchRemoveFromCart, fetchImageBase64 } from '../utils/fetch';
 import { useNavigate } from 'react-router';
 import { useUser } from "../context/UserContext";

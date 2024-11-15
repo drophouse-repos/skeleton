@@ -111,6 +111,7 @@ const App = () => {
 												<Route path="/contact" element={<ContactPage />} />
 												<Route path="/product/gallery" element={<ProductSection />} />
 												<Route path="*" element={<NotFoundPage />} />
+												
 											</Routes>
 											<Legal />
 										</div>
