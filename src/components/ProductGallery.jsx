@@ -15,7 +15,6 @@ import { HeartOutlined, HeartFilled, EditFilled } from "@ant-design/icons";
 import { fetchIsLiked, fetchPostLike, fetchImageBase64 } from "../utils/fetch";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { enhanceImageClarity } from '../utils/enhanceImageClarity';
 import { Orgcontext } from '../context/ApiContext';
 import ProductPopup from "./ProductPopup";
 import ZoomIcon from '../assets/zoom.png';
@@ -172,7 +171,6 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
   const [isActive, setIsActive] = useState(false);
   const navigate = useNavigate();
   const [buttonText, setButtonText] = useState('Edit Design');
-  // setdesignbtn = {text: 'Edit Design'};
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState('');
   const [imgHeightZoom, setImgHeightZoom] = useState('80')
@@ -466,19 +464,9 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
   
     const handleImageUpload = async (base64Image) => {
       if (base64Image)  { 
-      //   const uploadedImageUrl = await uploadToCloudinary(base64Image);
-      //   if (uploadedImageUrl)  {
-      //     const enhancedImageUrl = enhanceImage(uploadedImageUrl);
-      //     setUploadedImageUrl(enhancedImageUrl);
-      //     setToggled(enhancedImageUrl);
-      //     setEditedImage(enhancedImageUrl);
-      //   }
-        // const enhancedImage = await enhanceImageClarity(base64Image);
-        // if(enhancedImage){
           setUploadedImageUrl(base64Image);
           setToggled(base64Image);
           setEditedImage(base64Image);
-        // }
       } else {
         setError('Please enter a valid base64 image URL.');
       }
@@ -492,7 +480,8 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
     
   
   async function saveAsImage() {
-    const imageRef = editedImageRef.current.getEditedImageRef();
+    // const imageRef = editedImageRef.current.getEditedImageRef();
+    const imageRef = editedImageRef.current.getEditedImageRef_hidden();
     const transformedCanvas = document.createElement('canvas');
     transformedCanvas.width = 512;
     transformedCanvas.height = 512;
@@ -509,7 +498,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
     await Promise.all([image.decode()]);
     ctx.drawImage(image, 0, 0, transformedCanvas.width, transformedCanvas.height);
     imageRef.current.innerHTML = tmp;
-    let imgSrc = transformedCanvas.toDataURL("image/jpeg");
+    let imgSrc = transformedCanvas.toDataURL("image/jpeg", 1.0);
     handleImageUpload(imgSrc);
   }
 
@@ -716,7 +705,7 @@ const ProductGallery = forwardRef(({ onChange, setToggled, setToggleActivated, c
             Save Design</button>
       </div>
       <div className={`${(window.innerWidth <= 544)? `px-5`: ``} mt-6 mb-6 justify-center w-full md:w-[30rem] mx-auto text-lg md:text-2xl md:whitespace-nowrap gap-4 grid-cols-2 md:grid-cols-2  grid ${!isZoomEnabled ? '' : 'hidden'}`}>
-          <button ref={toggleZoomBtnRef} onClick={() => {toggleZoom();setTimeout(()=>{editedImageRef.current.resetAllPositions();}, 500);}} 
+          <button ref={toggleZoomBtnRef} onClick={() => {toggleZoom();setTimeout(()=>{editedImageRef.current.resetAllPositions()}, 150);}} 
             style={{fontFamily : `${orgDetails.font}`, backgroundColor: `${orgDetails.theme_color}`, fontSize: window.innerWidth <= 544 ? '17px': ''}}
             className={`mx-auto text-zinc-100 font-extrabold py-2 px-4 text-xl rounded-xl  ${(window.innerWidth <= 544) ? `w-[8.5rem]`: `w-[12rem]`}`}>
             Edit Design
