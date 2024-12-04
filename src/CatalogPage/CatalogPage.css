@@ -1,0 +1,24 @@
+/* Set up print styles */
+@media print {  
+    .catalog-print {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        }
+        
+    .catalog-print .image-container {
+        break-inside: avoid; /* Prevent images from splitting across pages */
+        page-break-inside: avoid; /* Prevent breaks inside an image container */
+        margin-top: 3rem;
+    }
+
+    .catalog-title {
+        margin-bottom: 0;
+    }
+  
+    /* Optional: Add specific styles for the page */
+    body {
+        margin: 0;
+        padding: 0;
+    }
+}
+  
