@@ -123,6 +123,7 @@ const App = () => {
 					</ImageProvider>
 				</AppProvider>
 			</OrganisationDetails>
+			
 			</>
 			)}
 		</div>
