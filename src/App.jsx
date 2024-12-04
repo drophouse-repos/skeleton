@@ -27,6 +27,7 @@ import { useUser } from "./context/UserContext";
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import ContactPage from './ContactPage/ContactPage';
+import CatalogPage from './CatalogPage/CatalogPage';
 import LoadingPage from './components/newloader';
 import OrganisationDetails, { Orgcontext } from './context/ApiContext';
 import ProductSection from './ProductSection/ProductSection';
@@ -110,8 +111,8 @@ const App = () => {
 												<Route path="/driver" element={<PrivateRoute><DriverPage /></PrivateRoute>} />
 												<Route path="/contact" element={<ContactPage />} />
 												<Route path="/product/gallery" element={<ProductSection />} />
+												<Route path="/catalog" element={<CatalogPage />} />
 												<Route path="*" element={<NotFoundPage />} />
-												
 											</Routes>
 											<Legal />
 										</div>
