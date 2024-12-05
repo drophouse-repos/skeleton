@@ -3,7 +3,7 @@
     .catalog-print {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        }
+    }
         
     .catalog-print .image-container {
         break-inside: avoid; /* Prevent images from splitting across pages */
@@ -13,12 +13,6 @@
 
     .catalog-title {
         margin-bottom: 0;
-    }
-  
-    /* Optional: Add specific styles for the page */
-    body {
-        margin: 0;
-        padding: 0;
     }
 }
   
