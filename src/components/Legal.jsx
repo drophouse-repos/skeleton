@@ -23,7 +23,7 @@ const Legal = () => {
   };
 
   return (
-    <footer className={`legalbanner mt-[15px]`}>
+    <footer className={`legalbanner mt-[15px] print:hidden`}>
       <div className="general">
         <div className="social-icons flex flex-row justify-center">
           <a className="mr-3" href="mailto:support@drophouse.art"><img src="/contact.svg" alt="Email" /></a>

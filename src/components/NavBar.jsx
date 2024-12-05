@@ -100,7 +100,7 @@ export default function NavBar() {
   });
 
   return (
-    <div className={`w-full z-[50] h-[5vh] fixed ${navbarHide ? "hidden" : ""}`}>
+    <div className={`w-full z-[50] h-[5vh] fixed ${navbarHide ? "hidden" : ""} print:hidden`}>
       <div
         className={`flex flex-row p-2 ${(window.innerWidth >= 544) ? `h-[2rem]`: `h-[3rem]`} md:h-[3rem] items-center justify-center bg-gray-200`}
       >
