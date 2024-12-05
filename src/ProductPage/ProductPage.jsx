@@ -87,6 +87,7 @@ const ProductPage = () => {
     const randomPrompt = getRandomPrompt();
     setLocalPrompt(randomPrompt);
   };
+  
 
   const guestDesignLimit = 5
   const updateGuestDesignCount = () => {
